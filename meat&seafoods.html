@@ -681,7 +681,6 @@
         </div>
     </footer>
     <script>
-
         const hamburger = document.getElementById('hamburger');
         const sidebarMenu = document.getElementById('sidebar-menu');
         const closeBtn = document.querySelector('.sidebar-menu .close-btn');
@@ -696,74 +695,69 @@
             hamburger.classList.remove('open');
         });
 
+        const toast = document.getElementById('toast');
+
+        // ✅ Event Delegation for Add to Cart (including dynamically added cards)
         document.addEventListener('click', function (event) {
             const button = event.target.closest('.product-card button');
-            if (!button) return;
+            if (button) {
+                const card = button.closest('.product-card');
+                const name = card.querySelector('h3').innerText;
+                const image = card.querySelector('img').getAttribute('src');
+                const priceText = card.querySelector('p').innerText.replace('₱', '');
+                const price = parseFloat(priceText);
 
-            const card = button.closest('.product-card');
-            const name = card.querySelector('h3').innerText;
-            const image = card.querySelector('img').getAttribute('src');
-            const priceText = card.querySelector('p').innerText.replace('₱', '');
-            const price = parseFloat(priceText);
+                const product = { name, image, price, quantity: 1 };
+                let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
-            const product = { name, image, price, quantity: 1 };
-            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+                const existing = cart.find(item => item.name === product.name);
+                if (existing) {
+                    existing.quantity += 1;
+                } else {
+                    cart.push(product);
+                }
 
-            const existing = cart.find(item => item.name === product.name);
-            if (existing) {
-                existing.quantity += 1;
-            } else {
-                cart.push(product);
+                localStorage.setItem('cart', JSON.stringify(cart));
+
+                toast.innerText = `${product.name} added to cart!`;
+                toast.classList.add('show');
+                setTimeout(() => toast.classList.remove('show'), 5000);
             }
-
-            localStorage.setItem('cart', JSON.stringify(cart));
-
-            // Show toast
-            toast.innerText = `${product.name} added to cart!`;
-            toast.classList.add('show');
-            setTimeout(() => toast.classList.remove('show'), 5000);
         });
 
-        // Live search & filter
+        // Live Search & Filter
         const searchInput = document.getElementById('search');
         const filterSelect = document.getElementById('categoryFilter');
 
         function filterProducts() {
             const query = searchInput.value.toLowerCase();
             const category = filterSelect.value;
+            const cards = document.querySelectorAll('.product-card');
 
             cards.forEach(card => {
-                const name = card.dataset.name.toLowerCase();
+                const name = card.dataset.name?.toLowerCase() || '';
                 const cat = card.dataset.category;
                 const match = name.includes(query) && (category === 'all' || category === cat);
                 card.style.display = match ? 'block' : 'none';
             });
         }
 
-        searchInput.addEventListener('input', filterProducts);
-        filterSelect.addEventListener('change', filterProducts);
+        searchInput?.addEventListener('input', filterProducts);
+        filterSelect?.addEventListener('change', filterProducts);
 
-
-        // Check if the user is logged in
+        // Login status check
         function checkLoginStatus() {
             const isLoggedIn = localStorage.getItem('isLoggedIn');
             const userIcon = document.querySelector('.head-btn-end a[href="wait.html"]');
+            if (!userIcon) return;
 
-            if (isLoggedIn === 'true') {
-                // Redirect to My Account page if logged in
-                userIcon.href = 'account.html';
-            } else {
-                // Ensure the link points to the login page
-                userIcon.href = 'sign-in.html';
-            }
+            userIcon.href = isLoggedIn === 'true' ? 'account.html' : 'sign-in.html';
         }
 
-        // Run the function when the page loads
         document.addEventListener('DOMContentLoaded', checkLoginStatus);
-
-        // Optionally, listen for any changes in localStorage (for example, if the user logs in after page load)
         window.addEventListener('storage', checkLoginStatus);
 
+        // Accordion
         document.addEventListener("DOMContentLoaded", function () {
             const accordions = document.querySelectorAll(".accordion");
 
@@ -771,16 +765,12 @@
                 accordion.addEventListener("click", function () {
                     this.classList.toggle("active");
                     const panel = this.nextElementSibling;
-
-                    if (panel.style.display === "block") {
-                        panel.style.display = "none";
-                    } else {
-                        panel.style.display = "block";
-                    }
+                    panel.style.display = panel.style.display === "block" ? "none" : "block";
                 });
             });
         });
 
+        // Header scroll effect
         window.addEventListener('scroll', function () {
             const header = document.querySelector('header');
             if (window.scrollY > 20) {
@@ -790,6 +780,7 @@
             }
         });
 
+        // Dynamic Load for Poultry and Shellfish
         let poultryIndex = 0;
         let shellfishIndex = 0;
         const productsPerLoad = 5;
@@ -799,7 +790,6 @@
         const poultryPrices = [155, 220, 150, 100, 200, 190, 230, 180, 175, 250];
         const shellfishPrices = [400, 250, 120, 260, 350, 295, 310, 330, 305, 320];
 
-        // Load text files for both categories
         fetch('products/products_poultry.txt')
             .then(res => res.text())
             .then(data => poultryNames = data.trim().split('\n'));
@@ -808,66 +798,62 @@
             .then(res => res.text())
             .then(data => shellfishNames = data.trim().split('\n'));
 
-        // Utility to create product cards
         function createCard(name, price, category) {
             const card = document.createElement("div");
             card.className = "product-card";
             card.dataset.category = category;
+            card.dataset.name = name;
 
-            const imageName = name.split(' ')[0]; // get first word
+            const imageName = name.split(' ')[0];
             const imagePath = `img/thumbnail/${category.toUpperCase()}/${imageName}.png`;
 
             card.innerHTML = `
-    <div class="product-image">
-      <img src="${imagePath}" alt="${name}" loading="lazy"
-        onerror="this.onerror=null; this.src='img/icons/noun-box-2845338-cropped.svg';" />
-    </div>
-    <div class="product-card-content">
-      <h3>${name}</h3>
-      <p>₱${price.toFixed(2)}</p>
-      <button><img src="img/icons/download.svg" alt="">ADD TO CART</button>
-    </div>
-  `;
+            <div class="product-image">
+              <img src="${imagePath}" alt="${name}" loading="lazy"
+                onerror="this.onerror=null; this.src='img/icons/noun-box-2845338-cropped.svg';" />
+            </div>
+            <div class="product-card-content">
+              <h3>${name}</h3>
+              <p>₱${price.toFixed(2)}</p>
+              <button><img src="img/icons/download.svg" alt="">ADD TO CART</button>
+            </div>
+        `;
             return card;
         }
 
-        // View More Poultry
-        document.getElementById("viewMorePoultry").addEventListener("click", () => {
+        // View More: Poultry
+        document.getElementById("viewMorePoultry")?.addEventListener("click", () => {
             const container = document.querySelector(".product-container[data-category='poultry']");
             for (let i = 0; i < productsPerLoad; i++) {
                 if (poultryIndex >= poultryNames.length) break;
-
                 const name = poultryNames[poultryIndex] || `Unnamed Poultry ${poultryIndex + 1}`;
                 const price = poultryPrices[poultryIndex] || 150;
                 const card = createCard(name, price, "poultry");
                 container.insertBefore(card, document.getElementById("viewMorePoultry"));
                 poultryIndex++;
             }
-
             if (poultryIndex >= poultryNames.length) {
                 document.getElementById("viewMorePoultry").style.display = "none";
             }
         });
 
-        // View More Shellfish
-        document.getElementById("viewMoreShellfish").addEventListener("click", () => {
+        // View More: Shellfish
+        document.getElementById("viewMoreShellfish")?.addEventListener("click", () => {
             const container = document.querySelector(".product-container[data-category='shellfish']");
             for (let i = 0; i < productsPerLoad; i++) {
                 if (shellfishIndex >= shellfishNames.length) break;
-
                 const name = shellfishNames[shellfishIndex] || `Unnamed Shellfish ${shellfishIndex + 1}`;
                 const price = shellfishPrices[shellfishIndex] || 199;
                 const card = createCard(name, price, "shellfish");
                 container.insertBefore(card, document.getElementById("viewMoreShellfish"));
                 shellfishIndex++;
             }
-
             if (shellfishIndex >= shellfishNames.length) {
                 document.getElementById("viewMoreShellfish").style.display = "none";
             }
         });
-
     </script>
+
 </body>
 
 </html>
