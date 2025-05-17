@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style/header.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Arimo:wght@700&family=Open+Sans:wght@300&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <title>Sign Up - Fresca Verde</title>
+</head>
+
+<style>
+    body {
+        font-family: 'Open Sans', sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+    }
+
+    .main-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        padding: 100px;
+
+    }
+
+    .graphic-left img {
+        width: 60%;
+        height: auto;
+    }
+
+    .sign-in-form {
+        background-color: #ffffff;
+        border-radius: 12px;
+        padding: 30px 25px;
+        max-width: 420px;
+        width: 100%;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        animation: fadeIn 0.6s ease-in-out;
+    }
+
+    .sign-in-form .top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 25px;
+    }
+
+    .sign-in-form h2 {
+        color: #456655;
+        margin: 0;
+        font-size: 24px;
+    }
+
+    .input-group {
+        margin-bottom: 18px;
+        position: relative;
+    }
+
+    .input-group label {
+        font-size: 13px;
+        color: #555;
+        margin-left: 5px;
+    }
+
+    .input-group input {
+        width: 95%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        font-size: 14px;
+        transition: border 0.3s ease;
+    }
+
+    .input-group input:focus {
+        border-color: #456655;
+        outline: none;
+    }
+
+    button {
+        width: 100%;
+        padding: 12px;
+        background-color: #456655;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    button[type="submit"]:hover {
+        background-color: #2f4f2f;
+        transform: translateY(-1px);
+    }
+
+    .social-login {
+        margin-top: 20px;
+    }
+
+    .social-login p {
+        margin: 10px 0;
+        color: #666;
+    }
+
+    .social-buttons {
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+    }
+
+    .social-buttons a {
+        flex: 1;
+        text-decoration: none;
+        color: white;
+        padding: 10px;
+        border-radius: 6px;
+        font-weight: bold;
+        transition: background-color 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+    }
+
+    .social-buttons a i {
+        margin-right: 8px;
+        font-size: 16px;
+    }
+
+    .social-buttons .facebook {
+        border: #2d4373 1px solid;
+    }
+
+    .social-buttons .facebook:hover {
+        background-color: #2d4373;
+        color: white;
+    }
+
+    .social-buttons .google {
+        border: #db4437 1px solid;
+    }
+
+    .social-buttons .google:hover {
+        background-color: #c1351d;
+        color: white;
+    }
+
+    .sign-in-form p {
+        margin-top: 20px;
+        font-size: 14px;
+    }
+
+    .sign-in-form a {
+        color: #456655;
+        text-decoration: none;
+        font-weight: 600;
+    }
+
+    .sign-in-form a:hover {
+        text-decoration: underline;
+    }
+
+    /* Toast Message */
+    .toast {
+        position: fixed;
+        bottom: 30px;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: #456655;
+        color: #fff;
+        padding: 14px 20px;
+        border-radius: 8px;
+        font-weight: bold;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.5s ease, visibility 0.5s ease;
+        z-index: 9999;
+    }
+
+    .toast.show {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .top {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .top img {
+        display: none;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @media (max-width: 480px) {
+        .sign-in-form {
+            padding: 20px;
+            width: 90%;
+        }
+
+        .social-buttons {
+            flex-direction: column;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .main-container {
+            flex-direction: column;
+            padding: 50px;
+            height: 89vh;
+            justify-content: center;
+        }
+
+        .graphic-left {
+            display: none;
+        }
+
+        .top img {
+            display: flex;
+        }
+    }
+
+    .input-icon {
+        position: relative;
+        display: flex;
+        align-items: center;
+        background-color: #f9f9f9;
+        border: 1.5px solid #ccc;
+        border-radius: 8px;
+        padding: 10px 12px;
+        transition: all 0.3s ease;
+    }
+
+    .input-icon:focus-within {
+        border-color: #456655;
+        box-shadow: 0 0 0 3px rgba(69, 102, 85, 0.1);
+        transform: scale(1.02);
+    }
+
+    .input-icon i {
+        color: #456655;
+        margin-right: 10px;
+        font-size: 14px;
+    }
+
+    .input-icon input {
+        border: none;
+        outline: none;
+        background: transparent;
+        flex: 1;
+        font-size: 14px;
+        padding: 8px 0;
+        transition: all 0.3s ease;
+    }
+
+    .input-icon input:focus {
+        border: none;
+        outline: none;
+    }
+
+    .input-icon input:focus::placeholder {
+        opacity: 0.4;
+    }
+
+    .null {
+        font-size: 13px;
+        margin-bottom: 12px;
+        color: #333;
+    }
+
+    .null input {
+        margin-right: 6px;
+        transform: scale(1.1);
+    }
+</style>
+
+<body>
+
+    <!-- Sidebar Menu -->
+    <div id="sidebar-menu" class="sidebar-menu">
+        <div class="close-btn">&times;</div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="#explore">Explore</a></li>
+                <li><a href="shop.html">Shop</a></li>
+                <li><a href="about.html#about">About</a></li>
+                <li><a href="support.html">Support</a></li>
+                <li><a href="support.html">Track Your Order</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <!-- Main Header -->
+    <header>
+        <div class="head-container">
+            <!-- LEFT -->
+            <div class="head-left">
+                <div class="sidebar" id="hamburger">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+                <div class="head-brand-start">
+                    <a href="#"><img src="images/LOGO-removebg-preview.png" alt="Fresca Verde Logo" /></a>
+                </div>
+                <div class="head-navbar-right">
+                    <nav>
+                        <ul>
+                            <li><a href="index.html">HOME</a></li>
+                            <li><a href="explore.html">EXPLORE</a></li>
+                            <li><a href="shop.html">SHOP</a></li>
+                            <li><a href="about.html#about">ABOUT</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+
+            <!-- RIGHT -->
+            <div class="head-right">
+                <div class="head-navbar-left">
+                    <nav>
+                        <ul>
+                            <li><a href="support.html">SUPPORT</a></li>
+                            <li><a href="#">TRACK YOUR ORDER</a></li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="head-btn-end">
+                    <a href="login.html"><img src="images/USER-removebg-preview.png" alt="User" /></a>
+                    <a href="cart.html"><img src="images/CART.png" alt="Cart" /></a>
+                    <a href="#"><img src="images/SEARCH.png" alt="Search" /></a>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div class="main-container">
+        <div class="graphic-left">
+            <img src="img/icons/undraw_mobile-login_4ntr (1).svg" alt="">
+        </div>
+        <div class="sign-in-form">
+            <div class="top">
+                <h2>Create Account</h2>
+                <img src="images/LOGO-removebg-preview.png" alt="Logo" width="50px" height="50px">
+            </div>
+            <form id="signup-form">
+                <div class="input-group">
+                    <label for="name">Full Name:</label>
+                    <div class="input-icon">
+                        <i class="fas fa-user"></i>
+                        <input type="text" id="name" required>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label for="email">Email:</label>
+                    <div class="input-icon">
+                        <i class="fas fa-envelope"></i>
+                        <input type="email" id="email" required>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label for="phone">Phone Number:</label>
+                    <div class="input-icon">
+                        <i class="fas fa-phone"></i>
+                        <input type="tel" id="phone" pattern="[0-9]{10,}" placeholder="e.g. 09123456789" required>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label for="address">Address:</label>
+                    <div class="input-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <input type="text" id="address" placeholder="Street, City, Province" required>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label for="password">Password:</label>
+                    <div class="input-icon">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="password" required>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label for="confirmPassword">Confirm Password:</label>
+                    <div class="input-icon">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="confirmPassword" required>
+                    </div>
+                </div>
+                <div class="null">
+                    <label>
+                        <input type="checkbox" id="terms" required>
+                        I agree to the <a href="terms.html" target="_blank">Terms and Conditions</a>
+                    </label>
+                </div>
+                <div class="null">
+                    <label>
+                        <input type="checkbox" id="newsletter">
+                        Subscribe to our newsletter for updates and offers
+                    </label>
+                </div>
+                <div id="toast" class="toast"></div>
+                <button type="submit">Sign Up</button>
+                <p style="margin-top: 15px;">Already have an account? <a href="sign-in.html">Sign In</a></p>
+            </form>
+        </div>
+    </div>
+
+
+    <script>
+        // Toast logic
+
+        const newsletterOptIn = document.getElementById("newsletter").checked;
+
+        const toast = document.getElementById("toast");
+        function showToast(message, color = "#456655") {
+            toast.textContent = message;
+            toast.style.backgroundColor = color;
+            toast.classList.add("show");
+
+            setTimeout(() => {
+                toast.classList.remove("show");
+            }, 3000);
+        }
+
+        function validateEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[a-z]{2,}$/;
+            return re.test(email.toLowerCase());
+        }
+
+        document.querySelector("#signup-form").addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            const name = document.getElementById("name").value.trim();
+            const email = document.getElementById("email").value.trim();
+            const phone = document.getElementById("phone").value.trim();
+            const address = document.getElementById("address").value.trim();
+            const password = document.getElementById("password").value.trim();
+            const confirmPassword = document.getElementById("confirmPassword").value.trim();
+            const termsChecked = document.getElementById("terms").checked;
+
+
+            if (!name || !email || !password || !confirmPassword) {
+                showToast("Please fill in all fields.", "#b94b4b");
+                return;
+            }
+
+            if (!validateEmail(email)) {
+                showToast("Invalid email format.", "#b94b4b");
+                return;
+            }
+
+            if (password.length < 6) {
+                showToast("Password must be at least 6 characters.", "#b94b4b");
+                return;
+            }
+
+            if (password !== confirmPassword) {
+                showToast("Passwords do not match.", "#b94b4b");
+                return;
+            }
+
+            if (!phone.match(/^[0-9]{10,}$/)) {
+                showToast("Invalid phone number.", "#b94b4b");
+                return;
+            }
+
+            if (!address) {
+                showToast("Please enter your address.", "#b94b4b");
+                return;
+            }
+
+            if (!termsChecked) {
+                showToast("You must agree to the terms and conditions.", "#b94b4b");
+                return;
+            }
+
+
+            const users = JSON.parse(localStorage.getItem("users")) || [];
+            const existingUser = users.find(user => user.email === email);
+
+            if (existingUser) {
+                showToast("Email already exists.", "#b94b4b");
+                return;
+            }
+
+            users.push({ name, email, phone, address, password, newsletter: newsletterOptIn });
+            localStorage.setItem("users", JSON.stringify(users));
+
+            showToast("Sign-up successful! Redirecting...", "#456655");
+            setTimeout(() => {
+                window.location.href = "sign-in.html";
+            }, 2000);
+        });
+
+        // Sidebar hamburger menu toggle
+        const hamburger = document.getElementById('hamburger');
+        const sidebarMenu = document.getElementById('sidebar-menu');
+        const closeBtn = document.querySelector('.sidebar-menu .close-btn');
+
+        hamburger?.addEventListener('click', () => {
+            sidebarMenu.classList.toggle('show');
+            hamburger.classList.toggle('open');
+        });
+
+        closeBtn?.addEventListener('click', () => {
+            sidebarMenu.classList.remove('show');
+            hamburger.classList.remove('open');
+        });
+
+        // Check if the user is logged in
+        function checkLoginStatus() {
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+            const userIcon = document.querySelector('.head-btn-end a[href="login.html"]');
+            const cartIcon = document.querySelector('.head-btn-end a[href="cart.html"]');
+
+            if (isLoggedIn === 'true') {
+                userIcon.href = 'account.html';
+                cartIcon.href = 'cart.html';
+            } else {
+                userIcon.href = 'sign-in.html';
+                cartIcon.href = 'need-sign-in.html';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', checkLoginStatus);
+        window.addEventListener('storage', checkLoginStatus);
+
+    </script>
+
+
+</body>
+
+</html>

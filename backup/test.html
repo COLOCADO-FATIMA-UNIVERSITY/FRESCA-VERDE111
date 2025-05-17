@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Responsive Product Cards" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Arimo:wght@700&family=Open+Sans:wght@300&display=swap"
+    rel="stylesheet" />
+  <title>Responsive Product Cards</title>
+  <style>
+    .main-container {
+      display: flex;
+      justify-content: center;
+      padding: 20px;
+      margin: 0;
+    }
+
+    .product-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      max-width: 1200px;
+      width: 100%;
+    }
+
+    .product-card {
+      background: #ffffff;
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 15px 100px rgba(0, 0, 0, 0.15);
+      transition: all 0.3s ease;
+    }
+
+    .product-card:hover {
+      transform: translateY(-5px);
+      border: #456655 1px solid;
+      box-shadow: 0 15px 25px #456655;
+    }
+
+    .product-card img {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+      border-bottom: 1px solid #ddd;
+      transition: transform 0.3s ease;
+    }
+
+    .product-card img:hover {
+      transform: scale(1.1);
+    }
+
+    .product-card-content {
+      padding: 15px;
+      text-align: left;
+    }
+
+    .product-card h3 {
+      font-size: 1rem;
+      margin: 10px 0;
+    }
+
+    figure {
+      background: #456655;
+    }
+
+    .product-card-content button {
+      background: #456655;
+      border: none;
+      color: #ffffff;
+      font-weight: bold;
+      padding: 10px 15px;
+      font-size: 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      width: 100%;
+      transition: background 0.3s ease;
+    }
+
+    .product-card-content button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      height: 40px;
+    }
+
+    .product-card-content button img {
+      width: 25px !important;
+      height: 25px !important;
+      object-fit: contain;
+      max-width: 100%;
+      max-height: 100%;
+    }
+
+    .product-card button:hover {
+      background: #ffb703;
+    }
+
+    @media (max-width: 768px) {
+      .product-card img {
+        height: 200px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .product-card img {
+        height: 200px;
+      }
+
+      .product-container {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      }
+
+      .product-card-content button{
+        font-size: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="main-container">
+    <div class="product-container">
+      <div class="product-card">
+        <img src="images/New - Nestle - Low Fat Milk.png" alt="Nestle Milk" />
+        <div class="product-card-content">
+          <h3>Nestle - Low Fat Milk</h3>
+          <p>₱2500</p>
+          <button><img src="img/download.svg" alt="">ADD TO CART</button>
+        </div>
+      </div>
+      <div class="product-card">
+        <img src="images/Emborg - Skimmed Milk.png" alt="Emborg Milk" />
+        <div class="product-card-content">
+          <h3>Emborg - Skimmed Milk</h3>
+          <p>₱2300</p>
+          <button><img src="img/download.svg" alt="">ADD TO CART</button>
+        </div>
+      </div>
+      <div class="product-card">
+        <img src="images/Milk Magic - Flavored Milk.png" alt="Milk Magic" />
+        <div class="product-card-content">
+          <h3>Milk Magic - Flavored Milk</h3>
+          <p>₱1900</p>
+          <button><img src="img/download.svg" alt="">ADD TO CART</button>
+        </div>
+      </div>
+      <div class="product-card">
+        <img src="images/Silk - Almond Milk.png" alt="Silk Almond" />
+        <div class="product-card-content">
+          <h3>Silk - Almond Milk</h3>
+          <p>₱2100</p>
+          <button><img src="img/download.svg" alt="">ADD TO CART</button>
+        </div>
+      </div>
+      <div class="product-card">
+        <img src="images/Arla - Lactose Free.png" alt="Arla Lactose Free" />
+        <div class="product-card-content">
+          <h3>Arla - Lactose Free</h3>
+          <p>₱2400</p>
+          <button><img src="img/download.svg" alt="">ADD TO CART</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.querySelectorAll('.product-card').forEach(card => {
+      const button = card.querySelector('button');
+      button.addEventListener('click', () => {
+        const name = card.querySelector('h3').innerText;
+        const image = card.querySelector('img').getAttribute('src');
+        const priceText = card.querySelector('p').innerText.replace('₱', '');
+        const price = parseFloat(priceText);
+
+        const product = {
+          name: name,
+          image: image,
+          price: price,
+          quantity: 1
+        };
+
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+        const existing = cart.find(item => item.name === product.name);
+        if (existing) {
+          existing.quantity += 1;
+        } else {
+          cart.push(product);
+        }
+
+        localStorage.setItem('cart', JSON.stringify(cart));
+        alert(`${product.name} added to cart!`);
+      });
+    });
+  </script>
+</body>
+</html>

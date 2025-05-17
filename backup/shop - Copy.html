@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style/header.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Arimo:wght@700&family=Open+Sans:wght@300&display=swap"
+        rel="stylesheet" />
+    <title>Shop - Fresca Verde</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: "Open Sans", sans-serif;
+        }
+
+        .whole-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f0f0f0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .upper-con {
+            width: 100%;
+            max-width: 1400px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-sizing: border-box;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+
+            font-size: 1.2rem;
+        }
+
+        .filters {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .filters input,
+        .filters select {
+            padding: 8px 12px;
+            font-size: 1rem;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+        }
+
+        .main-container {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+
+        .more {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        #category {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 0;
+            padding: 0;
+        }
+
+        .bold {
+            font-weight: bold;
+        }
+
+        .more img {
+            width: 40px;
+            height: 40px;
+            transition: transform 0.3s ease, filter 0.3s ease;
+        }
+
+        .more img:hover {
+            transform: scale(1.1);
+            filter: brightness(1.2);
+        }
+
+        .product-container {
+            display: grid;
+            align-items: center;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            width: 100%;
+            padding: 20px;
+            border-radius: 10px;
+            background-color: #e3e3e3;
+        }
+
+        .product-card {
+            background: #ffffff;
+
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 15px 100px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            border: #456655 1px solid;
+            box-shadow: 0 15px 25px #456655;
+        }
+
+        .product-card img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-bottom: 1px solid #ddd;
+            transition: transform 0.3s ease;
+        }
+
+        .product-card img:hover {
+            transform: scale(1.1);
+        }
+
+        .product-card-content {
+            padding: 15px;
+        }
+
+        .product-card h3 {
+            font-size: 1rem;
+            margin: 10px 0;
+        }
+
+        .product-card-content button {
+            background: #456655;
+            border: none;
+            color: #ffffff;
+            font-weight: bold;
+            padding: 10px 15px;
+            font-size: 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            transition: background 0.3s ease;
+        }
+
+        .product-card-content button img {
+            width: 25px;
+            height: 25px;
+        }
+
+        .product-card button:hover {
+            background: #ffb703;
+        }
+
+        .product-card {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 0.6s ease forwards;
+        }
+
+        .product-card:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        .product-card:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .product-card:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+
+        .product-card:nth-child(4) {
+            animation-delay: 0.4s;
+        }
+
+        .product-card:nth-child(5) {
+            animation-delay: 0.5s;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (min-width: 1280px) {
+            .product-container {
+                grid-template-columns: repeat(6, 1fr);
+            }
+        }
+
+
+        @media (max-width: 768px) {
+            .product-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .filters {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .filters input,
+            .filters select {
+                width: 100%;
+            }
+
+            .upper-con {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+
+        @media (max-width: 480px) {
+
+            .product-card img {
+                height: 200px;
+            }
+
+            .product-card-content button {
+                font-size: 10px;
+            }
+        }
+
+        /* Toast Notification */
+        #toast_1 {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #456655;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            opacity: 0;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            transform: translateY(20px);
+            z-index: 999;
+        }
+
+        #toast_1.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Sidebar Menu -->
+    <div id="sidebar-menu" class="sidebar-menu">
+        <div class="close-btn">&times;</div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="#explore">Explore</a></li>
+                <li><a href="shop.html">Shop</a></li>
+                <li><a href="about.html#about">About</a></li>
+                <li><a href="support.html">Support</a></li>
+                <li><a href="support.html">Track Your Order</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <!-- Main Header -->
+    <header>
+        <div class="head-container">
+            <!-- LEFT -->
+            <div class="head-left">
+                <div class="sidebar" id="hamburger">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+                <div class="head-brand-start">
+                    <a href="#"><img src="images/LOGO-removebg-preview.png" alt="Fresca Verde Logo" /></a>
+                </div>
+                <div class="head-navbar-right">
+                    <nav>
+                        <ul>
+                            <li><a href="index.html">HOME</a></li>
+                            <li><a href="explore.html">EXPLORE</a></li>
+                            <li><a href="shop.html"><span class="bold">SHOP</span></a></li>
+                            <li><a href="about.html#about">ABOUT</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+
+            <!-- RIGHT -->
+            <div class="head-right">
+                <div class="head-navbar-left">
+                    <nav>
+                        <ul>
+                            <li><a href="#">SUPPORT</a></li>
+                            <li><a href="#">TRACK YOUR ORDER</a></li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="head-btn-end">
+                    <a href="wait.html"><img src="images/USER-removebg-preview.png" alt="User" /></a>
+                    <a href="cart.html"><img src="images/CART.png" alt="Cart" /></a>
+                    <a href="#"><img src="images/SEARCH.png" alt="Search" /></a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="whole-container">
+        <div class="upper-con">
+
+            <p class="section-title"><img src="img/icons/output-onlinegiftools.gif" alt="" width="30px"><span
+                    class="bold">Shop</span> - Dairy &
+                Eggs</p>
+            <div class="filters">
+                <input type="text" id="search" placeholder="Search products..." />
+                <select id="categoryFilter">
+                    <option value="all">All</option>
+                    <option value="milk">Milk & Dairy</option>
+                    <option value="cheese">Cheese</option>
+                </select>
+            </div>
+        </div>
+
+
+        <div class="upper-con" , style="margin: 0;">
+            <p id="category">Milk & Dairy</p>
+        </div>
+
+        <div class="main-container">
+            <div class="product-container" id="productContainer">
+                <!-- Product Cards -->
+                <div class="product-card" data-name="Nestle Low Fat Milk" data-category="milk">
+                    <img src="images/New - Nestle - Low Fat Milk.png" alt="Nestle Milk" loading="lazy" />
+                    <div class="product-card-content">
+                        <h3>Nestle - Low Fat Milk</h3>
+                        <p>₱2500</p>
+                        <button><img src="img/icons/download.svg" alt="">ADD TO CART</button>
+                    </div>
+                </div>
+
+                <div class="product-card" data-name="Emborg Skimmed Milk" data-category="milk">
+                    <img src="images/Emborg - Skimmed Milk.png" alt="Emborg Milk" loading="lazy" />
+                    <div class="product-card-content">
+                        <h3>Emborg - Skimmed Milk</h3>
+                        <p>₱2300</p>
+                        <button><img src="img/icons/download.svg" alt="">ADD TO CART</button>
+                    </div>
+                </div>
+
+                <div class="product-card" data-name="Milk Magic Flavored" data-category="milk">
+                    <img src="images/Milk Magic - Flavored Milk.png" alt="Milk Magic" loading="lazy" />
+                    <div class="product-card-content">
+                        <h3>Milk Magic - Flavored Milk</h3>
+                        <p>₱1900</p>
+                        <button><img src="img/icons/download.svg" alt="">ADD TO CART</button>
+                    </div>
+                </div>
+
+                <div class="product-card" data-name="Silk Almond Milk" data-category="milk">
+                    <img src="images/Silk - Almond Milk.png" alt="Silk Almond" loading="lazy" />
+                    <div class="product-card-content">
+                        <h3>Silk - Almond Milk</h3>
+                        <p>₱2100</p>
+                        <button><img src="img/icons/download.svg" alt="">ADD TO CART</button>
+                    </div>
+                </div>
+
+                <div class="product-card" data-name="Arla Lactose Free" data-category="milk">
+                    <img src="images/Arla - Lactose Free.png" alt="Arla Lactose Free" loading="lazy" />
+                    <div class="product-card-content">
+                        <h3>Arla - Lactose Free</h3>
+                        <p>₱2400</p>
+                        <button><img src="img/icons/download.svg" alt="">ADD TO CART</button>
+                    </div>
+                </div>
+
+                <div class="more">
+                    <img src="img/icons/more.gif" alt="" width="40px">
+                    <p>View More</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="upper-con" , style="margin: 0;">
+            <p id="category">Cheese</p>
+        </div>
+
+        <div class="main-container">
+            <div class="product-container" id="productContainer">
+                <!-- Product Cards -->
+                <div class="product-card" data-name="Sharp Cheddar Cheese" data-category="cheese">
+                    <img src="img/thumbnail/CHEESE/Sharp - Cheddar Cheese.png" alt="Sharp Cheddar Cheese"
+                        loading="lazy" />
+                    <div class="product-card-content">
+                        <h3>Sharp - Cheddar Cheese</h3>
+                        <p>₱250</p>
+                        <button><img src="img/icons/download.svg" alt="">ADD TO CART</button>
+                    </div>
+                </div>
+
+                <div class="product-card" data-name="Arla Mozzarella Cheese" data-category="cheese">
+                    <img src="img/thumbnail/CHEESE/Arla - Mozzarella.png" alt="Arla Mozzarella Cheese" loading="lazy" />
+                    <div class="product-card-content">
+                        <h3>Arla - Mozzarella</h3>
+                        <p>₱230</p>
+                        <button><img src="img/icons/download.svg" alt="">ADD TO CART</button>
+                    </div>
+                </div>
+
+                <div class="product-card" data-name="Santini Parmesan Cheese" data-category="cheese">
+                    <img src="img/thumbnail/CHEESE/Santini - Parmesan.png" alt="Santini Parmesan Cheese"
+                        loading="lazy" />
+                    <div class="product-card-content">
+                        <h3>Santini - Parmesan</h3>
+                        <p>₱190</p>
+                        <button><img src="img/icons/download.svg" alt="">ADD TO CART</button>
+                    </div>
+                </div>
+
+                <div class="product-card" data-name="Bulla Cottage Cheese" data-category="cheese">
+                    <img src="img/thumbnail/CHEESE/Bulla - Cottage Cheese.png" alt="Bulla Cottage Cheese"
+                        loading="lazy" />
+                    <div class="product-card-content">
+                        <h3>Bulla - Cottage Cheese</h3>
+                        <p>₱210</p>
+                        <button><img src="img/icons/download.svg" alt="">ADD TO CART</button>
+                    </div>
+                </div>
+
+                <div class="product-card" data-name="Philadelphia Cream Cheese" data-category="cheese">
+                    <img src="img/thumbnail/CHEESE/Philadelphia - Cream Cheese.png" alt="Philadelphia Cream Cheese"
+                        loading="lazy" />
+                    <div class="product-card-content">
+                        <h3>Philadelphia - Cream Cheese</h3>
+                        <p>₱240</p>
+                        <button><img src="img/icons/download.svg" alt="">ADD TO CART</button>
+                    </div>
+                </div>
+
+
+                <div class="more">
+                    <img src="img/icons/more.gif" alt="" width="40px">
+                    <p>View More</p>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+    <div id="toast_1">Added to cart!</div>
+
+    <script>
+
+        const hamburger = document.getElementById('hamburger');
+        const sidebarMenu = document.getElementById('sidebar-menu');
+        const closeBtn = document.querySelector('.sidebar-menu .close-btn');
+
+        hamburger.addEventListener('click', () => {
+            sidebarMenu.classList.toggle('show');
+            hamburger.classList.toggle('open');
+        });
+
+        closeBtn.addEventListener('click', () => {
+            sidebarMenu.classList.remove('show');
+            hamburger.classList.remove('open');
+        });
+
+        const cards = document.querySelectorAll('.product-card');
+        const toast_1 = document.getElementById('toast_1');
+
+        cards.forEach(card => {
+            const button = card.querySelector('button');
+            button.addEventListener('click', () => {
+                const name = card.querySelector('h3').innerText;
+                const image = card.querySelector('img').getAttribute('src');
+                const priceText = card.querySelector('p').innerText.replace('₱', '');
+                const price = parseFloat(priceText);
+
+                const product = { name, image, price, quantity: 1 };
+                let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+                const existing = cart.find(item => item.name === product.name);
+                if (existing) {
+                    existing.quantity += 1;
+                } else {
+                    cart.push(product);
+                }
+
+                localStorage.setItem('cart', JSON.stringify(cart));
+
+                // Show toast_1
+                toast_1.innerText = `${product.name} added to cart!`;
+                toast_1.classList.add('show');
+                setTimeout(() => toast_1.classList.remove('show'), 5000);
+            });
+        });
+
+        // Live search & filter
+        const searchInput = document.getElementById('search');
+        const filterSelect = document.getElementById('categoryFilter');
+
+        function filterProducts() {
+            const query = searchInput.value.toLowerCase();
+            const category = filterSelect.value;
+
+            cards.forEach(card => {
+                const name = card.dataset.name.toLowerCase();
+                const cat = card.dataset.category;
+                const match = name.includes(query) && (category === 'all' || category === cat);
+                card.style.display = match ? 'block' : 'none';
+            });
+        }
+
+        searchInput.addEventListener('input', filterProducts);
+        filterSelect.addEventListener('change', filterProducts);
+
+
+        // Check if the user is logged in
+        function checkLoginStatus() {
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+            const userIcon = document.querySelector('.head-btn-end a[href="wait.html"]');
+
+            if (isLoggedIn === 'true') {
+                // Redirect to My Account page if logged in
+                userIcon.href = 'account.html';
+            } else {
+                // Ensure the link points to the login page
+                userIcon.href = 'sign-in.html';
+            }
+        }
+
+        // Run the function when the page loads
+        document.addEventListener('DOMContentLoaded', checkLoginStatus);
+
+        // Optionally, listen for any changes in localStorage (for example, if the user logs in after page load)
+        window.addEventListener('storage', checkLoginStatus);
+
+    </script>
+</body>
+
+</html>

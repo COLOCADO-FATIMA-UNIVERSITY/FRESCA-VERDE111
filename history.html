@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style/header.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Arimo:wght@700&family=Open+Sans:wght@300&display=swap"
+        rel="stylesheet" />
+    <title>Order Support - Fresca Verde</title>
+</head>
+<style>
+    body {
+        margin: 0;
+        font-family: "Open Sans", sans-serif;
+        background-color: #f9f9f9;
+    }
+
+    .bold {
+        font-weight: bold;
+    }
+
+    .main-container {
+        padding: 2rem;
+        max-width: 1200px;
+        margin: auto;
+    }
+
+    /* Grid layout for order cards */
+    #order-history {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 1.5rem;
+    }
+
+    /* Order Card */
+    .order-box {
+        background-color: #fff;
+        border-radius: 12px;
+        padding: 1.2rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        transition: transform 0.3s ease;
+    }
+
+    .order-box:hover {
+        transform: translateY(-4px);
+    }
+
+    .order-box img {
+        width: 100%;
+        height: 160px;
+        object-fit: cover;
+        border-radius: 8px;
+    }
+
+    /* Details */
+    .order-details {
+        display: flex;
+        flex-direction: column;
+        gap: 0.3rem;
+        font-size: 0.95rem;
+    }
+
+    .order-details strong {
+        font-size: 1.1rem;
+    }
+
+    /* Buttons */
+    .order-actions {
+        display: flex;
+        justify-content: space-between;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+    }
+
+    .order-actions button {
+        flex: 1 1 auto;
+        background-color: #205c4c;
+        color: white;
+        border: none;
+        padding: 0.6rem;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 0.9rem;
+        transition: background 0.3s ease;
+        min-width: 100px;
+    }
+
+    .order-actions button:hover {
+        background-color: #163d34;
+    }
+
+    /* Total Box */
+    .total-box {
+        margin-top: 2rem;
+        padding: 1rem;
+        background-color: #eeeeee;
+        border-radius: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-weight: bold;
+        font-size: 1.2rem;
+    }
+
+    /* Responsive tweaks */
+    @media (max-width: 768px) {
+        .order-actions {
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .order-actions button {
+            width: 100%;
+        }
+
+        .total-box {
+            flex-direction: column;
+            gap: 0.5rem;
+            text-align: center;
+        }
+    }
+</style>
+
+<body>
+    <!-- Sidebar Menu -->
+    <div id="sidebar-menu" class="sidebar-menu">
+        <div class="close-btn">&times;</div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="#explore">Explore</a></li>
+                <li><a href="shop.html">Shop</a></li>
+                <li><a href="about.html#about">About</a></li>
+                <li><a href="support.html">Support</a></li>
+                <li><a href="support.html">Track Your Order</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <!-- Main Header -->
+    <header>
+        <div class="head-container">
+            <!-- LEFT -->
+            <div class="head-left">
+                <div class="sidebar" id="hamburger">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+                <div class="head-brand-start">
+                    <a href="#"><img src="images/LOGO-removebg-preview.png" alt="Fresca Verde Logo" /></a>
+                </div>
+                <div class="head-navbar-right">
+                    <nav>
+                        <ul>
+                            <li><a href="index.html">HOME</a></li>
+                            <li><a href="explore.html">EXPLORE</a></li>
+                            <li><a href="shop.html">SHOP</a></li>
+                            <li><a href="about.html#about">ABOUT</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+
+            <!-- RIGHT -->
+            <div class="head-right">
+                <div class="head-navbar-left">
+                    <nav>
+                        <ul>
+                            <li><a href="#"><span class="bold">SUPPORT</span></a></li>
+                            <li><a href="#">TRACK YOUR ORDER</a></li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="head-btn-end">
+                    <a href="login.html"><img src="images/USER-removebg-preview.png" alt="User" /></a>
+                    <a href="cart.html"><img src="images/CART.png" alt="Cart" /></a>
+                    <a href="#"><img src="images/SEARCH.png" alt="Search" /></a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="main-container" id="order-history">
+        <!-- JS will inject order cards here -->
+    </div>
+
+    <div class="main-container">
+        <div class="total-box">
+            <span>Total Amount Spent:</span>
+            <span id="total-spent">₱0.00</span>
+        </div>
+    </div>
+
+    <!-- JS -->
+    <script>
+
+
+        function loadOrderHistory() {
+            const userEmail = localStorage.getItem("loggedInUser");
+            const container = document.getElementById('order-history');
+            const totalSpentEl = document.getElementById('total-spent');
+            const orders = JSON.parse(localStorage.getItem(`orderHistory_${userEmail}`)) || [];
+
+            let totalSpent = 0;
+
+            if (orders.length === 0) {
+                container.innerHTML = '<p>No past orders found.</p>';
+                return;
+            }
+
+            orders.forEach(order => {
+                order.items.forEach(item => {
+                    const itemTotal = parseFloat(item.price || 0) * (item.quantity || 1);
+                    totalSpent += itemTotal;
+
+                    const orderCard = document.createElement('div');
+                    orderCard.className = 'order-box';
+                    orderCard.innerHTML = `
+                <img src="${item.image || 'images/placeholder.png'}" alt="${item.name}">
+                <div class="order-details">
+                    <strong>${item.name}</strong>
+                    <span>Tracking #: FRESCA-VRD-${Math.floor(100000 + Math.random() * 900000)}</span>
+                    <span>Status: ${order.status || 'Delivered'}</span>
+                    <span>₱${item.price || '0.00'}</span>
+                    <small>${new Date(order.date).toLocaleDateString()} | ${order.method || 'N/A'}</small>
+                </div>
+                <div class="order-actions">
+                    <button onclick="buyAgain('${item.name}')">Buy Again</button>
+                    <button onclick="reviewItem('${item.name}')">Review</button>
+                    <button onclick="requestReturn('${item.name}')">Return / Refund</button>
+                </div>
+            `;
+                    container.appendChild(orderCard);
+                });
+            });
+
+            totalSpentEl.textContent = `₱${totalSpent.toFixed(2)}`;
+        }
+
+
+        function buyAgain(itemName) {
+            alert(`Added '${itemName}' to cart for repurchase.`);
+            // Add logic to push item to cart
+        }
+
+        function reviewItem(itemName) {
+            alert(`Redirecting to review page for '${itemName}'.`);
+            // Replace with actual review modal or redirect logic
+        }
+
+        function requestReturn(itemName) {
+            alert(`Return/Refund request initiated for '${itemName}'.`);
+            // Could open a modal or send a flag to admin
+        }
+
+        document.addEventListener('DOMContentLoaded', loadOrderHistory);
+
+        const hamburger = document.getElementById('hamburger');
+        const sidebarMenu = document.getElementById('sidebar-menu');
+        const closeBtn = document.querySelector('.sidebar-menu .close-btn');
+
+        hamburger.addEventListener('click', () => {
+            sidebarMenu.classList.toggle('show');
+            hamburger.classList.toggle('open');
+        });
+
+        closeBtn.addEventListener('click', () => {
+            sidebarMenu.classList.remove('show');
+            hamburger.classList.remove('open');
+        });
+
+        function checkLoginStatus() {
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+            const userIcon = document.querySelector('.head-btn-end a[href="login.html"]');
+
+            if (isLoggedIn === 'true') {
+                const user = JSON.parse(localStorage.getItem('users')).find(user => user.email === localStorage.getItem('loggedInUser'));
+                if (user) {
+                    document.getElementById('userName').textContent = user.name;
+                    document.getElementById('userEmail').textContent = user.email;
+                    document.getElementById('userPhone').textContent = user.phone;
+                    document.getElementById('userAddress').textContent = user.address;
+
+                    if (user.dob) {
+                        const [day, month, year] = user.dob.split('-');
+                        document.getElementById('dobDay').textContent = day || '';
+                        document.getElementById('dobMonth').textContent = month || '';
+                        document.getElementById('dobYear').textContent = year || '';
+                    }
+
+                }
+            } else {
+                // Redirect if not logged in
+                window.location.href = 'sign-in.html';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', checkLoginStatus);
+        window.addEventListener('storage', checkLoginStatus);
+
+        window.addEventListener('scroll', function () {
+            const header = document.querySelector('header');
+            if (window.scrollY > 20) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style/header.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Arimo:wght@700&family=Open+Sans:wght@300&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="style/footer.css">
+    <title>Shop - Fresca Verde</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: "Open Sans", sans-serif;
+        }
+
+        .bold {
+            font-weight: bold;
+        }
+
+        .main-container-1 {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        h1 {
+            font-weight: 400;
+        }
+
+        .upper {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 90%;
+            height: 70px;
+            font-size: clamp(1rem, 1.5vw, 1.5rem);
+        }
+
+        .breathe {
+            animation: breathe 2s ease-in-out infinite;
+        }
+
+        @keyframes breathe {
+            0% {
+                color: black;
+            }
+
+            50% {
+                color: darkred;
+            }
+
+            100% {
+                color: black;
+            }
+        }
+
+        .custom-toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #f44336;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            z-index: 9999;
+        }
+
+        .custom-toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(-10px);
+        }
+
+
+        .store-flex {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .store-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #ffffff;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+            width: calc(20% - 20px);
+            box-sizing: border-box;
+
+            /* Animation */
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeSlideUp 0.6s ease forwards;
+        }
+
+        .store-item a {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+
+            text-decoration: none;
+            margin: 0;
+            padding: 0;
+            color: #000000;
+            transition: 0.3s;
+        }
+
+        .store-item a:hover {
+            color: #456655;
+            transform: translateY(-5px);
+        }
+
+
+        .store-item img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        .store-item p {
+            margin-top: 10px;
+            font-size: 1rem;
+            font-weight: bold;
+        }
+
+        /* Delay for each item */
+        .store-item:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        .store-item:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .store-item:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+
+        .store-item:nth-child(4) {
+            animation-delay: 0.4s;
+        }
+
+        .store-item:nth-child(5) {
+            animation-delay: 0.5s;
+        }
+
+        .line {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 70%;
+            margin: 20px auto;
+        }
+
+        hr {
+            width: 47%;
+            border: none;
+            height: 2px;
+            background-color: #456655;
+        }
+
+        .line p {
+            font-size: 20px;
+            font-weight: bold;
+            color: #456655;
+        }
+
+        .not-sure {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-evenly;
+            width: 65%;
+            min-height: 200px;
+            height: auto;
+        }
+
+        .right {
+            display: flex;
+            flex-wrap: wrap;
+            width: 60%;
+        }
+
+        .right p {
+            display: flex;
+            align-items: center;
+            justify-content: space-evenly;
+            font-size: 20px;
+            background-color: #456655;
+            color: #ffffff;
+            padding: 10px 15px;
+            border-radius: 5px;
+            width: 120px;
+            transition: 0.3s;
+        }
+
+        .right p:hover {
+            background-color: #33483d;
+            cursor: pointer;
+        }
+
+        a {
+            text-decoration: none;
+            margin: 0;
+            padding: 0;
+            color: #000000;
+            transition: 0.3s;
+        }
+
+        a:hover {
+            text-decoration: none;
+            color: #456655;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .store-item {
+                width: calc(33.33% - 20px);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .store-item {
+                width: calc(50% - 20px);
+            }
+
+            .not-sure {
+                justify-content: center;
+                text-align: center;
+                font-size: 14px;
+            }
+
+            h1 {
+                font-size: 25px;
+            }
+
+            .right {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .store-item {
+                width: calc(50% - 20px);
+            }
+        }
+
+        /* ===== Animation ===== */
+        @keyframes fadeSlideUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-slide-up {
+            animation: fadeSlideUp 0.8s ease-out forwards;
+            opacity: 0;
+        }
+
+        .img-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 200px;
+            overflow: hidden;
+            border-radius: 8px;
+            background-color: #91cbb2;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Sidebar Menu -->
+    <div id="sidebar-menu" class="sidebar-menu">
+        <div class="close-btn">&times;</div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="#explore">Explore</a></li>
+                <li><a href="shop.html"><span class="bold">Shop</span></a></li>
+                <li><a href="about.html#about">About</a></li>
+                <li><a href="support.html">Support</a></li>
+                <li><a href="support.html">Track Your Order</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <!-- Main Header -->
+    <header>
+        <div class="head-container">
+            <div class="head-left">
+                <div class="sidebar" id="hamburger">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+                <div class="head-brand-start">
+                    <a href="#"><img src="images/LOGO-removebg-preview.png" alt="Fresca Verde Logo" /></a>
+                </div>
+                <div class="head-navbar-right">
+                    <nav>
+                        <ul>
+                            <li><a href="index.html">HOME</a></li>
+                            <li><a href="explore.html">EXPLORE</a></li>
+                            <li><a href="shop.html"><span class="bold">SHOP</span></a></li>
+                            <li><a href="about.html#about">ABOUT</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+            <div class="head-right">
+                <div class="head-navbar-left">
+                    <nav>
+                        <ul>
+                            <li><a href="support.html">SUPPORT</a></li>
+                            <li><a href="#">TRACK YOUR ORDER</a></li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="head-btn-end">
+                    <a href="login.html"><img src="images/USER-removebg-preview.png" alt="User" /></a>
+                    <a href="cart.html"><img src="images/CART.png" alt="Cart" /></a>
+                    <a href="#"><img src="images/SEARCH.png" alt="Search" /></a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="main-container-1 fade-slide-up">
+        <div class="upper fade-slide-up">
+            <p><span class="bold">SHOP</span> - Fresca Verde</p>
+            <span id="warning"></span>
+        </div>
+        <h1 class="fade-slide-up">Find What You Need Below</h1>
+
+        <div class="main-container">
+            <div class="store-flex">
+                <div class="store-item">
+                    <a href="dairy&eggs.html">
+                        <div class="img-container">
+                            <img src="img/thumbnail/HOME/Dairy and Eggs.jpg" alt="Dairy & Eggs"
+                                style="margin-top: 30px;">
+                        </div>
+                        <p>DAIRY & EGGS</p>
+                    </a>
+
+                </div>
+
+                <div class="store-item">
+                    <a href="meat&seafoods.html">
+                        <div class="img-container">
+                            <img src="img/thumbnail/HOME/Meat and Seafood.png" alt="Meat & Seafood">
+                        </div>
+                        <p>MEAT & SEAFOOD</p>
+                    </a>
+                </div>
+
+                <div class="store-item">
+                    <a href="bakery.html">
+                        <div class="img-container">
+                            <img src="img/thumbnail/HOME/Bakery Goods.png" alt="Bakery Treats">
+                        </div>
+                        <p>BAKERY TREATS</p>
+                    </a>
+                </div>
+
+                <div class="store-item">
+                    <a href="snacks.html">
+                        <div class="img-container">
+                            <img src="img/thumbnail/HOME/Snack and Sweets.png" alt="Snacks & Sweets">
+                        </div>
+                        <p>SNACKS & SWEETS</p>
+                    </a>
+                </div>
+
+                <div class="store-item">
+                    <a href="organic.html">
+                        <div class="img-container">
+                            <img src="img/thumbnail/HOME/Organic Foods.png" alt="Organic Products">
+                        </div>
+                        <p>ORGANIC PRODUCTS</p>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="line fade-slide-up">
+            <hr>
+            <p>OR</p>
+            <hr>
+        </div>
+
+        <div class="not-sure fade-slide-up">
+            <img src="img/thumbnail/HOME/Bakery Goods.png" alt="" width="150px">
+            <div class="right">
+                <h1>Not Sure What to Pick? Discover Random Products!</h1>
+                <p><img src="img/icons/view-all-shop.svg" alt="" width="30px">View All</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Desktop Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-column">
+                <h4>About Us</h4>
+                <p>About Fresca Verde</p>
+                <p>Sustainability & Organic – Commitment</p>
+                <p>Careers</p>
+            </div>
+            <div class="footer-column">
+                <h4>Quick Help</h4>
+                <p>FAQ</p>
+                <p>Terms & Conditions</p>
+                <p>Security & Privacy Policy</p>
+                <p>Shipping & Delivery</p>
+            </div>
+            <div class="footer-column">
+                <h4>My Account</h4>
+                <p><a href="login.html">Log In</a></p>
+                <p><a href="signup.html">Sign Up</a></p>
+                <p>Apply Membership</p>
+                <p>Renew Membership</p>
+            </div>
+            <div class="footer-column">
+                <h4>Contact Us</h4>
+                <p>Email</p>
+                <p>Landline</p><br>
+                <p><em>Typically replies instantly</em></p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>All rights reserved – Fresca Verde</p>
+            <img src="images/LOGO-removebg-preview.png" alt="Fresca Verde Logo" class="footer-logo">
+        </div>
+    </footer>
+
+    <!-- Mobile Footer -->
+    <footer class="mobile-footer">
+        <div class="footer-section">
+
+            <button class="accordion">About Us <span class="arrow">&#9662;</span></button>
+            <div class="panel">
+                <a href="">
+                    <p>About Fresca Verde</p>
+                </a>
+                <a href="">
+                    <p>Sustainability & Organic – Commitment</p>
+                </a>
+                <a href="">
+                    <p>Careers</p>
+                </a>
+            </div>
+
+            <button class="accordion">Quick Help <span class="arrow">&#9662;</span></button>
+            <div class="panel">
+                <a href="">
+                    <p>FAQ</p>
+                </a>
+                <a href="">
+                    <p>Terms & Conditions</p>
+                </a>
+                <a href="">
+                    <p>Security & Privacy Policy</p>
+                </a>
+                <a href="">
+                    <p>Shipping & Delivery</p>
+                </a>
+            </div>
+
+            <button class="accordion">My Account <span class="arrow">&#9662;</span></button>
+            <div class="panel">
+                <a href="login.html">
+                    <p>Log In</p>
+                </a>
+                <a href="signup.html">
+                    <p>Sign Up</p>
+                </a>
+                <a href="">
+                    <p>Apply Membership</p>
+                </a>
+                <a href="">
+                    <p>Renew Membership</p>
+                </a>
+            </div>
+
+            <button class="accordion">Contact Us <span class="arrow">&#9662;</span></button>
+            <div class="panel">
+                <a href="">
+                    <p>Email</p>
+                </a>
+                <a href="">
+                    <p>Landline</p>
+                </a>
+                <p><i>Typically replies instantly</i></p>
+            </div>
+
+        </div>
+
+        <div class="mobile-footer-logo">
+            <p class="footer-note">All rights reserved – Fresca Verde</p>
+            <img src="images/LOGO-removebg-preview.png" alt="logo">
+        </div>
+    </footer>
+
+    <!-- JS -->
+    <script>
+        const hamburger = document.getElementById('hamburger');
+        const sidebarMenu = document.getElementById('sidebar-menu');
+        const closeBtn = document.querySelector('.sidebar-menu .close-btn');
+
+        hamburger.addEventListener('click', () => {
+            sidebarMenu.classList.toggle('show');
+            hamburger.classList.toggle('open');
+        });
+
+        closeBtn.addEventListener('click', () => {
+            sidebarMenu.classList.remove('show');
+            hamburger.classList.remove('open');
+        });
+
+        function checkLoginStatus() { //hindi ata gumagana kase kapag pinipindot ko yung cart kahit d naka sign in pumupunta paidin s acart eh
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+            const userIcon = document.querySelector('.head-btn-end a[href="login.html"]');
+            const cartIcon = document.querySelector('.head-btn-end a[href="cart.html"]');
+
+            if (isLoggedIn === 'true') {
+                userIcon.href = 'account.html';
+                cartIcon.href = 'cart.html';
+            } else {
+                userIcon.href = 'sign-in.html';
+                cartIcon.href = 'need-sign-in.html';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            checkLoginStatus();
+            const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+            const username = localStorage.getItem('username') || 'Guest';
+            const warningElement = document.getElementById('warning');
+
+            if (warningElement) {
+                if (isLoggedIn) {
+                    warningElement.innerHTML = `Hi, <span style="font-weight: 700;">${username}!</span>`;
+                } else {
+                    warningElement.textContent = `⚠️ You're not signed in`;
+                    warningElement.classList.add('breathe');
+                }
+            }
+
+            // Disable links if not signed in
+            if (!isLoggedIn) {
+                const links = document.querySelectorAll('.main-container a');
+                links.forEach(link => {
+                    link.addEventListener('click', (e) => {
+                        e.preventDefault(); // Block navigation
+                        showToast("⚠️ Please sign in first!");
+                    });
+                });
+            }
+        });
+
+        // Toast function
+        function showToast(message) {
+            let toast = document.createElement('div');
+            toast.textContent = message;
+            toast.className = 'custom-toast';
+            document.body.appendChild(toast);
+
+            setTimeout(() => {
+                toast.classList.add('show');
+            }, 100); // Slight delay for transition
+
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => toast.remove(), 300);
+            }, 2500); // Duration before it fades out
+        }
+
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const accordions = document.querySelectorAll(".accordion");
+
+            accordions.forEach((accordion) => {
+                accordion.addEventListener("click", function () {
+                    this.classList.toggle("active");
+                    const panel = this.nextElementSibling;
+
+                    if (panel.style.display === "block") {
+                        panel.style.display = "none";
+                    } else {
+                        panel.style.display = "block";
+                    }
+                });
+            });
+        });
+
+        window.addEventListener('scroll', function () {
+            const header = document.querySelector('header');
+            if (window.scrollY > 20) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+
+</html>

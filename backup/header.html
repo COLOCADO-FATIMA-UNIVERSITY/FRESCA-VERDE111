@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fresca Verde Header</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+            background: #0f1617;
+        }
+
+        header {
+            background-color: #456655;
+            color: white;
+            padding: 12px 24px;
+            position: relative;
+            z-index: 100;
+            box-shadow: 0 0 30px #456655;
+        }
+
+        .head-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        /* Hamburger */
+        .sidebar {
+            display: none;
+            cursor: pointer;
+            flex-direction: column;
+            justify-content: center;
+            gap: 5px;
+            width: 30px;
+            height: 24px;
+            transition: transform 0.3s ease;
+        }
+
+        .bar {
+            width: 100%;
+            height: 3px;
+            background-color: white;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar.open .bar:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .sidebar.open .bar:nth-child(2) {
+            opacity: 0;
+        }
+
+        .sidebar.open .bar:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
+        }
+
+        .head-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .head-brand-start img {
+            width: 48px;
+            transition: transform 0.3s ease;
+        }
+
+        .head-brand-start img:hover {
+            transform: scale(1.05);
+        }
+
+        .head-navbar-right ul,
+        .head-navbar-left ul {
+            display: flex;
+            gap: 18px;
+            list-style: none;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 15px;
+            transition: color 0.2s ease, opacity 0.2s ease;
+        }
+
+        nav ul li a:hover {
+            color: #d6f7d6;
+            opacity: 0.9;
+        }
+
+        .head-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .head-btn-end a img {
+            width: 35px;
+            transition: transform 0.2s ease, filter 0.2s ease;
+        }
+
+        .head-btn-end a:hover img {
+            transform: scale(1.1);
+            filter: brightness(1.2);
+        }
+
+        /* Sidebar Menu */
+        .sidebar-menu {
+            position: fixed;
+            top: 0;
+            left: -250px;
+            width: 250px;
+            height: 100%;
+            background-color: #456655;
+            color: white;
+            transition: left 0.3s ease;
+            z-index: 1000;
+            padding-top: 60px;
+        }
+
+        .sidebar-menu.show {
+            left: 0;
+        }
+
+        .sidebar-menu ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .sidebar-menu ul li {
+            padding: 16px 24px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .sidebar-menu ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            display: block;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        .sidebar-menu ul li a:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+            color: #d6f7d6;
+        }
+
+        .sidebar-menu .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 28px;
+            cursor: pointer;
+            color: white;
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+
+            .head-navbar-right,
+            .head-navbar-left {
+                display: none;
+            }
+
+            .sidebar {
+                display: flex;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Sidebar Menu -->
+    <div id="sidebar-menu" class="sidebar-menu">
+        <div class="close-btn">&times;</div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="#explore">Explore</a></li>
+                <li><a href="shop.html">Shop</a></li>
+                <li><a href="about.html#about">About</a></li>
+                <li><a href="support.html">Support</a></li>
+                <li><a href="support.html">Track Your Order</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <!-- Main Header -->
+    <header>
+        <div class="head-container">
+            <!-- LEFT -->
+            <div class="head-left">
+                <div class="sidebar" id="hamburger">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+                <div class="head-brand-start">
+                    <a href="#"><img src="images/LOGO-removebg-preview.png" alt="Fresca Verde Logo" /></a>
+                </div>
+                <div class="head-navbar-right">
+                    <nav>
+                        <ul>
+                            <li><a href="index.html">HOME</a></li>
+                            <li><a href="#explore">EXPLORE</a></li>
+                            <li><a href="shop.html">SHOP</a></li>
+                            <li><a href="about.html#about">ABOUT</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+
+            <!-- RIGHT -->
+            <div class="head-right">
+                <div class="head-navbar-left">
+                    <nav>
+                        <ul>
+                            <li><a href="#">SUPPORT</a></li>
+                            <li><a href="#">TRACK YOUR ORDER</a></li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="head-btn-end">
+                    <a href="login.html"><img src="images/USER-removebg-preview.png" alt="User" /></a>
+                    <a href="#"><img src="images/CART.png" alt="Cart" /></a>
+                    <a href="#"><img src="images/SEARCH.png" alt="Search" /></a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- JS -->
+    <script>
+        const hamburger = document.getElementById('hamburger');
+        const sidebarMenu = document.getElementById('sidebar-menu');
+        const closeBtn = document.querySelector('.sidebar-menu .close-btn');
+
+        hamburger.addEventListener('click', () => {
+            sidebarMenu.classList.toggle('show');
+            hamburger.classList.toggle('open');
+        });
+
+        closeBtn.addEventListener('click', () => {
+            sidebarMenu.classList.remove('show');
+            hamburger.classList.remove('open');
+        });
+    </script>
+</body>
+
+</html>

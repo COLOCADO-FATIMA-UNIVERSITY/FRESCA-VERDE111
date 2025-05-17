@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style/header.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Arimo:wght@700&family=Open+Sans:wght@300&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="style/footer.css">
+    <title>Explore - Fresca Verde</title>
+</head>
+<style>
+    body {
+        margin: 0;
+        font-family: "Open Sans", sans-serif;
+    }
+
+
+    .bold {
+        font-weight: bold;
+    }
+
+    .main-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 89vh;
+        font-size: clamp(1rem, 2vw, 2rem);
+    }
+
+    .main-container img {
+        width: 250px;
+        margin-bottom: 20px;
+    }
+
+    p {
+        margin: 0;
+        padding: 0;
+    }
+</style>
+
+<body>
+    <!-- Sidebar Menu -->
+    <div id="sidebar-menu" class="sidebar-menu">
+        <div class="close-btn">&times;</div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="#explore">Explore</a></li>
+                <li><a href="shop.html">Shop</a></li>
+                <li><a href="about.html#about">About</a></li>
+                <li><a href="support.html">Support</a></li>
+                <li><a href="support.html">Track Your Order</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <!-- Main Header -->
+    <header>
+        <div class="head-container">
+            <!-- LEFT -->
+            <div class="head-left">
+                <div class="sidebar" id="hamburger">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+                <div class="head-brand-start">
+                    <a href="#"><img src="images/LOGO-removebg-preview.png" alt="Fresca Verde Logo" /></a>
+                </div>
+                <div class="head-navbar-right">
+                    <nav>
+                        <ul>
+                            <li><a href="index.html">HOME</a></li>
+                            <li><a href="#explore"><span class="bold">EXPLORE</span></a></li>
+                            <li><a href="shop.html">SHOP</a></li>
+                            <li><a href="about.html#about">ABOUT</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+
+            <!-- RIGHT -->
+            <div class="head-right">
+                <div class="head-navbar-left">
+                    <nav>
+                        <ul>
+                            <li><a href="support.html">SUPPORT</a></li>
+                            <li><a href="#">TRACK YOUR ORDER</a></li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="head-btn-end">
+                    <a href="login.html"><img src="images/USER-removebg-preview.png" alt="User" /></a>
+                    <a href="cart.html"><img src="images/CART.png" alt="Cart" /></a>
+                    <a href="#"><img src="images/SEARCH.png" alt="Search" /></a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <img src="img/icons/undraw_launching_szjw.svg" alt="G-SERVER-ERROR">
+        <p>There's more to <span style="color: #456655; font-weight: 700; text-decoration: underline;">explore!</span>
+        </p>
+        <p>Stay <span style="color: #456655; font-weight: 700; text-decoration: underline;">tuned</span> for updates on
+            site availability.</p>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-column">
+                <h4>About Us</h4>
+                <p>About Fresca Verde</p>
+                <p>Sustainability & Organic – Commitment</p>
+                <p>Careers</p>
+            </div>
+            <div class="footer-column">
+                <h4>Quick Help</h4>
+                <p>FAQ</p>
+                <p>Terms & Conditions</p>
+                <p>Security & Privacy Policy</p>
+                <p>Shipping & Delivery</p>
+            </div>
+            <div class="footer-column">
+                <h4>My Account</h4>
+                <p><a href="login.html">Log In</a></p>
+                <p><a href="signup.html">Sign Up</a></p>
+                <p>Apply Membership</p>
+                <p>Renew Membership</p>
+            </div>
+            <div class="footer-column">
+                <h4>Contact Us</h4>
+                <p>Email</p>
+                <p>Landline</p><br>
+                <p><em>Typically replies instantly</em></p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>All rights reserved – Fresca Verde</p>
+            <img src="images/LOGO-removebg-preview.png" alt="Fresca Verde Logo" class="footer-logo">
+        </div>
+    </footer>
+
+    <!-- Mobile Footer -->
+    <footer class="mobile-footer">
+        <div class="footer-section">
+
+            <button class="accordion">About Us <span class="arrow">&#9662;</span></button>
+            <div class="panel">
+                <a href="">
+                    <p>About Fresca Verde</p>
+                </a>
+                <a href="">
+                    <p>Sustainability & Organic – Commitment</p>
+                </a>
+                <a href="">
+                    <p>Careers</p>
+                </a>
+            </div>
+
+            <button class="accordion">Quick Help <span class="arrow">&#9662;</span></button>
+            <div class="panel">
+                <a href="">
+                    <p>FAQ</p>
+                </a>
+                <a href="">
+                    <p>Terms & Conditions</p>
+                </a>
+                <a href="">
+                    <p>Security & Privacy Policy</p>
+                </a>
+                <a href="">
+                    <p>Shipping & Delivery</p>
+                </a>
+            </div>
+
+            <button class="accordion">My Account <span class="arrow">&#9662;</span></button>
+            <div class="panel">
+                <a href="login.html">
+                    <p>Log In</p>
+                </a>
+                <a href="signup.html">
+                    <p>Sign Up</p>
+                </a>
+                <a href="">
+                    <p>Apply Membership</p>
+                </a>
+                <a href="">
+                    <p>Renew Membership</p>
+                </a>
+            </div>
+
+            <button class="accordion">Contact Us <span class="arrow">&#9662;</span></button>
+            <div class="panel">
+                <a href="">
+                    <p>Email</p>
+                </a>
+                <a href="">
+                    <p>Landline</p>
+                </a>
+                <p><i>Typically replies instantly</i></p>
+            </div>
+
+        </div>
+
+        <div class="mobile-footer-logo">
+            <p class="footer-note">All rights reserved – Fresca Verde</p>
+            <img src="images/LOGO-removebg-preview.png" alt="logo">
+        </div>
+    </footer>
+
+    <!-- JS -->
+    <script>
+        const hamburger = document.getElementById('hamburger');
+        const sidebarMenu = document.getElementById('sidebar-menu');
+        const closeBtn = document.querySelector('.sidebar-menu .close-btn');
+
+        hamburger.addEventListener('click', () => {
+            sidebarMenu.classList.toggle('show');
+            hamburger.classList.toggle('open');
+        });
+
+        closeBtn.addEventListener('click', () => {
+            sidebarMenu.classList.remove('show');
+            hamburger.classList.remove('open');
+        });
+
+        // Check if the user is logged in
+        function checkLoginStatus() {
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+            const userIcon = document.querySelector('.head-btn-end a[href="login.html"]');
+            const cartIcon = document.querySelector('.head-btn-end a[href="cart.html"]');
+
+            if (isLoggedIn === 'true') {
+                userIcon.href = 'account.html';
+                cartIcon.href = 'cart.html';
+            } else {
+                userIcon.href = 'sign-in.html';
+                cartIcon.href = 'need-sign-in.html';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', checkLoginStatus);
+        window.addEventListener('storage', checkLoginStatus);
+
+        window.addEventListener('scroll', function () {
+            const header = document.querySelector('header');
+            if (window.scrollY > 20) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const accordions = document.querySelectorAll(".accordion");
+
+            accordions.forEach((accordion) => {
+                accordion.addEventListener("click", function () {
+                    this.classList.toggle("active");
+                    const panel = this.nextElementSibling;
+
+                    if (panel.style.display === "block") {
+                        panel.style.display = "none";
+                    } else {
+                        panel.style.display = "block";
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

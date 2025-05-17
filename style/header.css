@@ -1,0 +1,173 @@
+header {
+    background-color: #456655;
+    color: white;
+    padding: 12px 24px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    transition: background-color 0.3s ease, backdrop-filter 0.3s ease;
+}
+
+/* When user scrolls */
+header.scrolled {
+    background-color: rgba(69, 102, 85, 0.85);
+    /* Slightly transparent */
+    backdrop-filter: blur(6px);
+    /* Soft blur effect */
+    -webkit-backdrop-filter: blur(6px);
+}
+
+
+
+.head-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+/* Hamburger */
+.sidebar {
+    display: none;
+    cursor: pointer;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 30px;
+    height: 24px;
+    transition: transform 0.3s ease;
+}
+
+.bar {
+    width: 100%;
+    height: 3px;
+    background-color: white;
+    transition: all 0.3s ease;
+}
+
+.sidebar.open .bar:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+}
+
+.sidebar.open .bar:nth-child(2) {
+    opacity: 0;
+}
+
+.sidebar.open .bar:nth-child(3) {
+    transform: rotate(-45deg) translate(6px, -6px);
+}
+
+.head-left {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.head-brand-start img {
+    width: 48px;
+    transition: transform 0.3s ease;
+}
+
+.head-brand-start img:hover {
+    transform: scale(1.05);
+}
+
+.head-navbar-right ul,
+.head-navbar-left ul {
+    display: flex;
+    gap: 18px;
+    list-style: none;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 15px;
+    transition: color 0.2s ease, opacity 0.2s ease;
+}
+
+nav ul li a:hover {
+    color: #afd6af;
+    opacity: 0.9;
+}
+
+.head-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.head-btn-end a img {
+    width: 35px;
+    transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.head-btn-end a:hover img {
+    transform: scale(1.1);
+    filter: brightness(1.2);
+}
+
+/* Sidebar Menu */
+.sidebar-menu {
+    position: fixed;
+    top: 0;
+    left: -250px;
+    width: 250px;
+    height: 100%;
+    background-color: #456655;
+    color: white;
+    transition: left 0.3s ease;
+    z-index: 1000;
+    padding-top: 60px;
+}
+
+.sidebar-menu.show {
+    left: 0;
+}
+
+.sidebar-menu ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar-menu ul li {
+    padding: 16px 24px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sidebar-menu ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    display: block;
+    transition: background 0.3s ease, color 0.3s ease;
+}
+
+.sidebar-menu ul li a:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+    color: #d6f7d6;
+}
+
+.sidebar-menu .close-btn {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 28px;
+    cursor: pointer;
+    color: white;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+
+    .head-navbar-right,
+    .head-navbar-left {
+        display: none;
+    }
+
+    .sidebar {
+        display: flex;
+    }
+}

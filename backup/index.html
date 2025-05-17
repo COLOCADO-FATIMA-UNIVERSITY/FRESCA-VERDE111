@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style/header.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Arimo:wght@700&family=Open+Sans:wght@300&display=swap"
+        rel="stylesheet" />
+    <title>Home - Fresca Verde</title>
+</head>
+<style>
+    body {
+        margin: 0;
+        font-family: "Open Sans", sans-serif;
+    }
+
+    .bold {
+        font-weight: bold;
+    }
+
+    a {
+        text-decoration: none;
+    }
+
+    .carousel-container {
+        position: relative;
+        width: 100%;
+        max-width: 1500px;
+        height: 500px;
+        margin: 50px auto;
+        overflow: hidden;
+        border-radius: 12px;
+        box-shadow: 0 0 100px #456655;
+    }
+
+    .carousel-slides {
+        display: flex;
+        width: 100%;
+        height: 100%;
+        transition: transform 0.5s ease-in-out;
+    }
+
+    .carousel-slide {
+        min-width: 100%;
+        height: 100%;
+    }
+
+    .carousel-slide img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .carousel-dots {
+        position: absolute;
+        bottom: 15px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 10px;
+        z-index: 10;
+    }
+
+    .dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background-color: #456655;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .dot.active {
+        background-color: #fff;
+    }
+
+
+    /* Background Blur Overlay */
+    .overlay-blur {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        backdrop-filter: blur(6px);
+        -webkit-backdrop-filter: blur(6px);
+        background-color: rgba(0, 0, 0, 0.2);
+        z-index: 9998;
+        display: none;
+    }
+
+    .overlay-blur.show {
+        display: block;
+    }
+
+    /* Toast Container */
+    .toast {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(0.95);
+        background: rgba(69, 102, 85, 0.25);
+        /* #456655 with transparency */
+        color: #fff;
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        padding: 24px 28px;
+        border-radius: 20px;
+        text-align: center;
+        max-width: 90%;
+        width: 400px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.4s ease, transform 0.4s ease;
+        z-index: 9999;
+    }
+
+    .toast.show {
+        opacity: 1;
+        pointer-events: auto;
+        transform: translate(-50%, -50%) scale(1);
+    }
+
+    .toast h3 {
+        margin: 0 0 10px;
+        font-size: 1.2rem;
+        color: #ffffff;
+        font-weight: 600;
+    }
+
+    .toast p {
+        margin: 0;
+        font-size: 0.95rem;
+        color: #e0e0e0;
+    }
+
+    .toast button {
+        margin-top: 16px;
+        background-color: #456655;
+        color: white;
+        border: none;
+        padding: 10px 18px;
+        font-weight: 400;
+        border-radius: 10px;
+        cursor: pointer;
+        font-size: 0.95rem;
+        transition: background 0.3s ease;
+    }
+
+    .toast button:hover {
+        background-color: #385245;
+    }
+
+    .wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-height: 100vh;
+        border-top: #385245 5px solid;
+        border-radius: 10px;
+    }
+
+    .det {
+        width: 90%;
+    }
+
+    .main-container {
+        text-align: left;
+        padding: 20px;
+        border-bottom: #354c3d 1px solid;
+    }
+
+    .main-container h2 {
+        font-size: 2rem;
+        margin-bottom: 10px;
+    }
+
+    .main-container p {
+        font-size: 1rem;
+        margin-bottom: 20px;
+    }
+
+    .store-flex {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .store-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        background-color: #ffffff;
+        padding: 15px;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s;
+        width: calc(20% - 20px);
+        /* For 5 items in a row (5 x 20% = 100%) */
+        box-sizing: border-box;
+    }
+
+    .store-item:hover {
+        transform: translateY(-5px);
+    }
+
+    .store-item img {
+        width: 100%;
+        height: auto;
+        border-radius: 8px;
+    }
+
+    .store-item p {
+        margin-top: 10px;
+        font-size: 1rem;
+        font-weight: bold;
+    }
+
+    .shop-more-mod {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #456655;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        font-size: 1rem;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        margin-top: 20px;
+    }
+
+    .shop-more-mod img {
+        width: 20px;
+        height: 20px;
+        margin-right: 5px;
+        transition: transform 0.3s;
+        box-shadow: 0 0 50px #456655;
+    }
+
+    .shop-more-mod:hover {
+        background-color: #354c3d;
+    }
+
+    .new-release-container {
+        width: 90%;
+        margin: 0 auto;
+        padding: 20px;
+        text-align: left;
+    }
+
+    .new-release-container h2 {
+        font-size: 2rem;
+        margin-bottom: 15px;
+        font-weight: bold;
+    }
+
+    .new-release-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        justify-content: flex-start;
+        width: 100%;
+    }
+
+    .product-card {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #f4f4f9;
+        border: 1px solid black;
+        border-radius: 8px;
+        width: calc(16.9% - 20px);
+        padding: 15px;
+        box-sizing: border-box;
+        box-shadow: 0 0 100px rgba(0, 0, 0, 0.289);
+        min-height: 320px;
+        height: auto;
+        transition: all 0.3s;
+    }
+
+    .product-thumbnail {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #91cbb2;
+        width: 100%;
+        height: 160px;
+        border-radius: 5px;
+        margin-bottom: 10px;
+    }
+
+    .product-card:hover {
+        transform: translateY(-5px);
+        border: #456655 1px solid;
+        box-shadow: 0 0 25px rgba(0, 0, 0, 0.496);
+    }
+
+    .thumb {
+        width: 100%;
+        height: auto;
+        border-radius: 5px;
+        margin-bottom: 10px;
+    }
+
+    .product-card .product-name {
+        font-size: 1rem;
+        margin-bottom: 5px;
+    }
+
+    .product-card .product-price {
+        font-size: 1rem;
+        color: #333;
+        margin-bottom: 10px;
+    }
+
+    .product-card .add-to-cart {
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+        background-color: #456655;
+        color: #fff;
+        padding: 8px 12px;
+        font-size: 0.9rem;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        gap: 5px;
+        width: 95%;
+        border: none;
+        text-align: center;
+    }
+
+    .product-card .add-to-cart img {
+        width: 16px;
+        height: 16px;
+    }
+
+    .product-card .add-to-cart:hover {
+        background-color: #354c3d;
+    }
+
+
+    .add-to-cart:hover img {
+        transform: scale(1.1);
+        transition: transform 0.3s;
+    }
+
+    #toast_1 {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        background: #456655;
+        color: white;
+        padding: 15px 20px;
+        border-radius: 8px;
+        opacity: 0;
+        transition: opacity 0.3s ease, transform 0.3s ease;
+        transform: translateY(20px);
+        z-index: 999;
+    }
+
+    #toast_1.show {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+
+    /* Responsive Design */
+    @media (max-width: 1024px) {
+        .product-card {
+            width: calc(33.33% - 20px);
+        }
+    }
+
+    @media (max-width: 768px) {
+        .product-card {
+            width: calc(52% - 20px);
+        }
+    }
+
+    @media (max-width: 480px) {
+        .product-card {
+            width: calc(52% - 20px);
+        }
+    }
+
+
+
+
+    /* Responsive Design */
+    @media (max-width: 1024px) {
+        .store-item {
+            width: calc(33.33% - 20px);
+            /* 3 items per row */
+        }
+    }
+
+    @media (max-width: 768px) {
+        .store-item {
+            width: calc(50% - 20px);
+            /* 2 items per row */
+        }
+    }
+
+    @media (max-width: 480px) {
+        .store-item {
+            width: calc(50% - 20px);
+            /* Still 2 items per row */
+        }
+    }
+
+
+
+    /* Media Queries */
+    @media (max-width: 480px) {
+        .toast {
+            width: 80%;
+            padding: 20px;
+        }
+
+        .toast h3 {
+            font-size: 1.1rem;
+        }
+
+        .toast p {
+            font-size: 0.95rem;
+        }
+
+        .toast button {
+            font-size: 0.9rem;
+            padding: 8px 16px;
+        }
+    }
+
+
+
+    @media (min-width: 768px) {
+        .toast {
+            max-width: 400px;
+        }
+
+        .toast h3 {
+            font-size: 1.4rem;
+        }
+
+        .toast p {
+            font-size: 1.05rem;
+        }
+
+        .toast button {
+            font-size: 1rem;
+            padding: 12px 20px;
+        }
+    }
+
+    @media (min-width: 1024px) {
+        .toast {
+            max-width: 450px;
+        }
+
+        .toast h3 {
+            font-size: 1.5rem;
+        }
+
+        .toast p {
+            font-size: 1.1rem;
+        }
+
+        .toast button {
+            font-size: 1rem;
+        }
+    }
+
+
+    @media (max-width: 768px) {
+        .carousel-container {
+            height: 300px;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .carousel-container {
+            height: 230px;
+        }
+    }
+
+    #mod1-1 {
+        width: 90px;
+    }
+
+    #mod1 {
+        width: 130px;
+    }
+
+    #mod3 {
+        width: 100%;
+    }
+
+    .center {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: red 1px solid;
+    }
+</style>
+
+<body>
+    <!-- Sidebar Menu -->
+    <div id="sidebar-menu" class="sidebar-menu">
+        <div class="close-btn">&times;</div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="#explore">Explore</a></li>
+                <li><a href="shop.html">Shop</a></li>
+                <li><a href="about.html#about">About</a></li>
+                <li><a href="support.html">Support</a></li>
+                <li><a href="support.html">Track Your Order</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <!-- Main Header -->
+    <header>
+        <div class="head-container">
+            <!-- LEFT -->
+            <div class="head-left">
+                <div class="sidebar" id="hamburger">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+                <div class="head-brand-start">
+                    <a href="#"><img src="images/LOGO-removebg-preview.png" alt="Fresca Verde Logo" /></a>
+                </div>
+                <div class="head-navbar-right">
+                    <nav>
+                        <ul>
+                            <li><a href="index.html"><span class="bold">HOME</span></a></li>
+                            <li><a href="explore.html">EXPLORE</a></li>
+                            <li><a href="shop.html">SHOP</a></li>
+                            <li><a href="about.html#about">ABOUT</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+
+            <!-- RIGHT -->
+            <div class="head-right">
+                <div class="head-navbar-left">
+                    <nav>
+                        <ul>
+                            <li><a href="#">SUPPORT</a></li>
+                            <li><a href="#">TRACK YOUR ORDER</a></li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="head-btn-end">
+                    <a href="login.html"><img src="images/USER-removebg-preview.png" alt="User" /></a>
+                    <a href="cart.html"><img src="images/CART.png" alt="Cart" /></a>
+                    <a href="#"><img src="images/SEARCH.png" alt="Search" /></a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="carousel-container">
+        <div class="carousel-slides">
+            <div class="carousel-slide"><img
+                    src="img/banner/Angelo_Rioveros_Colocado_A_bold_and_energetic_grocery_store_advertisement_w_e9bb8e91-cc1a-46da-bce5-e136b012ecbd.png"
+                    alt="Slide 1" /></div>
+            <div class="carousel-slide"><img
+                    src="img/banner/Angelo_Rioveros_Colocado_A_festive_and_colorful_grocery_store_advertisement_9a7b5b5b-a124-4bd1-bc05-367a57772131.png"
+                    alt="Slide 2" /></div>
+            <div class="carousel-slide"><img
+                    src="img/banner/Angelo_Rioveros_Colocado_A_vibrant_and_eye-catching_grocery_store_advertise_102a263a-d01c-479a-ad4c-b5fe30b35d2d.png"
+                    alt="Slide 3" /></div>
+        </div>
+
+        <div class="carousel-dots">
+            <span class="dot active" data-index="0"></span>
+            <span class="dot" data-index="1"></span>
+            <span class="dot" data-index="2"></span>
+        </div>
+    </div>
+
+    <div class="wrapper">
+        <div class="det">
+            <h2>Store</h2>
+            <p>Experience the fastest and most convenient way to shop for fresh groceries and organic products!</p>
+        </div>
+        <div class="main-container">
+            <div class="store-flex">
+                <div class="store-item">
+                    <img src="img/thumbnail/HOME/Dairy and Eggs.jpg" alt="Dairy & Eggs" style="margin-top: 30px;">
+                    <p>DAIRY & EGGS</p>
+                </div>
+                <div class="store-item">
+                    <img src="img/thumbnail/HOME/Meat and Seafood.png" alt="Meat & Seafood">
+                    <p>MEAT & SEAFOOD</p>
+                </div>
+                <div class="store-item">
+                    <img src="img/thumbnail/HOME/Bakery Goods.png" alt="Bakery Treats">
+                    <p>BAKERY TREATS</p>
+                </div>
+                <div class="store-item">
+                    <img src="img/thumbnail/HOME/Snack and Sweets.png" alt="Snacks & Sweets">
+                    <p>SNACKS & SWEETS</p>
+                </div>
+                <div class="store-item">
+                    <img src="img/thumbnail/HOME/Organic Foods.png" alt="Organic Products">
+                    <p>ORGANIC PRODUCTS</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="det">
+            <h2>New Release</h2>
+            <p>Experience convenient, healthy shopping today!</p>
+        </div>
+
+
+        <div class="new-release-container">
+            <div class="new-release-grid">
+                <div class="product-card">
+
+
+
+                </div>
+
+                <div class="product-card">
+                    <div class="product-thumbnail">
+                        <img class="thumb" src="img/thumbnail/HOME/Nestle - Yogurt.png" alt="G-SERVER ERROR">
+                    </div>
+                    <div id="mod3">
+                        <p class="product-name">Product Name</p>
+                        <p class="product-price">₱199.00</p>
+                    </div>
+                    <button class="add-to-cart">
+                        <img src="img/icons/download.svg" alt="Add to Cart"> ADD TO CART
+                    </button>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-thumbnail">
+                        <img class="thumb" src="img/thumbnail/HOME/Salmon Fillet.png" alt="G-SERVER ERROR">
+                    </div>
+                    <div id="mod3">
+                        <p class="product-name">Product Name</p>
+                        <p class="product-price">₱199.00</p>
+                    </div>
+                    <button class="add-to-cart">
+                        <img src="img/icons/download.svg" alt="Add to Cart"> ADD TO CART
+                    </button>
+                </div>
+
+
+                <div class="product-card">
+                    <div class="product-thumbnail">
+                        <img class="thumb" src="img/thumbnail/HOME/Sourdough Bread.png" alt="G-SERVER ERROR">
+                    </div>
+                    <div id="mod3">
+                        <p class="product-name">Product Name</p>
+                        <p class="product-price">₱199.00</p>
+                    </div>
+                    <button class="add-to-cart">
+                        <img src="img/icons/download.svg" alt="Add to Cart"> ADD TO CART
+                    </button>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-thumbnail">
+                        <img class="thumb" src="img/thumbnail/HOME/New - Selecta - Ice Cream.png" alt="G-SERVER ERROR">
+                    </div>
+                    <div id="mod3">
+                        <p class="product-name">Product Name</p>
+                        <p class="product-price">₱199.00</p>
+                    </div>
+                    <button class="add-to-cart">
+                        <img src="img/icons/download.svg" alt="Add to Cart"> ADD TO CART
+                    </button>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-thumbnail">
+                        <img class="thumb" id="mod1-1" src="img/thumbnail/HOME/Zaytoun - Olive Oil.png" alt="G-SERVER ERROR">
+                    </div>
+                    <div id="mod3">
+                        <p class="product-name">Product Name</p>
+                        <p class="product-price">₱199.00</p>
+                    </div>
+                    <button class="add-to-cart">
+                        <img src="img/icons/download.svg" alt="Add to Cart"> ADD TO CART
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <a href="shop.html">
+            <p class="shop-more-mod"><img src="img/icons/shop-more.svg" alt="">SHOP MORE</p>
+        </a>
+
+    </div>
+
+    </div>
+
+    <!-- Blur Background -->
+    <div id="overlay" class="overlay-blur"></div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast">
+        <h3 id="toastTitle">Hello!</h3>
+        <p id="toastMessage">Welcome message here.</p>
+        <button id="toastBtn">Continue</button>
+    </div>
+    <div id="toast_1">Added to cart!</div>
+
+    <!-- JS -->
+    <script>
+        const hamburger = document.getElementById('hamburger');
+        const sidebarMenu = document.getElementById('sidebar-menu');
+        const closeBtn = document.querySelector('.sidebar-menu .close-btn');
+
+        hamburger.addEventListener('click', () => {
+            sidebarMenu.classList.toggle('show');
+            hamburger.classList.toggle('open');
+        });
+
+        closeBtn.addEventListener('click', () => {
+            sidebarMenu.classList.remove('show');
+            hamburger.classList.remove('open');
+        });
+
+        const slides = document.querySelector('.carousel-slides');
+        const dots = document.querySelectorAll('.dot');
+        const totalSlides = dots.length;
+        let index = 0;
+
+        function showSlide(i) {
+            index = (i + totalSlides) % totalSlides;
+            slides.style.transform = `translateX(-${index * 100}%)`;
+            updateDots();
+        }
+
+        function updateDots() {
+            dots.forEach(dot => dot.classList.remove('active'));
+            dots[index].classList.add('active');
+        }
+
+        // Dot click
+        dots.forEach(dot => {
+            dot.addEventListener('click', () => {
+                showSlide(Number(dot.dataset.index));
+            });
+        });
+
+        // Auto-play every 3 seconds
+        setInterval(() => {
+            showSlide(index + 1);
+        }, 3000);
+
+        function showToast(title, message) {
+            const toast = document.getElementById('toast');
+            const overlay = document.getElementById('overlay');
+
+            document.getElementById('toastTitle').innerHTML = title;
+            document.getElementById('toastMessage').innerHTML = message;
+
+            toast.classList.add('show');
+            overlay.classList.add('show');
+
+            const toastBtn = document.getElementById('toastBtn');
+            toastBtn.onclick = () => {
+                toast.classList.remove('show');
+                overlay.classList.remove('show');
+            };
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+            const username = localStorage.getItem('username') || 'Guest';
+
+            if (isLoggedIn) {
+                showToast(
+                    `👋 Welcome back, ${username}!`,
+                    `We're glad to see you again. Ready to continue shopping?`
+                );
+            } else {
+                showToast(
+                    `🔒 You're not signed in`,
+                    `Sign in to track orders and enjoy a personalized experience.`
+                );
+            }
+        });
+
+
+        const cards = document.querySelectorAll('.product-card');
+        const toast_1 = document.getElementById('toast_1');
+
+        cards.forEach(card => {
+            const button = card.querySelector('button');
+            const nameEl = card.querySelector('.product-name');
+            const imageEl = card.querySelector('img');
+            const priceEl = card.querySelector('.product-price');
+
+            // Skip card if any required info is missing
+            if (!button || !nameEl || !imageEl || !priceEl) return;
+
+            button.addEventListener('click', () => {
+                const name = nameEl.innerText;
+                const image = imageEl.getAttribute('src');
+                const priceText = priceEl.innerText.replace('₱', '');
+                const price = parseFloat(priceText);
+
+                const product = { name, image, price, quantity: 1 };
+                let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+                const existing = cart.find(item => item.name === product.name);
+                if (existing) {
+                    existing.quantity += 1;
+                } else {
+                    cart.push(product);
+                }
+
+                localStorage.setItem('cart', JSON.stringify(cart));
+
+                toast_1.innerText = `${product.name} added to cart!`;
+                toast_1.classList.add('show');
+                setTimeout(() => toast_1.classList.remove('show'), 5000);
+            });
+        });
+
+
+
+        // Check if the user is logged in
+        function checkLoginStatus() {
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+            const userIcon = document.querySelector('.head-btn-end a[href="login.html"]');
+
+            if (isLoggedIn === 'true') {
+                // Redirect to My Account page if logged in
+                userIcon.href = 'account.html';
+            } else {
+                // Ensure the link points to the login page
+                userIcon.href = 'sign-in.html';
+            }
+        }
+
+        // Run the function when the page loads
+        document.addEventListener('DOMContentLoaded', checkLoginStatus);
+
+        // Optionally, listen for any changes in localStorage (for example, if the user logs in after page load)
+        window.addEventListener('storage', checkLoginStatus);
+
+
+    </script>
+</body>
+
+</html>

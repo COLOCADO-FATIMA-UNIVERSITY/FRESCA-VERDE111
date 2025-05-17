@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Arimo:wght@700&family=Open+Sans:wght@300&display=swap"
+        rel="stylesheet" />
+    <title>EMPTY CART V2</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            font-family: "Open Sans", sans-serif;
+            background-color: white;
+            /* #333 yan dati */
+            padding: 20px;
+        }
+
+        .empty-cart {
+            width: 100%;
+            max-width: 900px;
+            height: 500px;
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: #456655;
+            border-radius: 20px;
+            box-shadow: 0 0 30px #456655;
+            animation: breathingShadow 3s ease-in-out infinite;
+            color: #fff;
+            text-align: center;
+        }
+
+
+        .empty-cart h3 {
+            font-size: 1.8rem;
+            font-weight: 300;
+            margin-top: 20px;
+        }
+
+        .empty-cart p {
+            font-size: 1rem;
+            font-weight: 300;
+            margin: 10px 0 20px;
+        }
+
+        .empty-cart span {
+            font-family: "Arimo", sans-serif;
+            font-weight: 700;
+        }
+
+        .empty-cart img {
+            width: 180px;
+            max-width: 90%;
+            height: auto;
+        }
+
+        .empty-cart .button-group {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .empty-cart button {
+            background-color: #456655;
+            color: #fff;
+            border: #fff 1px solid;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .empty-cart button:hover {
+            background-color: #fff;
+            color: #456655;
+        }
+
+        .empty-cart-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100px;
+        }
+
+        h3,
+        p {
+            margin: 0;
+        }
+
+        .empty-cart button:focus {
+            outline: none;
+            box-shadow: 0 0 5px #456655;
+        }
+
+        @keyframes breathingShadow {
+            0% {
+                box-shadow: 0 0 30px #456655;
+            }
+
+            50% {
+                box-shadow: 0 0 200px #456655;
+            }
+
+            100% {
+                box-shadow: 0 0 30px #456655;
+            }
+        }
+
+
+        /* 📱 Small screens */
+        @media (max-width: 600px) {
+            .empty-cart {
+                padding: 20px 15px;
+            }
+
+            .empty-cart h3 {
+                font-size: 1.4rem;
+            }
+
+            .empty-cart p {
+                font-size: 0.95rem;
+            }
+
+            .empty-cart button {
+                width: 100%;
+                font-size: 1rem;
+            }
+
+            .empty-cart .button-group {
+                flex-direction: column;
+                align-items: stretch;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .empty-cart h3 {
+                font-size: 1rem;
+            }
+
+            .empty-cart p {
+                font-size: 0.8rem;
+            }
+
+            .empty-cart button {
+                padding: 10px 70px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+
+        <div class="empty-cart">
+            <img src="img/empty-cart.svg" alt="Empty Cart" />
+            <div class="empty-cart-content">
+                <h3><span>SORRY,</span> Your shopping cart is empty!</h3>
+                <p>You have no items in your shopping cart.</p>
+            </div>
+            <div class="button-group">
+                <button>GO BACK</button>
+                <button id="attention" onclick="window.location.href='index.html'">Continue Shopping</button>
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+
+    <script>
+        function loadCartFromStorage() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const container = document.getElementById("cart-items-container");
+            container.innerHTML = '';
+
+            if (cart.length === 0) {
+                document.getElementById("empty-cart").classList.remove("hidden");
+                document.getElementById("filled-cart").classList.add("hidden");
+                return;
+            }
+
+            document.getElementById("empty-cart").classList.add("hidden");
+            document.getElementById("filled-cart").classList.remove("hidden");
+
+            cart.forEach(item => {
+                const itemTotal = item.price * item.quantity;
+                const div = document.createElement('div');
+                div.className = 'cart-item';
+                div.innerHTML = `
+            <input type="checkbox" />
+            <img src="${item.image}" alt="${item.name}">
+            <div class="item-details">
+                <p class="name">${item.name}</p>
+                <select><option>Default</option></select>
+            </div>
+            <div class="price">₱${item.price}</div>
+            <div class="qty">
+                <button onclick="updateQty(this, -1)">-</button>
+                <input type="number" value="${item.quantity}" min="1"/>
+                <button onclick="updateQty(this, 1)">+</button>
+            </div>
+            <div class="total">₱${itemTotal}</div>
+            <button class="delete" onclick="deleteItem(this)">Delete</button>
+          `;
+                container.appendChild(div);
+            });
+
+            updateTotal();
+        }
+
+        function updateQty(button, change) {
+            const itemElement = button.closest('.cart-item');
+            const name = itemElement.querySelector('.name').innerText;
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+            const input = itemElement.querySelector("input[type='number']");
+            let newQty = parseInt(input.value) + change;
+            if (newQty < 1) newQty = 1;
+            input.value = newQty;
+
+            const item = cart.find(i => i.name === name);
+            if (item) item.quantity = newQty;
+
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateTotal();
+        }
+
+        function deleteItem(button) {
+            const itemElement = button.closest('.cart-item');
+            const name = itemElement.querySelector('.name').innerText;
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+            cart = cart.filter(item => item.name !== name);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            itemElement.remove();
+            updateTotal();
+        }
+
+        function toggleAll(checkbox) {
+            const checkboxes = document.querySelectorAll(".cart-item input[type='checkbox']");
+            checkboxes.forEach(cb => cb.checked = checkbox.checked);
+        }
+
+        function updateTotal() {
+            const items = document.querySelectorAll(".cart-item");
+            const itemCount = items.length;
+            let total = 0;
+
+            if (itemCount === 0) {
+                document.getElementById("empty-cart").classList.remove("hidden");
+                document.getElementById("filled-cart").classList.add("hidden");
+            } else {
+                document.getElementById("empty-cart").classList.add("hidden");
+                document.getElementById("filled-cart").classList.remove("hidden");
+
+                items.forEach(item => {
+                    const price = parseFloat(item.querySelector(".price").innerText.replace("₱", ""));
+                    const qty = parseInt(item.querySelector("input[type='number']").value);
+                    const itemTotal = price * qty;
+                    item.querySelector(".total").innerText = `₱${itemTotal}`;
+                    total += itemTotal;
+                });
+
+                document.getElementById("item-count").innerText = itemCount;
+                document.getElementById("total-price").innerText = total;
+            }
+        }
+
+        function showCheckoutSummary() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            if (cart.length === 0) return;
+
+            const container = document.getElementById("summary-details");
+            let rows = '';
+            let total = 0;
+
+            cart.forEach(item => {
+                const itemTotal = item.price * item.quantity;
+                total += itemTotal;
+                rows += `
+            <tr>
+              <td><img src="${item.image}"></td>
+              <td>${item.name}<br><small>Variations</small></td>
+              <td>₱${item.price}</td>
+              <td>${item.quantity}</td>
+              <td>₱${itemTotal}</td>
+            </tr>
+          `;
+            });
+
+            const shipping = 500;
+            const discount = 400;
+            const voucher = 0;
+            const final = total + shipping - discount - voucher;
+
+            container.innerHTML = `
+          <table>
+            <thead>
+              <tr>
+                <th>Product</th><th></th><th>Unit Price</th><th>Qty</th><th>Total</th>
+              </tr>
+            </thead>
+            <tbody>${rows}</tbody>
+          </table>
+          <p>Merchandise Total: <span style="float:right">₱${total}</span></p>
+          <p>Shipping Subtotal: <span style="float:right">₱${shipping}</span></p>
+          <p>Shipping Discount: <span style="float:right">₱${discount}</span></p>
+          <p>Voucher Discount: <span style="float:right">₱${voucher}</span></p>
+          <hr />
+          <p><strong>Total Payment: </strong><span style="float:right"><strong>₱${final}</strong></span></p>
+        `;
+
+            document.getElementById('checkout-modal').classList.remove('hidden');
+        }
+
+        function confirmCheckout() {
+            const modal = document.getElementById('checkout-modal');
+            const content = document.getElementById('summary-details');
+            let countdown = 5;
+
+            // Clear cart and show success
+            localStorage.removeItem('cart');
+            updateTotal();
+
+            content.innerHTML = `
+        <p style="text-align:center; font-size:18px; font-weight:bold;">Checkout Successful!</p>
+        <p style="text-align:center;">Redirecting to home in <span id="countdown">${countdown}</span> seconds...</p>
+      `;
+
+            // Disable buttons
+            document.querySelector('.modal-buttons').classList.add('hidden');
+
+            const interval = setInterval(() => {
+                countdown--;
+                document.getElementById('countdown').innerText = countdown;
+
+                if (countdown === 0) {
+                    clearInterval(interval);
+                    window.location.href = 'test.html';
+                }
+            }, 1000);
+        }
+
+        function closeModal() {
+            document.getElementById('checkout-modal').classList.add('hidden');
+        }
+
+        window.addEventListener('DOMContentLoaded', loadCartFromStorage);
+    </script>
+</body>
+
+</html>
