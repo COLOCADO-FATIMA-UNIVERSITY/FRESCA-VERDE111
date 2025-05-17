@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fresca Verde - Info</title>
+    <link rel="stylesheet" href="style/header.css">
+    <link rel="stylesheet" href="style/footer.css">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap" rel="stylesheet" />
+    <style>
+        :root {
+            --green: #456655;
+            --dark: #1a1a1a;
+            --light: #f4f4f4;
+            --transition: all 0.3s ease-in-out;
+        }
+
+        .main-con-con {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 89vh;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Open Sans", sans-serif;
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: auto;
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 0.6s ease;
+        }
+
+        .head-con {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .nav-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .nav-links button {
+            background: none;
+            border: 2px solid var(--green);
+            color: var(--green);
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .nav-links button:hover,
+        .nav-links button.active {
+            background: var(--green);
+            color: white;
+        }
+
+        .back-btn {
+            background-color: #eee;
+            border: none;
+            color: #333;
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+
+        .back-btn:hover {
+            background-color: #ddd;
+        }
+
+        section {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        section.active {
+            display: block;
+            opacity: 1;
+        }
+
+        h2 {
+            color: var(--green);
+            margin-bottom: 1rem;
+        }
+
+        .main-con-con p {
+            margin-bottom: 1rem;
+            text-align: justify;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .nav-links {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .container {
+                padding: 1.5rem;
+            }
+        }
+
+        .footer {
+            background: linear-gradient(135deg, #e9f5ea, #f7faf7);
+            padding: 2rem 1rem;
+            font-family: "Open Sans", sans-serif;
+            text-align: center;
+            color: #3d3d3d;
+            border-top: 1px solid #cce5cc;
+            animation: fadeInUp 0.6s ease-out both;
+        }
+
+        .footer h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+            color: #2d6a4f;
+            animation: slideFade 0.5s ease-out 0.2s both;
+        }
+
+        .footer .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1.2rem;
+            animation: slideFade 0.6s ease-out 0.4s both;
+        }
+
+        .footer .footer-links a {
+            color: #2d6a4f;
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            transition: color 0.3s;
+        }
+
+        .footer .footer-links a::after {
+            content: "";
+            display: block;
+            height: 2px;
+            width: 0%;
+            background-color: #2d6a4f;
+            transition: width 0.3s;
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+        }
+
+        .footer .footer-links a:hover {
+            color: #1b4332;
+        }
+
+        .footer .footer-links a:hover::after {
+            width: 100%;
+        }
+
+        .footer p {
+            margin-top: 1.5rem;
+            font-size: 0.85rem;
+            color: #6b6b6b;
+            animation: slideFade 0.7s ease-out 0.6s both;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideFade {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .footer {
+                border-top: #1b4332 1px solid;
+                padding: 1.5rem 1rem;
+            }
+
+            .footer .footer-links {
+                flex-direction: column;
+                gap: 0.8rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Sidebar Menu -->
+    <div id="sidebar-menu" class="sidebar-menu">
+        <div class="close-btn">&times;</div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="explore.html">Explore</a></li>
+                <li><a href="shop.html">Shop</a></li>
+                <li><a href="about.html#about">About</a></li>
+                <li><a href="support.html">Support</a></li>
+                <li><a href="support.html">Track Your Order</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <!-- Main Header -->
+    <header>
+        <div class="head-container">
+            <!-- LEFT -->
+            <div class="head-left">
+                <div class="sidebar" id="hamburger">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+                <div class="head-brand-start">
+                    <a href="#"><img src="images/LOGO-removebg-preview.png" alt="Fresca Verde Logo" /></a>
+                </div>
+                <div class="head-navbar-right">
+                    <nav>
+                        <ul>
+                            <li><a href="index.html">HOME</a></li>
+                            <li><a href="explore.html">EXPLORE</a></li>
+                            <li><a href="shop.html"><span class="bold">SHOP</span></a></li>
+                            <li><a href="about.html#about">ABOUT</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+
+            <!-- RIGHT -->
+            <div class="head-right">
+                <div class="head-navbar-left">
+                    <nav>
+                        <ul>
+                            <li><a href="support.html">SUPPORT</a></li>
+                            <li><a href="history.html">TRACK YOUR ORDER</a></li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="head-btn-end">
+                    <a href="wait.html"><img src="images/USER-removebg-preview.png" alt="User" /></a>
+                    <a href="cart.html"><img src="images/CART.png" alt="Cart" /></a>
+                    <a href="#"><img src="images/SEARCH.png" alt="Search" /></a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="main-con-con">
+        <div class="container">
+            <div class="head-con">
+                <button class="back-btn" onclick="window.history.back()">← Back</button>
+                <div class="nav-links">
+                    <button onclick="showSection('about')" class="active">About</button>
+                    <button onclick="showSection('agreement')">User Agreement</button>
+                    <button onclick="showSection('privacy')">Privacy Policy</button>
+                    <button onclick="showSection('cookies')">Cookies</button>
+                </div>
+            </div>
+
+            <section id="about" class="active">
+                <h2>About Fresca Verde</h2>
+                <p>Fresca Verde is your one-stop destination for fresh, organic, and locally sourced grocery products.
+                    Built
+                    by passionate students, the platform aims to revolutionize the way you shop healthy by combining
+                    sustainable practices with modern technology.</p>
+                <p>Whether you're looking for farm-fresh vegetables, dairy alternatives, or organic pantry staples, we
+                    bring
+                    it all directly to your doorstep — with a commitment to quality, transparency, and convenience.</p>
+                <p>Join our journey to build a greener and healthier future. Support local. Shop consciously. Live
+                    sustainably with Fresca Verde.</p>
+            </section>
+
+            <section id="agreement">
+                <h2>User Agreement</h2>
+                <p>By accessing or using Fresca Verde, you agree to be bound by the following terms and conditions. You
+                    must
+                    be at least 18 years old or have parental consent to use our platform.</p>
+                <p>Users are responsible for maintaining the confidentiality of their account credentials. Any
+                    fraudulent
+                    activity will result in immediate suspension or termination of service.</p>
+                <p>Fresca Verde reserves the right to modify these terms at any time. Continued use of the service
+                    indicates
+                    your acceptance of the updated terms.</p>
+            </section>
+
+            <section id="privacy">
+                <h2>Privacy Policy</h2>
+                <p>We value your privacy. Fresca Verde collects only the necessary data to provide and improve our
+                    services
+                    — including your name, email, and delivery preferences.</p>
+                <p>We never sell your data to third parties. Your information is stored securely and used solely to
+                    enhance
+                    your experience with us. You may request to review, modify, or delete your personal data at any
+                    time.
+                </p>
+                <p>For transparency, we comply with all relevant data protection laws and ensure encryption and secure
+                    storage of your personal data.</p>
+            </section>
+
+            <section id="cookies">
+                <h2>Cookies Policy</h2>
+                <p>Our website uses cookies to improve performance and provide personalized features. Cookies are small
+                    text
+                    files stored on your device that help us remember your preferences and enhance your experience.</p>
+                <p>By using our site, you agree to our use of cookies. You can disable cookies in your browser settings,
+                    although this may affect site functionality.</p>
+                <p>We use both session and persistent cookies for analytics, login preferences, and to keep your
+                    shopping
+                    cart active.</p>
+            </section>
+            
+        </div>
+    </div>
+
+    <div class="footer">
+        <h4>Fresca Verde – Sustainable. Simple. Secure.</h4>
+        <div class="footer-links">
+            <a href="#">User Agreement</a>
+            <a href="#">Privacy Policy</a>
+            <a href="#">Cookies</a>
+            <a href="#">About</a>
+        </div>
+        <p>&copy; 2025 Fresca Verde. All rights reserved.</p>
+    </div>
+
+    <script>
+
+        const hamburger = document.getElementById('hamburger');
+        const sidebarMenu = document.getElementById('sidebar-menu');
+        const closeBtn = document.querySelector('.sidebar-menu .close-btn');
+
+        hamburger.addEventListener('click', () => {
+            sidebarMenu.classList.toggle('show');
+            hamburger.classList.toggle('open');
+        });
+
+        closeBtn.addEventListener('click', () => {
+            sidebarMenu.classList.remove('show');
+            hamburger.classList.remove('open');
+        });
+
+        function showSection(id) {
+            const sections = document.querySelectorAll("section");
+            const buttons = document.querySelectorAll(".nav-links button");
+
+            sections.forEach((sec) => {
+                sec.classList.remove("active");
+            });
+            document.getElementById(id).classList.add("active");
+
+            buttons.forEach((btn) => {
+                btn.classList.remove("active");
+            });
+            event.target.classList.add("active");
+        }
+    </script>
+</body>
+
+</html>

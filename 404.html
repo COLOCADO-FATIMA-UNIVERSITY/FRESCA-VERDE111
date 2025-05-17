@@ -12,28 +12,82 @@
     <title>404 - Fresca Verde</title>
 </head>
 <style>
+    * {
+        box-sizing: border-box;
+    }
+
     body {
         margin: 0;
         font-family: "Open Sans", sans-serif;
-    }
-
-
-    .bold {
-        font-weight: bold;
+        background: #f9f9f9;
+        color: #333;
     }
 
     .main-container {
+        min-height: 80vh;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        height: 79vh;
-        font-size: 2rem;
+        padding: 2rem;
+        text-align: center;
+        animation: fadeIn 0.6s ease-out;
     }
 
     .main-container img {
-        width: 250px;
+        width: 100%;
+        max-width: 350px;
         margin-bottom: 20px;
+    }
+
+    .main-container h1 {
+        font-size: 2.5rem;
+        margin: 0;
+        font-weight: 700;
+    }
+
+    .main-container p {
+        font-size: 1.1rem;
+        margin: 1rem 0 2rem;
+        color: #666;
+    }
+
+    .main-container a.button {
+        display: inline-block;
+        padding: 12px 24px;
+        border: #456655 1px solid;
+        color: black;
+        font-weight: 600;
+        border-radius: 6px;
+        text-decoration: none;
+        transition: background 0.3s ease;
+    }
+
+    .main-container a.button:hover {
+        background-color: #3e8b42;
+        color: white;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @media (max-width: 480px) {
+        .main-container h1 {
+            font-size: 1.8rem;
+        }
+
+        .main-container p {
+            font-size: 1rem;
+        }
     }
 </style>
 
@@ -84,7 +138,7 @@
                     <nav>
                         <ul>
                             <li><a href="support.html">SUPPORT</a></li>
-                            <li><a href="#">TRACK YOUR ORDER</a></li>
+                            <li><a href="history.html">TRACK YOUR ORDER</a></li>
                         </ul>
                     </nav>
                 </div>
@@ -98,8 +152,10 @@
     </header>
 
     <div class="main-container">
-        <img src="img/icons/undraw_server-error_syuz.svg" alt="G-SERVER-ERROR">
-        Hayst! That didn't work. CODE 404
+        <img src="img/icons/undraw_server-error_syuz.svg" alt="Server Error Illustration">
+        <h1>Oops! Page under development</h1>
+        <p>Hayst! The page you're looking for doesn't exist. (Error code: 404)</p>
+        <a class="button" href="index.html">Return to Home</a>
     </div>
 
     <!-- JS -->

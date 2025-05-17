@@ -43,7 +43,7 @@
         display: flex;
         flex-direction: column;
         gap: 1rem;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        box-shadow: 0 0 50px rgba(0, 0, 0, 0.08);
         transition: transform 0.3s ease;
     }
 
@@ -53,7 +53,7 @@
 
     .order-box img {
         width: 100%;
-        height: 160px;
+        height: 320px;
         object-fit: cover;
         border-radius: 8px;
     }
@@ -125,6 +125,39 @@
             text-align: center;
         }
     }
+
+    /* Toast Styles */
+    .toast {
+        position: fixed;
+        bottom: 30px;
+        left: 50%;
+        transform: translateX(-50%) translateY(20px);
+        background: rgba(30, 30, 30, 0.9);
+        color: #fff;
+        padding: 12px 20px;
+        border-radius: 12px;
+        opacity: 0;
+        font-weight: 500;
+        font-size: 14px;
+        transition: opacity 0.3s ease, transform 0.3s ease;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        z-index: 1000;
+    }
+
+    .toast.show {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+
+    .status-delivered {
+        color: green;
+        font-weight: bold;
+    }
+
+    .status-pending {
+        color: orange;
+        font-weight: bold;
+    }
 </style>
 
 <body>
@@ -173,8 +206,8 @@
                 <div class="head-navbar-left">
                     <nav>
                         <ul>
-                            <li><a href="#"><span class="bold">SUPPORT</span></a></li>
-                            <li><a href="#">TRACK YOUR ORDER</a></li>
+                            <li><a href="#">SUPPORT</a></li>
+                            <li><a href="#"><span class="bold">TRACK YOUR ORDER</span></a></li>
                         </ul>
                     </nav>
                 </div>
@@ -198,8 +231,13 @@
         </div>
     </div>
 
+    <div id="toast" class="toast">This feature is not yet available.</div>
+
     <!-- JS -->
     <script>
+
+        document.addEventListener('DOMContentLoaded', checkLoginStatus);
+        window.addEventListener('storage', checkLoginStatus);
 
 
         function loadOrderHistory() {
@@ -221,13 +259,15 @@
                     totalSpent += itemTotal;
 
                     const orderCard = document.createElement('div');
+                    const status = order.status || 'Delivered';
+                    const statusClass = status === 'Delivered' ? 'status-delivered' : 'status-pending';
                     orderCard.className = 'order-box';
                     orderCard.innerHTML = `
                 <img src="${item.image || 'images/placeholder.png'}" alt="${item.name}">
                 <div class="order-details">
                     <strong>${item.name}</strong>
                     <span>Tracking #: FRESCA-VRD-${Math.floor(100000 + Math.random() * 900000)}</span>
-                    <span>Status: ${order.status || 'Delivered'}</span>
+                    <span class="${statusClass}">${status}</span>
                     <span>₱${item.price || '0.00'}</span>
                     <small>${new Date(order.date).toLocaleDateString()} | ${order.method || 'N/A'}</small>
                 </div>
@@ -246,21 +286,31 @@
 
 
         function buyAgain(itemName) {
-            alert(`Added '${itemName}' to cart for repurchase.`);
-            // Add logic to push item to cart
+            showToast(`'${itemName}' buy again feature is not yet available.`);
         }
 
         function reviewItem(itemName) {
-            alert(`Redirecting to review page for '${itemName}'.`);
-            // Replace with actual review modal or redirect logic
+            showToast(`Review feature for '${itemName}' is not yet available.`);
         }
 
         function requestReturn(itemName) {
-            alert(`Return/Refund request initiated for '${itemName}'.`);
-            // Could open a modal or send a flag to admin
+            showToast(`Return/Refund for '${itemName}' is not yet available.`);
         }
 
-        document.addEventListener('DOMContentLoaded', loadOrderHistory);
+        document.addEventListener('DOMContentLoaded', () => {
+            checkLoginStatus();
+
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+            if (isLoggedIn === 'true') {
+                loadOrderHistory();
+            }
+            else {
+                window.location.href = 'sign-in.html';
+            }
+        });
+
+        window.addEventListener('storage', checkLoginStatus);
+
 
         const hamburger = document.getElementById('hamburger');
         const sidebarMenu = document.getElementById('sidebar-menu');
@@ -278,29 +328,46 @@
 
         function checkLoginStatus() {
             const isLoggedIn = localStorage.getItem('isLoggedIn');
-            const userIcon = document.querySelector('.head-btn-end a[href="login.html"]');
+
+            const userIcon = document.querySelector('.head-btn-end a[href*="login"], .head-btn-end a[href*="sign-in"]');
+            const cartIcon = document.querySelector('.head-btn-end a[href*="cart"]');
 
             if (isLoggedIn === 'true') {
-                const user = JSON.parse(localStorage.getItem('users')).find(user => user.email === localStorage.getItem('loggedInUser'));
+                const user = JSON.parse(localStorage.getItem('users') || '[]').find(user => user.email === localStorage.getItem('loggedInUser'));
+
+                // Optional: check kung nasa ibang page ka na may mga user info
                 if (user) {
-                    document.getElementById('userName').textContent = user.name;
-                    document.getElementById('userEmail').textContent = user.email;
-                    document.getElementById('userPhone').textContent = user.phone;
-                    document.getElementById('userAddress').textContent = user.address;
+                    const nameEl = document.getElementById('userName');
+                    const emailEl = document.getElementById('userEmail');
+                    const phoneEl = document.getElementById('userPhone');
+                    const addressEl = document.getElementById('userAddress');
+
+                    if (nameEl) nameEl.textContent = user.name;
+                    if (emailEl) emailEl.textContent = user.email;
+                    if (phoneEl) phoneEl.textContent = user.phone;
+                    if (addressEl) addressEl.textContent = user.address;
 
                     if (user.dob) {
                         const [day, month, year] = user.dob.split('-');
-                        document.getElementById('dobDay').textContent = day || '';
-                        document.getElementById('dobMonth').textContent = month || '';
-                        document.getElementById('dobYear').textContent = year || '';
-                    }
+                        const dobDay = document.getElementById('dobDay');
+                        const dobMonth = document.getElementById('dobMonth');
+                        const dobYear = document.getElementById('dobYear');
 
+                        if (dobDay) dobDay.textContent = day;
+                        if (dobMonth) dobMonth.textContent = month;
+                        if (dobYear) dobYear.textContent = year;
+                    }
                 }
+
+                if (userIcon) userIcon.href = 'account.html';
+                if (cartIcon) cartIcon.href = 'cart.html';
             } else {
-                // Redirect if not logged in
-                window.location.href = 'sign-in.html';
+                if (userIcon) userIcon.href = 'sign-in.html';
+                if (cartIcon) cartIcon.href = 'need-sign-in.html';
             }
         }
+
+
 
         document.addEventListener('DOMContentLoaded', checkLoginStatus);
         window.addEventListener('storage', checkLoginStatus);
@@ -313,6 +380,16 @@
                 header.classList.remove('scrolled');
             }
         });
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.classList.add('show');
+
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
     </script>
 </body>
 

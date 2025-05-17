@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fresca Verde - Info</title>
+    <link rel="stylesheet" href="style/header.css">
+    <link rel="stylesheet" href="style/footer.css">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap" rel="stylesheet" />
+    <style>
+        :root {
+            --green: #456655;
+            --dark: #1a1a1a;
+            --light: #f4f4f4;
+            --transition: all 0.3s ease-in-out;
+            --radius: 10px;
+        }
+
+        * {
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Open Sans", sans-serif;
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        .main-con-con {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 3rem 1rem;
+            min-height: 79vh;
+        }
+
+        .container {
+            max-width: 960px;
+            background: #fff;
+            padding: 2rem;
+            border-radius: var(--radius);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.07);
+            animation: fadeIn 0.6s ease;
+            width: 100%;
+        }
+
+        .head-con {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .nav-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .nav-links button {
+            background: white;
+            border: 1.8px solid var(--green);
+            color: var(--green);
+            padding: 0.5rem 1.2rem;
+            border-radius: var(--radius);
+            font-size: 0.95rem;
+            font-weight: 600;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+            transition: var(--transition);
+        }
+
+        .nav-links button:hover,
+        .nav-links button.active {
+            background: var(--green);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .back-btn {
+            background-color: #e0e0e0;
+            border: none;
+            color: #333;
+            padding: 0.4rem 1rem;
+            border-radius: var(--radius);
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .back-btn:hover {
+            background-color: #d5d5d5;
+        }
+
+        section {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            margin-top: 1.5rem;
+            padding: 1rem 1.5rem;
+            background-color: #fafafa;
+            border-radius: var(--radius);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        section.active {
+            display: block;
+            opacity: 1;
+        }
+
+        h2 {
+            color: var(--green);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        h4 {
+            margin-top: 1rem;
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: #2f4433;
+        }
+
+        .main-con-con p,
+        .main-con-con li {
+            margin-bottom: 0.8rem;
+            text-align: justify;
+            font-size: 0.95rem;
+        }
+
+        .main-con-con ul,
+        .main-con-con ol {
+            padding-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 640px) {
+            .nav-links {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .nav-links button {
+                width: 100%;
+            }
+        }
+
+        .footer {
+            background: linear-gradient(135deg, #e9f5ea, #f7faf7);
+            padding: 2rem 1rem;
+            font-family: "Open Sans", sans-serif;
+            text-align: center;
+            color: #3d3d3d;
+            border-top: 1px solid #cce5cc;
+            animation: fadeInUp 0.6s ease-out both;
+        }
+
+        .footer h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+            color: #2d6a4f;
+            animation: slideFade 0.5s ease-out 0.2s both;
+        }
+
+        .footer .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1.2rem;
+            animation: slideFade 0.6s ease-out 0.4s both;
+        }
+
+        .footer .footer-links a {
+            color: #2d6a4f;
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            transition: color 0.3s;
+        }
+
+        .footer .footer-links a::after {
+            content: "";
+            display: block;
+            height: 2px;
+            width: 0%;
+            background-color: #2d6a4f;
+            transition: width 0.3s;
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+        }
+
+        .footer .footer-links a:hover {
+            color: #1b4332;
+        }
+
+        .footer .footer-links a:hover::after {
+            width: 100%;
+        }
+
+        .footer p {
+            margin-top: 1.5rem;
+            font-size: 0.85rem;
+            color: #6b6b6b;
+            animation: slideFade 0.7s ease-out 0.6s both;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideFade {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .footer {
+                border-top: #1b4332 1px solid;
+                padding: 1.5rem 1rem;
+            }
+
+            .footer .footer-links {
+                flex-direction: column;
+                gap: 0.8rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Sidebar Menu -->
+    <div id="sidebar-menu" class="sidebar-menu">
+        <div class="close-btn">&times;</div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="explore.html">Explore</a></li>
+                <li><a href="shop.html">Shop</a></li>
+                <li><a href="about.html#about">About</a></li>
+                <li><a href="support.html">Support</a></li>
+                <li><a href="support.html">Track Your Order</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <!-- Main Header -->
+    <header>
+        <div class="head-container">
+            <!-- LEFT -->
+            <div class="head-left">
+                <div class="sidebar" id="hamburger">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+                <div class="head-brand-start">
+                    <a href="#"><img src="images/LOGO-removebg-preview.png" alt="Fresca Verde Logo" /></a>
+                </div>
+                <div class="head-navbar-right">
+                    <nav>
+                        <ul>
+                            <li><a href="index.html">HOME</a></li>
+                            <li><a href="explore.html">EXPLORE</a></li>
+                            <li><a href="shop.html"><span class="bold">SHOP</span></a></li>
+                            <li><a href="about.html#about">ABOUT</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+
+            <!-- RIGHT -->
+            <div class="head-right">
+                <div class="head-navbar-left">
+                    <nav>
+                        <ul>
+                            <li><a href="support.html">SUPPORT</a></li>
+                            <li><a href="history.html">TRACK YOUR ORDER</a></li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="head-btn-end">
+                    <a href="wait.html"><img src="images/USER-removebg-preview.png" alt="User" /></a>
+                    <a href="cart.html"><img src="images/CART.png" alt="Cart" /></a>
+                    <a href="#"><img src="images/SEARCH.png" alt="Search" /></a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="main-con-con">
+        <div class="container">
+            <div class="head-con">
+                <button class="back-btn" onclick="window.history.back()">← Back</button>
+                <div class="nav-links">
+                    <button onclick="showSection('payment-assistance', this)">Payment Assistance</button>
+                    <button onclick="showSection('product-issues', this)">Product Issues</button>
+                    <button onclick="showSection('faqs', this)">FAQs</button>
+                    <button onclick="showSection('technical-support', this)">Technical Support</button>
+
+                </div>
+            </div>
+
+            <section id="payment-assistance" class="content-section">
+                <h2>Payment Assistance</h2>
+                <p>If you're having trouble completing a payment, we're here to help. Make sure to double-check the
+                    following:</p>
+                <ul>
+                    <li>Ensure that your payment method (GCash, BDO, etc.) has sufficient funds.</li>
+                    <li>Check that the account details are correct and match your records.</li>
+                    <li>If using a promo code, confirm it's still valid and applicable to your cart.</li>
+                </ul>
+                <p>Still having issues? Reach out to our support team and we’ll assist you in resolving the issue
+                    quickly.</p>
+            </section>
+
+            <section id="product-issues" class="content-section">
+                <h2>Product Issues</h2>
+                <p>We stand behind the quality of our products. If you've received a damaged, expired, or incorrect
+                    item:</p>
+                <ol>
+                    <li>Take a clear photo of the product and packaging.</li>
+                    <li>Send it to our support email within 24 hours of delivery.</li>
+                    <li>Include your order ID and a short description of the issue.</li>
+                </ol>
+                <p>We’ll investigate and arrange for a replacement or refund as quickly as possible.</p>
+            </section>
+
+            <section id="faqs" class="content-section">
+                <h2>Frequently Asked Questions (FAQs)</h2>
+                <div class="faq">
+                    <h4>How long does delivery take?</h4>
+                    <p>Deliveries typically arrive within 1–3 business days, depending on your location.</p>
+
+                    <h4>What payment methods are accepted?</h4>
+                    <p>We currently accept GCash, BDO bank transfers, and cash on delivery (COD) for select areas.</p>
+
+                    <h4>Can I edit my order after placing it?</h4>
+                    <p>You can modify your order within 1 hour of placing it by contacting our support team directly.
+                    </p>
+                </div>
+            </section>
+
+            <section id="technical-support" class="content-section">
+                <h2>Technical Support</h2>
+                <p>If you're experiencing issues with our website (such as loading problems, login errors, or cart
+                    malfunctions), try the following:</p>
+                <ul>
+                    <li>Clear your browser cache and cookies.</li>
+                    <li>Make sure you're using the latest version of your browser.</li>
+                    <li>Try accessing the site using a different device or network.</li>
+                </ul>
+                <p>If problems persist, contact our tech team at <strong>support@frescaverde.com</strong> and describe
+                    the issue in detail.</p>
+            </section>
+
+        </div>
+    </div>
+
+    <div class="footer">
+        <h4>Fresca Verde – Sustainable. Simple. Secure.</h4>
+        <div class="footer-links">
+            <a href="#">User Agreement</a>
+            <a href="#">Privacy Policy</a>
+            <a href="#">Cookies</a>
+            <a href="#">About</a>
+        </div>
+        <p>&copy; 2025 Fresca Verde. All rights reserved.</p>
+    </div>
+
+    <script>
+
+        const hamburger = document.getElementById('hamburger');
+        const sidebarMenu = document.getElementById('sidebar-menu');
+        const closeBtn = document.querySelector('.sidebar-menu .close-btn');
+
+        hamburger.addEventListener('click', () => {
+            sidebarMenu.classList.toggle('show');
+            hamburger.classList.toggle('open');
+        });
+
+        closeBtn.addEventListener('click', () => {
+            sidebarMenu.classList.remove('show');
+            hamburger.classList.remove('open');
+        });
+
+        function showSection(id, btnElement = null) {
+            const sections = document.querySelectorAll("section");
+            const buttons = document.querySelectorAll(".nav-links button");
+
+            sections.forEach((sec) => sec.classList.remove("active"));
+            buttons.forEach((btn) => btn.classList.remove("active"));
+
+            document.getElementById(id).classList.add("active");
+
+            if (btnElement) {
+                btnElement.classList.add("active");
+            }
+
+            // Update URL hash without scrolling
+            history.replaceState(null, null, "#" + id);
+        }
+
+        // Show correct section based on URL hash on load
+        window.addEventListener("DOMContentLoaded", () => {
+            const hash = window.location.hash.substring(1); // remove the #
+            if (hash) {
+                const targetBtn = document.querySelector(`.nav-links button[onclick*="${hash}"]`);
+                if (targetBtn) showSection(hash, targetBtn);
+            }
+        });
+
+        window.addEventListener('scroll', function () {
+            const header = document.querySelector('header');
+            const carousel = document.querySelector('.carousel-container'); // make sure class matches
+
+            if (window.scrollY > 20) {
+                header.classList.add('scrolled');
+                carousel.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+                carousel.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -480,11 +480,96 @@
 
     .vouchers-container {
         display: flex;
+        flex-wrap: wrap;
         justify-content: center;
         align-items: center;
         width: 100%;
-        height: 50vh;
-        background-color: #ccc;
+        min-height: 50vh;
+        height: auto;
+        gap: 40px;
+    }
+
+    .voucher-box {
+        display: flex;
+        background-color: #e5e5e5;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.482);
+        width: 500px;
+        gap: 20px;
+        justify-content: space-evenly;
+        height: auto;
+        padding: 20px;
+    }
+
+    .voucher-image {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        padding: 0px;
+        gap: 20px;
+    }
+
+    .voucher-image img {
+        width: 290px;
+        height: 125px;
+        object-fit: cover;
+    }
+
+    .voucher-content {
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .voucher-content h2 {
+        margin: 0;
+        font-size: 24px;
+        font-family: 'Georgia', serif;
+    }
+
+    .voucher-content p {
+        font-weight: 700;
+        color: #354c3d;
+        margin: 0;
+    }
+
+    .voucher-footer {
+        display: flex;
+        align-items: center;
+        margin-top: 20px;
+        gap: 30px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .claim-btn {
+        justify-content: center;
+        display: flex;
+        background-color: #456655;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        font-weight: bold;
+        border-radius: 5px;
+        cursor: pointer;
+        align-items: center;
+        gap: 20px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.482);
+        transition: all 0.3s ease;
+    }
+
+    .claim-btn:hover {
+        background-color: black;
+        color: white;
+    }
+
+    .claim-btn img {
+        width: 28px;
+        object-fit: contain;
+
     }
 
     .membership-banner {
@@ -496,8 +581,8 @@
         height: max-content;
     }
 
-    .membership-banner p {
-        font-size: clamp(1rem, 1.9vw, 2rem);
+    .membership-banner h2 {
+        font-size: clamp(2rem, 3vw, 5rem);
         font-weight: 700;
     }
 
@@ -507,21 +592,117 @@
     }
 
     @media (max-width: 1024px) {
-        .product-card {
+
+        .product-card,
+        .mod {
             width: calc(33.33% - 20px);
+        }
+
+        .mod {
+            width: calc(33.33% - 20px) !important;
         }
     }
 
     @media (max-width: 768px) {
+
         .product-card {
             width: calc(52% - 20px);
+        }
+
+        .vouchers-container {
+            gap: 30px;
+        }
+
+        .voucher-box {
+            margin-top: 50px;
+            flex-direction: column;
+            align-items: center;
+            width: 90%;
+            padding: 15px;
+        }
+
+        .voucher-image {
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .voucher-image img {
+            width: 100%;
+            height: auto;
+        }
+
+        .voucher-content {
+            width: 100%;
+            gap: 15px;
+        }
+
+        .voucher-content h2 {
+            font-size: 20px;
+            text-align: left;
+        }
+
+        .claim-btn {
+            padding: 10px 16px;
+            gap: 10px;
+        }
+
+        .claim-btn img {
+            width: 16px;
+        }
+
+        .mod {
+            width: calc(52% - 20px) !important;
         }
     }
 
     @media (max-width: 480px) {
-        .product-card {
+
+        .product-card,
+        .mod {
             width: calc(52% - 20px);
         }
+
+        .mod {
+            width: calc(52% - 20px)!important;
+        }
+
+        .voucher-box {
+            width: 80%;
+            padding: 10px;
+        }
+
+        .voucher-image img {
+            width: 100%;
+            height: auto;
+        }
+
+        .voucher-content h2 {
+            font-size: 18px;
+            margin: 0;
+        }
+
+        .voucher-footer {
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .claim-btn {
+            width: 100%;
+            justify-content: center;
+            padding: 10px;
+            font-size: 14px;
+        }
+
+        .toast-container {
+            width: 300px !important;
+            height: 350px !important;
+        }
+
+        .membership-banner img {
+            width: 95% !important;
+            border-radius: 5px;
+        }
+
     }
 
 
@@ -569,6 +750,20 @@
         .toast button {
             font-size: 0.9rem;
             padding: 8px 16px;
+        }
+
+        .product-card button {
+            font-size: 10px;
+        }
+
+        .carousel-container.scrolled {
+            transform: scale(0.94) translateY(-25px);
+            opacity: 0.85;
+            filter: blur(10px);
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.2);
+            width: 95%;
+            height: 180px !important;
+            border-radius: 12px;
         }
     }
 
@@ -682,7 +877,8 @@
         opacity: 0;
     }
 
-    .product-card.animated {
+    .product-card.animated,
+    .mod.animated {
         animation: fadeIn 0.6s ease forwards;
     }
 
@@ -782,6 +978,93 @@
         height: 450px;
         border-radius: 12px;
     }
+
+    .toast-container {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(0.95);
+        width: 350px;
+        height: 320px;
+        background: #ffffff;
+        border-radius: 20px;
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        padding: 30px 20px;
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        transition: opacity 0.3s ease, transform 0.3s ease;
+        z-index: 1000;
+    }
+
+    .toast-container.show {
+        display: flex;
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+
+    .toast-logo {
+        width: 80px;
+        margin-top: 10px;
+        margin-bottom: 20px;
+    }
+
+    .toast-title {
+        font-size: 22px;
+        font-weight: 700;
+        color: #2f4858;
+        margin-bottom: 10px;
+    }
+
+    .toast-title span {
+        color: #00a859;
+        font-weight: 800;
+    }
+
+    .toast-description {
+        font-size: 14px;
+        color: #444;
+        margin-bottom: 30px;
+        line-height: 1.6;
+    }
+
+    .toast-btn {
+        padding: 10px 30px;
+        background-color: #00a859;
+        border: none;
+        color: #fff;
+        font-weight: bold;
+        border-radius: 30px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .toast-btn:hover {
+        background-color: #008f4d;
+    }
+
+    .bann {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .mod {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #f4f4f9;
+        border: 1px solid black;
+        border-radius: 8px;
+        width: calc(16.9% - 20px);
+        box-sizing: border-box;
+        box-shadow: 0 0 100px rgba(0, 0, 0, 0.289);
+        min-height: 320px;
+        height: auto;
+        transition: all 0.3s;
+    }
 </style>
 
 <body>
@@ -795,7 +1078,7 @@
                 <li><a href="shop.html">Shop</a></li>
                 <li><a href="about.html#about">About</a></li>
                 <li><a href="support.html">Support</a></li>
-                <li><a href="support.html">Track Your Order</a></li>
+                <li><a href="history.html">Track Your Order</a></li>
             </ul>
         </nav>
     </div>
@@ -831,7 +1114,7 @@
                     <nav>
                         <ul>
                             <li><a href="support.html">SUPPORT</a></li>
-                            <li><a href="#">TRACK YOUR ORDER</a></li>
+                            <li><a href="history.html">TRACK YOUR ORDER</a></li>
                         </ul>
                     </nav>
                 </div>
@@ -880,7 +1163,7 @@
                 <div class="store-item">
                     <a href="dairy&eggs.html">
                         <div class="img-container">
-                            <img src="img/thumbnail/HOME/Dairy and Eggs.jpg" alt="Dairy & Eggs"
+                            <img src="img/thumbnail/HOME/Dairy and Eggs.png" alt="Dairy & Eggs"
                                 style="margin-top: 30px;">
                         </div>
                         <p>DAIRY & EGGS</p>
@@ -934,7 +1217,10 @@
 
         <div class="new-release-container">
             <div class="new-release-grid">
-                <div class="product-card">
+                <div class="mod">
+                    <img class="bann"
+                        src="img/banner/Angelo_Rioveros_Colocado__A_premium_vertical_banner_(256x401)_for_an_online_c27ac179-11bc-4a76-b4fb-f32f0f0da81d.png"
+                        alt="">
                 </div>
                 <div class="product-card">
                     <div class="product-thumbnail">
@@ -1010,19 +1296,57 @@
         </a>
 
         <div class="vouchers-container">
-            ⚠️VOUCHERS SECTION UNDER MAINTENANCE
+            <div class="voucher-box">
+                <div class="voucher-image">
+                    <img src="img/vouchers/1A.jpg" alt="Voucher Image">
+                    <img src="img/vouchers/1B.jpg">
+                </div>
+                <div class="voucher-content">
+                    <h2>Early Bird<br>Voucher</h2>
+                    <p>Unlock exclusive discounts by shopping early!</p>
+                    <div class="voucher-footer">
+                        <button class="claim-btn"><img src="img/icons/voucher.svg">CLAIM</button>
+                    </div>
+                </div>
+            </div>
+            <div class="voucher-box">
+                <div class="voucher-image">
+                    <img src="img/vouchers/2A.jpg" alt="Voucher Image">
+                    <img src="img/vouchers/2B.jpg">
+                </div>
+                <div class="voucher-content">
+                    <h2>Discount<br>Voucher</h2>
+                    <p>Unlock exclusive discounts by shopping early!</p>
+                    <div class="voucher-footer">
+                        <button class="claim-btn"><img src="img/icons/voucher.svg">CLAIM</button>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div class="membership-banner">
-            <p>MEMBERSHIP</p>
+            <h2>MEMBERSHIP</h2>
             <img src="img/banner/cf06d434-e11e-4a05-9558-fbab264e7f8a.jpg" alt="">
         </div>
 
-        GITHUB V1.1 BETA COMMIT 11:51PM
-
     </div>
 
     </div>
+
+    <div id="versionToast" class="toast-container">
+        <img src="images/LOGO-removebg-preview.png" alt="Logo" class="toast-logo">
+        <div class="toast-content">
+            <h2 class="toast-title">Version <span id="versionLabel">NULL</span></h2>
+            <p class="toast-description">
+                You're viewing the official release of the Fresca Verde website by GROUP 5. Last updated on
+                18-05-25<br><br>
+                Thank you for supporting sustainable living.
+            </p>
+            <button onclick="dismissVersionToast()" class="toast-btn">OK</button>
+        </div>
+    </div>
+
+
 
     <div id="overlay" class="overlay-blur"></div>
     <div id="toast" class="toast">
@@ -1138,6 +1462,45 @@
 
     <!-- JS -->
     <script>
+
+        const CURRENT_VERSION = "1.1 BETA";
+
+        function showVersionToast() {
+            const stored = JSON.parse(localStorage.getItem('versionToastData'));
+            const now = new Date();
+
+            const hasNewVersion = !stored || stored.version !== CURRENT_VERSION;
+            const aWeekPassed = stored && stored.dismissedAt &&
+                (now - new Date(stored.dismissedAt)) > 7 * 24 * 60 * 60 * 1000;
+
+            if (hasNewVersion || aWeekPassed) {
+                document.getElementById('versionToast').classList.add('show');
+            }
+        }
+
+        function dismissVersionToast() {
+            const toast = document.getElementById('versionToast');
+            toast.classList.remove('show');
+
+            const now = new Date();
+            localStorage.setItem('versionToastData', JSON.stringify({
+                dismissedAt: now.toISOString(),
+                version: CURRENT_VERSION
+            }));
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Set version label text dynamically
+            const versionLabel = document.getElementById("versionLabel");
+            if (versionLabel) {
+                versionLabel.textContent = CURRENT_VERSION;
+            }
+
+            // Show the toast if conditions are met
+            showVersionToast();
+        });
+
+        document.addEventListener('DOMContentLoaded', showVersionToast);
 
         document.addEventListener('DOMContentLoaded', () => {
             const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
