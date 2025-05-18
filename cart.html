@@ -1044,6 +1044,62 @@
       width: 100%;
       height: auto;
     }
+
+    .toast {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: rgba(30, 30, 30, 0.9);
+      color: #fff;
+      padding: 12px 20px;
+      border-radius: 12px;
+      opacity: 0;
+      font-weight: 500;
+      font-size: 14px;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      z-index: 1000;
+    }
+
+    .toast.show {
+      animation: toastEntry 0.5s ease forwards;
+    }
+
+    .toast.hide {
+      animation: toastExit 0.5s ease forwards;
+    }
+
+    /* Entry Animation */
+    @keyframes toastEntry {
+      0% {
+        opacity: 0;
+        transform: translateX(-50%) translateY(40px);
+      }
+
+      60% {
+        opacity: 1;
+        transform: translateX(-50%) translateY(-5px);
+      }
+
+      100% {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+      }
+    }
+
+    /* Exit Animation */
+    @keyframes toastExit {
+      0% {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+      }
+
+      100% {
+        opacity: 0;
+        transform: translateX(-50%) translateY(20px);
+      }
+    }
   </style>
 </head>
 
@@ -1304,8 +1360,118 @@
     </div>
   </div>
 
+  <div id="toast" class="toast hidden">Please select at least one item to checkout.</div>
+
 
   <script>
+
+    const loggedInUser = localStorage.getItem('isLoggedIn'); // Palitan mo ang 'loggedInUser' kung iba ang key na ginagamit mo
+
+    if (!loggedInUser) {
+      // If no logged-in user is found, redirect to sign-in.html
+      window.location.href = 'need-sign-in.html';
+    }
+
+    // Check if user is logged in
+    function checkLoginStatus() {
+      console.log("checkLoginStatus called"); // Para malaman kung tinawag
+      const isLoggedIn = localStorage.getItem('isLoggedIn');
+      console.log("isLoggedIn:", isLoggedIn);
+
+      const userIcon = document.querySelector('.head-btn-end a[href="login.html"]');
+      // const cartIcon = document.getElementById('your-cart-icon-id'); // Siguraduhing tama ang ID o selector
+
+      if (isLoggedIn === 'true') {
+        if (userIcon) userIcon.href = 'account.html';
+        // if (cartIcon) cartIcon.href = 'cart.html'; // I- uncomment kung may cartIcon ka
+
+        const usersString = localStorage.getItem('users');
+        const loggedInUserEmail = localStorage.getItem('loggedInUser');
+
+        console.log("usersString from localStorage:", usersString);
+        console.log("loggedInUserEmail from localStorage:", loggedInUserEmail);
+
+        if (!usersString) {
+          console.error("localStorage item 'users' not found!");
+          document.getElementById('userNameCC').textContent = "Error: User data not found.";
+          document.getElementById('userAddressCC').textContent = "Error: User data not found.";
+          return; // Itigil na dito kung wala ang 'users'
+        }
+
+        if (!loggedInUserEmail) {
+          console.error("localStorage item 'loggedInUser' not found!");
+          // Pwedeng i-redirect dito o magpakita ng error
+          // window.location.href = 'sign-in.html';
+          document.getElementById('userNameCC').textContent = "Error: Logged in user email missing.";
+          document.getElementById('userAddressCC').textContent = "Error: Logged in user email missing.";
+          return;
+        }
+
+        let usersArray;
+        try {
+          usersArray = JSON.parse(usersString);
+          if (!Array.isArray(usersArray)) {
+            console.error("'users' in localStorage is not an array after parsing:", usersArray);
+            document.getElementById('userNameCC').textContent = "Error: Invalid user data format.";
+            document.getElementById('userAddressCC').textContent = "Error: Invalid user data format.";
+            return;
+          }
+        } catch (e) {
+          console.error("Error parsing 'users' from localStorage:", e);
+          document.getElementById('userNameCC').textContent = "Error: Cannot read user data.";
+          document.getElementById('userAddressCC').textContent = "Error: Cannot read user data.";
+          return;
+        }
+
+        const user = usersArray.find(u => u.email === loggedInUserEmail);
+        console.log("Found user:", user);
+
+        if (user) {
+          const userNameEl = document.getElementById('userName');
+          const userEmailEl = document.getElementById('userEmail');
+          const userPhoneEl = document.getElementById('userPhone');
+          const userAddressEl = document.getElementById('userAddress');
+
+          if (userNameEl) userNameEl.textContent = user.name || "N/A";
+          if (userEmailEl) userEmailEl.textContent = user.email || "N/A";
+          if (userPhoneEl) userPhoneEl.textContent = user.phone || "N/A";
+          if (userAddressEl) userAddressEl.textContent = user.address || "N/A";
+
+          // Populate billing details (#biller)
+          document.getElementById('userNameCC').textContent = user.name || "Name not available";
+          document.getElementById('userAddressCC').textContent = user.address || "Address not available";
+
+          if (user.dob) {
+            const [day, month, year] = user.dob.split('-');
+            const dobDayEl = document.getElementById('dobDay');
+            const dobMonthEl = document.getElementById('dobMonth');
+            const dobYearEl = document.getElementById('dobYear');
+
+            if (dobDayEl) dobDayEl.textContent = day || '';
+            if (dobMonthEl) dobMonthEl.textContent = month || '';
+            if (dobYearEl) dobYearEl.textContent = year || '';
+          }
+        } else {
+          console.error("User with email '" + loggedInUserEmail + "' not found in users array.");
+          document.getElementById('userNameCC').textContent = "Billing details not found.";
+          document.getElementById('userAddressCC').textContent = "Billing details not found.";
+        }
+
+      } else {
+        console.log("User not logged in, redirecting to sign-in.html");
+        window.location.href = 'sign-in.html';
+      }
+    }
+
+    // Siguraduhing tinatawag ito pagkatapos ma-load ang DOM
+    document.addEventListener('DOMContentLoaded', function () {
+      checkLoginStatus();
+    });
+
+    document.addEventListener('DOMContentLoaded', checkLoginStatus);
+    window.addEventListener('storage', checkLoginStatus);
+
+
 
     document.addEventListener("DOMContentLoaded", function () {
       const accordions = document.querySelectorAll(".accordion");
@@ -1364,7 +1530,7 @@
         const div = document.createElement('div');
         div.className = 'cart-item';
         div.innerHTML = `
-        <input type="checkbox" />
+        <input type="checkbox" class="item-checkbox" />
         <img src="${item.image}" alt="${item.name}">
         <div class="item-details">
             <p class="name">${item.name}</p>
@@ -1445,25 +1611,34 @@
 
 
     function showCheckoutSummary() {
-      const cart = JSON.parse(localStorage.getItem('cart')) || [];
-      if (cart.length === 0) return;
+      const selectedItems = Array.from(document.querySelectorAll('.cart-item input[type="checkbox"]:checked')).map(cb => cb.closest('.cart-item'));
+
+      if (selectedItems.length === 0) {
+        showToast("Please select at least one item to checkout.");
+        return;
+      }
 
       const container = document.getElementById("summary-details");
       let rows = '';
       let total = 0;
 
-      cart.forEach(item => {
-        const itemTotal = item.price * item.quantity;
+      selectedItems.forEach(item => {
+        const image = item.querySelector('img').src;
+        const name = item.querySelector('.name').innerText;
+        const price = parseFloat(item.querySelector('.price').innerText.replace('₱', ''));
+        const quantity = parseInt(item.querySelector('input[type="number"]').value);
+        const itemTotal = price * quantity;
         total += itemTotal;
+
         rows += `
-        <tr>
-          <td><img src="${item.image}"></td>
-          <td>${item.name}<br><small>Variations</small></td>
-          <td>₱${item.price}</td>
-          <td>${item.quantity}</td>
-          <td>₱${itemTotal}</td>
-        </tr>
-      `;
+      <tr>
+        <td><img src="${image}" style="width:50px;"></td>
+        <td>${name}<br><small>Variations</small></td>
+        <td>₱${price}</td>
+        <td>${quantity}</td>
+        <td>₱${itemTotal}</td>
+      </tr>
+    `;
       });
 
       const shipping = 500;
@@ -1472,24 +1647,25 @@
       const final = total + shipping - discount - voucher;
 
       container.innerHTML = `
-      <table>
-        <thead>
-          <tr>
-            <th>Product</th><th></th><th>Unit Price</th><th>Qty</th><th>Total</th>
-          </tr>
-        </thead>
-        <tbody>${rows}</tbody>
-      </table>
-      <p>Merchandise Total: <span style="float:right">₱${total}</span></p>
-      <p>Shipping Subtotal: <span style="float:right">₱${shipping}</span></p>
-      <p>Shipping Discount: <span style="float:right">₱${discount}</span></p>
-      <p>Voucher Discount: <span style="float:right">₱${voucher}</span></p>
-      <hr />
-      <p><strong>Total Payment: </strong><span style="float:right"><strong>₱${final}</strong></span></p>
-    `;
+    <table>
+      <thead>
+        <tr>
+          <th>Product</th><th></th><th>Unit Price</th><th>Qty</th><th>Total</th>
+        </tr>
+      </thead>
+      <tbody>${rows}</tbody>
+    </table>
+    <p>Merchandise Total: <span style="float:right">₱${total.toFixed(2)}</span></p>
+    <p>Shipping Subtotal: <span style="float:right">₱${shipping.toFixed(2)}</span></p>
+    <p>Shipping Discount: <span style="float:right">₱${discount.toFixed(2)}</span></p>
+    <p>Voucher Discount: <span style="float:right">₱${voucher.toFixed(2)}</span></p>
+    <hr />
+    <p><strong>Total Payment: </strong><span style="float:right"><strong>₱${final.toFixed(2)}</strong></span></p>
+  `;
 
       document.getElementById('checkout-modal').classList.remove('hidden');
     }
+
 
     function confirmCheckout() {
       const loadingOverlay = document.getElementById('loading-overlay');
@@ -1582,47 +1758,6 @@
     };
 
 
-    // Check if user is logged in
-    function checkLoginStatus() {
-      const isLoggedIn = localStorage.getItem('isLoggedIn');
-      const userIcon = document.querySelector('.head-btn-end a[href="login.html"]');
-
-      if (isLoggedIn === 'true') {
-        userIcon.href = 'account.html';
-        cartIcon.href = 'cart.html';
-      } else {
-        userIcon.href = 'sign-in.html';
-        cartIcon.href = 'need-sign-in.html';
-      }
-
-      if (isLoggedIn === 'true') {
-        const user = JSON.parse(localStorage.getItem('users')).find(user => user.email === localStorage.getItem('loggedInUser'));
-        if (user) {
-          document.getElementById('userName').textContent = user.name;
-          document.getElementById('userEmail').textContent = user.email;
-          document.getElementById('userPhone').textContent = user.phone;
-          document.getElementById('userAddress').textContent = user.address;
-          document.getElementById('userAddressCC').textContent = user.address;
-          document.getElementById('userNameCC').textContent = user.address;
-
-          if (user.dob) {
-            const [day, month, year] = user.dob.split('-');
-            document.getElementById('dobDay').textContent = day || '';
-            document.getElementById('dobMonth').textContent = month || '';
-            document.getElementById('dobYear').textContent = year || '';
-          }
-
-        }
-
-      } else {
-        // Redirect if not logged in
-        window.location.href = 'sign-in.html';
-      }
-    }
-
-    document.addEventListener('DOMContentLoaded', checkLoginStatus);
-    window.addEventListener('storage', checkLoginStatus);
-
     function handlePaymentSelectionChange() {
       // We need a way to identify the "Place Order" button inside the modal.
       // If it has an onclick="confirmCheckout()", and you want to disable it,
@@ -1689,11 +1824,12 @@
         const nameCC = document.getElementById('userNameCC');
         const addressCC = document.getElementById('userAddressCC');
 
+
         if (nameEl) nameEl.textContent = userData.name;
         if (addressEl) addressEl.textContent = userData.address;
 
-        if (nameElCC) nameElCC.textContent = userData.name;
-        if (addressElCC) addressElCC.textContent = userData.address;
+        if (nameCC) nameCC.textContent = userData.name;
+        if (addressCC) addressCC.textContent = userData.address;
       }
 
       // Save order to localStorage for order history
@@ -1726,6 +1862,21 @@
         header.classList.remove('scrolled');
       }
     });
+
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      toast.textContent = message;
+      toast.classList.remove('hidden', 'hide');
+      toast.classList.add('show');
+
+      setTimeout(() => {
+        toast.classList.remove('show');
+        toast.classList.add('hide');
+      }, 3000);
+    }
+
+
+
 
   </script>
 </body>

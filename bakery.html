@@ -350,6 +350,71 @@
             display: inline-block;
             vertical-align: middle;
         }
+
+        @keyframes cantAddShake {
+
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+
+            20%,
+            60% {
+                transform: translateX(-4px);
+            }
+
+            40%,
+            80% {
+                transform: translateX(4px);
+            }
+        }
+
+        @keyframes cantAddPulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(204, 51, 51, 0.7);
+            }
+
+            70% {
+                box-shadow: 0 0 0 8px rgba(204, 51, 51, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(204, 51, 51, 0);
+            }
+        }
+
+        .product-card-content button.cant-add {
+            height: 42px;
+            background-color: #cc3333 !important;
+            color: #fff;
+            font-weight: 500;
+            justify-content: center;
+            gap: 0;
+            animation: cantAddShake 0.5s ease, cantAddPulse 1s ease;
+        }
+
+
+
+        .custom-toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #f44336;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            z-index: 9999;
+        }
+
+        .custom-toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(-10px);
+        }
     </style>
 </head>
 
@@ -698,11 +763,69 @@
             hamburger.classList.remove('open');
         });
 
+        document.addEventListener('DOMContentLoaded', () => {
+            const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+
+            if (!isLoggedIn) {
+                const buttons = document.querySelectorAll('.main-container button');
+
+                // Block Add to Cart buttons
+                buttons.forEach(button => {
+                    button.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        showToast1("⚠️ Please sign in first!");
+
+                        // 🔴 UI feedback: disable + show warning
+                        button.classList.add('cant-add');
+                        button.innerHTML = `Oops! Not now`;
+
+                        // Optional: Force restart animation if clicked multiple times
+                        button.style.animation = 'none';
+                        button.offsetHeight; // Trigger reflow
+                        button.style.animation = '';
+
+                        // Optional: revert back after 2 seconds
+                        setTimeout(() => {
+                            button.innerHTML = `<img src="img/icons/download.svg" alt="Add to Cart"> ADD TO CART`;
+                            button.classList.remove('cant-add');
+                        }, 2000);
+                    });
+                });
+            }
+        });
+
+
+        // Toast function
+        function showToast1(message) {
+            let toast = document.createElement('div');
+            toast.textContent = message;
+            toast.className = 'custom-toast';
+            document.body.appendChild(toast);
+
+            setTimeout(() => {
+                toast.classList.add('show');
+            }, 100); // Slight delay for transition
+
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => toast.remove(), 300);
+            }, 2500); // Duration before it fades out
+        }
+
         const cards = document.querySelectorAll('.product-card');
         const toast = document.getElementById('toast');
 
         cards.forEach(card => {
             const button = card.querySelector('button');
+
+            const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+            if (!isLoggedIn) {
+                e.preventDefault();
+                showToast1("⚠️ Please sign in first!");
+                return; // 🛑 STOP here
+            }
+
+
             button.addEventListener('click', () => {
                 const name = card.querySelector('h3').innerText;
                 const image = card.querySelector('img').getAttribute('src');
@@ -746,6 +869,7 @@
 
         searchInput.addEventListener('input', filterProducts);
         filterSelect.addEventListener('change', filterProducts);
+
 
 
         // Check if the user is logged in
@@ -793,6 +917,9 @@
                 header.classList.remove('scrolled');
             }
         });
+
+
+
     </script>
 </body>
 

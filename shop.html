@@ -572,17 +572,6 @@
                     warningElement.classList.add('breathe');
                 }
             }
-
-            // Disable links if not signed in
-            if (!isLoggedIn) {
-                const links = document.querySelectorAll('.main-container a');
-                links.forEach(link => {
-                    link.addEventListener('click', (e) => {
-                        e.preventDefault(); // Block navigation
-                        showToast("⚠️ Please sign in first!");
-                    });
-                });
-            }
         });
 
         // Toast function

@@ -1463,7 +1463,7 @@
     <!-- JS -->
     <script>
 
-        const CURRENT_VERSION = "1.1 BETA";
+        const CURRENT_VERSION = "1.02 BETA";
 
         function showVersionToast() {
             const stored = JSON.parse(localStorage.getItem('versionToastData'));
@@ -1506,25 +1506,7 @@
             const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
 
             if (!isLoggedIn) {
-                const links = document.querySelectorAll('.main-container a');
                 const buttons = document.querySelectorAll('.new-release-container button');
-
-                links.forEach(link => {
-                    link.addEventListener('click', (e) => {
-                        e.preventDefault();
-                        showToast1("⚠️ Please sign in first!");
-
-                        const card = link.closest('.store-item');
-                        if (card) {
-                            card.classList.add('shake1');
-
-                            // Remove the class after animation completes
-                            setTimeout(() => {
-                                card.classList.remove('shake1');
-                            }, 400); // Same duration as the animation
-                        }
-                    });
-                });
 
                 // Block Add to Cart buttons
                 buttons.forEach(button => {
