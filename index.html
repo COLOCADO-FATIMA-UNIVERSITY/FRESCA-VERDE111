@@ -440,11 +440,11 @@
     .product-card button img {
         width: 25px;
         height: 25px;
-        transition: transform 0.2s ease;
+        transition: transform 5s ease;
     }
 
     .product-card button:active img {
-        animation: shake 0.5s;
+        animation: shake 0.2s;
     }
 
     .product-card .add-to-cart:hover {
@@ -664,7 +664,7 @@
         }
 
         .mod {
-            width: calc(52% - 20px)!important;
+            width: calc(52% - 20px) !important;
         }
 
         .voucher-box {
@@ -1122,7 +1122,7 @@
                 <div class="head-btn-end">
                     <a href="login.html"><img src="images/USER-removebg-preview.png" alt="User" /></a>
                     <a href="cart.html"><img src="images/CART.png" alt="Cart" /></a>
-                    <a href="#"><img src="images/SEARCH.png" alt="Search" /></a>
+                    <a href="search-products.html"><img src="images/SEARCH.png" alt="Search" /></a>
                 </div>
             </div>
         </div>
@@ -1609,14 +1609,25 @@
                 overlay.classList.remove('show');
             };
         }
-
+        
         document.addEventListener('DOMContentLoaded', () => {
             const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
             const username = localStorage.getItem('username') || 'Guest';
 
+            const stored = JSON.parse(localStorage.getItem('welcomeToastData')) || {};
+            const now = new Date();
+
+            const oneWeek = 7 * 24 * 60 * 60 * 1000;
+            const shouldShow =
+                !stored.dismissedAt ||
+                (now - new Date(stored.dismissedAt)) > oneWeek ||
+                stored.version !== CURRENT_VERSION;
+
+            if (!shouldShow) return;
+
             if (isLoggedIn) {
                 showToast(
-                    `👋 Welcome back, ${username}!`,
+                    `👋 Welcome, ${username}!`,
                     `We're glad to see you again. Ready to continue shopping?`
                 );
             } else {
@@ -1625,7 +1636,20 @@
                     `Sign in to track orders and enjoy a personalized experience.`
                 );
             }
+
+            // Save dismiss handler to update localStorage
+            const toastBtn = document.getElementById('toastBtn');
+            toastBtn.onclick = () => {
+                document.getElementById('toast').classList.remove('show');
+                document.getElementById('overlay').classList.remove('show');
+
+                localStorage.setItem('welcomeToastData', JSON.stringify({
+                    dismissedAt: now.toISOString(),
+                    version: CURRENT_VERSION
+                }));
+            };
         });
+
 
 
         const cards = document.querySelectorAll('.product-card');

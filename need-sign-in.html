@@ -27,12 +27,14 @@
         align-items: center;
         height: 89vh;
     }
-
-    .graphic-left img {
-        width: 60%;
-        height: auto;
+    .graphic-left{
+        margin-right: 100px;
     }
 
+    .graphic-left img {
+        width: 70%;
+        height: auto;
+    }
     .sign-in-form {
         background-color: #fff;
         padding: 30px 25px;
@@ -582,7 +584,7 @@
                 <div class="head-btn-end">
                     <a href="login.html"><img src="images/USER-removebg-preview.png" alt="User" /></a>
                     <a href="cart.html"><img src="images/CART.png" alt="Cart" /></a>
-                    <a href="#"><img src="images/SEARCH.png" alt="Search" /></a>
+                    <a href="search-products.html"><img src="images/SEARCH.png" alt="Search" /></a>
                 </div>
             </div>
         </div>
@@ -590,7 +592,7 @@
 
     <div class="main-container">
         <div class="graphic-left">
-            <img src="img/icons/undraw_mobile-login_4ntr (1).svg" alt="">
+            <img src="img/icons/LOGO-removebg-preview.png" alt="">
         </div>
 
         <div class="sign-in-form">
@@ -601,18 +603,25 @@
             <form action="login.html" method="POST">
                 <div class="input-group">
                     <label for="email">Email:</label>
-                    <input type="email" id="email" name="email" required />
+                    <input type="email" id="email" name="email" placeholder="e.g. example@gmail.com" required />
                 </div>
                 <div class="input-group">
                     <label for="password">Password:</label>
-                    <input type="password" id="password" name="password" required />
+                    <input type="password" id="password" name="password" placeholder="Enter your password" required />
                 </div>
+
                 <span class="toggle-password" onclick="togglePassword()">
                     <i class="fas fa-eye" id="eye-icon"></i>
                 </span>
+
+                <div style="text-align: right; margin-top: 5px;">
+                    <a href="forgot-password.html" style="font-size: 0.9rem; color: #456655;">Forgot your password?</a>
+                </div>
+
                 <div id="toast" class="toast"></div>
                 <button type="submit">Sign In</button>
             </form>
+
 
             <div class="social-login">
                 <p>or log in with</p>
@@ -663,7 +672,7 @@
 
         document.addEventListener('DOMContentLoaded', () => {
             checkLoginStatus();
-            showCenterAlert(); // ✅ Show alert right when the page loads
+            showCenterAlert();
         });
 
 
@@ -675,13 +684,11 @@
             const alert = document.getElementById('center-alert');
             const content = alert.querySelector('.center-alert-content');
 
-            // Add fade-out animation
             content.style.animation = 'popFadeOut 0.4s ease';
 
-            // Wait for animation to finish before hiding
             setTimeout(() => {
                 alert.classList.remove('show');
-                content.style.animation = ''; // reset for next time
+                content.style.animation = '';
             }, 400);
         }
 

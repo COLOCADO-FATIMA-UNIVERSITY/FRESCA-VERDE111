@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style/header.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Arimo:wght@700&family=Open+Sans:wght@300&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="style/footer.css">
+    <script src="js/products.js" defer></script>
+    <script src="js/search.js" defer></script>
+    <title>Search - Fresca Verde</title>
+    <link rel="icon" type="image/x-icon" href="/images/LOGO-removebg-preview.png">
+    <style>
+        :root {
+            --primary: #456655;
+            --accent: #88aa99;
+            --bg: #f8f8f5;
+            --text: #2f2f2f;
+            --muted: #6b6b6b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Open Sans", sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+        }
+
+        .whole-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        .upper-con {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            gap: 1rem;
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+
+        .filters input,
+        .filters select {
+            padding: 0.6rem 1rem;
+            font-size: 1rem;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            min-width: 200px;
+        }
+
+        .main-container {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+
+        .more {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        #category {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 0;
+            padding: 0;
+        }
+
+        .bold {
+            font-weight: bold;
+        }
+
+        .more {
+            text-align: center;
+            color: var(--primary);
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .more img {
+            width: 36px;
+            height: 36px;
+            margin: 0 auto;
+            display: block;
+        }
+
+        .product-container {
+            display: grid;
+            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+            padding: 20px;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 0 100px rgba(0, 0, 0, 0.289);
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s ease;
+            border: #ffffff 1px solid;
+        }
+
+        h3,
+        p {
+            margin: 0;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            border: #456655 1px solid;
+            box-shadow: 0 0 25px rgba(0, 0, 0, 0.496);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 200px;
+            background-color: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .product-card:hover .product-image img {
+            transform: scale(1.05);
+        }
+
+        .product-card-content {
+            padding: 1rem;
+            flex-grow: 1;
+        }
+
+        .product-card-content h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        .product-card-content p {
+            font-size: 0.95rem;
+            color: var(--text);
+            margin-bottom: 1rem;
+        }
+
+
+        .product-card-content button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 0.6rem 1rem;
+            font-size: 0.7rem;
+            font-weight: 300;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            gap: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .product-card-content button:hover {
+            background-color: #5a7a66;
+            transform: scale(1.05);
+        }
+
+        @keyframes shake {
+
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+
+            20%,
+            60% {
+                transform: translateX(-5px);
+            }
+
+            40%,
+            80% {
+                transform: translateX(5px);
+            }
+        }
+
+        .product-card-content button:active {
+            transform: scale(0.98);
+            box-shadow: 0 0 50px #456655;
+            background-color: #456655;
+        }
+
+        .product-card-content button img {
+            width: 25px;
+            height: 25px;
+            transition: transform 5s ease;
+        }
+
+        .product-card-content button:active img {
+            animation: shake 0.2s;
+        }
+
+        .product-card {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 0.6s ease forwards;
+
+        }
+
+        .product-card:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        .product-card:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .product-card:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+
+        .product-card:nth-child(4) {
+            animation-delay: 0.4s;
+        }
+
+        .product-card:nth-child(5) {
+            animation-delay: 0.5s;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (min-width: 1280px) {
+            .product-container {
+                grid-template-columns: repeat(6, 1fr);
+            }
+        }
+
+
+        @media (max-width: 768px) {
+            .product-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .filters {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .filters input,
+            .filters select {
+                width: 100%;
+            }
+
+            .upper-con {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+
+        @media (max-width: 480px) {
+
+            .product-card img {
+                height: 200px;
+            }
+
+            .product-card-content button {
+                font-size: 10px;
+            }
+        }
+
+        @keyframes toastAnim {
+            0% {
+
+                color: #000000;
+            }
+
+            50% {
+                color: #0b7c3e;
+                font-weight: bold;
+            }
+
+            100% {
+                color: #000000;
+            }
+        }
+
+        /* Toast Notification */
+        #toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            background: rgba(30, 30, 30, 0.9);
+            color: #fff;
+            padding: 12px 20px;
+            border-radius: 12px;
+            opacity: 0;
+            font-weight: 500;
+            font-size: 14px;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+        }
+
+        #toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        #toast .message {
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        @keyframes cantAddShake {
+
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+
+            20%,
+            60% {
+                transform: translateX(-4px);
+            }
+
+            40%,
+            80% {
+                transform: translateX(4px);
+            }
+        }
+
+        @keyframes cantAddPulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(204, 51, 51, 0.7);
+            }
+
+            70% {
+                box-shadow: 0 0 0 8px rgba(204, 51, 51, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(204, 51, 51, 0);
+            }
+        }
+
+        .product-card-content button.cant-add {
+            height: 42px;
+            background-color: #cc3333 !important;
+            color: #fff;
+            font-weight: 500;
+            justify-content: center;
+            gap: 0;
+            animation: cantAddShake 0.5s ease, cantAddPulse 1s ease;
+        }
+
+
+
+        .custom-toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #f44336;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            z-index: 9999;
+        }
+
+        .custom-toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(-10px);
+        }
+
+        .search-container {
+            width: 100%;
+            padding: 1rem;
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        .search-container h1 {
+            font-size: 1.6rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        #searchBox {
+            width: 100%;
+            max-width: 400px;
+            padding: 0.75rem 1rem;
+            font-size: 1rem;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            margin-bottom: 2rem;
+            outline: none;
+        }
+
+        #searchBox:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 5px rgba(69, 102, 85, 0.4);
+        }
+
+        #results.results-grid {
+            display: grid;
+            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            width: 100%;
+            padding: 0 1rem;
+        }
+
+        #results .product-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 0.6s ease forwards;
+            height: 350px;
+            max-height: 350px;
+        }
+
+        #results .product-card .product-image {
+            width: 100%;
+            height: 200px;
+            background-color: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        #results .product-card .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        #results .product-card-content {
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            flex-grow: 1;
+        }
+
+        #results .product-card-content button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 0.6rem 1rem;
+            font-size: 0.8rem;
+            font-weight: 400;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            align-self: flex-end;
+        }
+
+        #results .product-card-content button:hover {
+            background-color: #5a7a66;
+            transform: scale(1.05);
+        }
+
+
+        @media (max-width: 768px) {
+            #results.results-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            #searchBox {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            #results .product-card img {
+                height: 200px;
+            }
+
+            #results .product-card-content button {
+                font-size: 10px;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <!-- Sidebar Menu -->
+    <div id="sidebar-menu" class="sidebar-menu">
+        <div class="close-btn">&times;</div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="explore.html">Explore</a></li>
+                <li><a href="shop.html">Shop</a></li>
+                <li><a href="about.html#about">About</a></li>
+                <li><a href="support.html">Support</a></li>
+                <li><a href="support.html">Track Your Order</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <!-- Main Header -->
+    <header>
+        <div class="head-container">
+            <!-- LEFT -->
+            <div class="head-left">
+                <div class="sidebar" id="hamburger">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+                <div class="head-brand-start">
+                    <a href="#"><img src="images/LOGO-removebg-preview.png" alt="Fresca Verde Logo" /></a>
+                </div>
+                <div class="head-navbar-right">
+                    <nav>
+                        <ul>
+                            <li><a href="index.html">HOME</a></li>
+                            <li><a href="explore.html">EXPLORE</a></li>
+                            <li><a href="shop.html"><span class="bold">SHOP</span></a></li>
+                            <li><a href="about.html#about">ABOUT</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+
+            <!-- RIGHT -->
+            <div class="head-right">
+                <div class="head-navbar-left">
+                    <nav>
+                        <ul>
+                            <li><a href="support.html">SUPPORT</a></li>
+                            <li><a href="history.html">TRACK YOUR ORDER</a></li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="head-btn-end">
+                    <a href="wait.html"><img src="images/USER-removebg-preview.png" alt="User" /></a>
+                    <a href="cart.html"><img src="images/CART.png" alt="Cart" /></a>
+                    <a href="#"><img src="images/SEARCH.png" alt="Search" /></a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="whole-container">
+        <div class="upper-con">
+
+            <p class="section-title"><a href="shop.html"><img src="img/icons/output-onlinegiftools.gif" alt=""
+                        width="30px"></a><span class="bold">Shop</span> - Search Products</p>
+            <div class="filters">
+                <select id="categoryFilter">
+                    <option value="all">All</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="upper-con" , style="margin: 0;">
+            <p id="category">ENTIRE STOCK</p>
+        </div>
+
+        <div class="main-container">
+            <div class="search-container">
+                <h1>Product Search</h1>
+                <input type="text" id="searchBox" placeholder="Search for products...">
+                <div id="results" class="results-grid"></div>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="toast">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/Bitmap_VS_SVG.svg" alt="Cart icon">
+        <span class="message">Added to cart!</span>
+    </div>
+
+    <!-- Desktop Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-column">
+                <h4>About Us</h4>
+                <p>About Fresca Verde</p>
+                <p>Sustainability & Organic – Commitment</p>
+                <p>Careers</p>
+            </div>
+            <div class="footer-column">
+                <h4>Quick Help</h4>
+                <p>FAQ</p>
+                <p>Terms & Conditions</p>
+                <p>Security & Privacy Policy</p>
+                <p>Shipping & Delivery</p>
+            </div>
+            <div class="footer-column">
+                <h4>My Account</h4>
+                <p><a href="sign-in.html">Log In</a></p>
+                <p><a href="sign-up.html">Sign Up</a></p>
+                <p>Apply Membership</p>
+                <p>Renew Membership</p>
+            </div>
+            <div class="footer-column">
+                <h4>Contact Us</h4>
+                <p>Email</p>
+                <p>Landline</p><br>
+                <p><em>Typically replies instantly</em></p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>All rights reserved – Fresca Verde</p>
+            <img src="images/LOGO-removebg-preview.png" alt="Fresca Verde Logo" class="footer-logo">
+        </div>
+    </footer>
+
+    <!-- Mobile Footer -->
+    <footer class="mobile-footer">
+        <div class="footer-section">
+
+            <button class="accordion">About Us <span class="arrow">&#9662;</span></button>
+            <div class="panel">
+                <a href="">
+                    <p>About Fresca Verde</p>
+                </a>
+                <a href="">
+                    <p>Sustainability & Organic – Commitment</p>
+                </a>
+                <a href="">
+                    <p>Careers</p>
+                </a>
+            </div>
+
+            <button class="accordion">Quick Help <span class="arrow">&#9662;</span></button>
+            <div class="panel">
+                <a href="">
+                    <p>FAQ</p>
+                </a>
+                <a href="">
+                    <p>Terms & Conditions</p>
+                </a>
+                <a href="">
+                    <p>Security & Privacy Policy</p>
+                </a>
+                <a href="">
+                    <p>Shipping & Delivery</p>
+                </a>
+            </div>
+
+            <button class="accordion">My Account <span class="arrow">&#9662;</span></button>
+            <div class="panel">
+                <a href="login.html">
+                    <p>Log In</p>
+                </a>
+                <a href="signup.html">
+                    <p>Sign Up</p>
+                </a>
+                <a href="">
+                    <p>Apply Membership</p>
+                </a>
+                <a href="">
+                    <p>Renew Membership</p>
+                </a>
+            </div>
+
+            <button class="accordion">Contact Us <span class="arrow">&#9662;</span></button>
+            <div class="panel">
+                <a href="">
+                    <p>Email</p>
+                </a>
+                <a href="">
+                    <p>Landline</p>
+                </a>
+                <p><i>Typically replies instantly</i></p>
+            </div>
+
+        </div>
+
+        <div class="mobile-footer-logo">
+            <p class="footer-note">All rights reserved – Fresca Verde</p>
+            <img src="images/LOGO-removebg-preview.png" alt="logo">
+        </div>
+    </footer>
+    <script>
+        const hamburger = document.getElementById('hamburger');
+        const sidebarMenu = document.getElementById('sidebar-menu');
+        const closeBtn = document.querySelector('.sidebar-menu .close-btn');
+
+        hamburger.addEventListener('click', () => {
+            sidebarMenu.classList.toggle('show');
+            hamburger.classList.toggle('open');
+        });
+
+        closeBtn.addEventListener('click', () => {
+            sidebarMenu.classList.remove('show');
+            hamburger.classList.remove('open');
+        });
+
+        const toast = document.getElementById('toast');
+
+        // ✅ Event Delegation for Add to Cart (including dynamically added cards)
+        document.addEventListener('click', function (event) {
+            const button = event.target.closest('.product-card button');
+
+            const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+            if (!isLoggedIn) {
+                e.preventDefault();
+                showToast1("⚠️ Please sign in first!");
+                return; // 🛑 STOP here
+            }
+
+            if (button) {
+                const card = button.closest('.product-card');
+                const name = card.querySelector('h3').innerText;
+                const image = card.querySelector('img').getAttribute('src');
+                const priceText = card.querySelector('p').innerText.replace('₱', '');
+                const price = parseFloat(priceText);
+
+                const product = { name, image, price, quantity: 1 };
+                let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+                const existing = cart.find(item => item.name === product.name);
+                if (existing) {
+                    existing.quantity += 1;
+                } else {
+                    cart.push(product);
+                }
+
+                localStorage.setItem('cart', JSON.stringify(cart));
+
+                toast.innerText = `${product.name} added to cart!`;
+                toast.classList.add('show');
+                setTimeout(() => toast.classList.remove('show'), 5000);
+            }
+        });
+
+        // Live Search & Filter
+        const searchInput = document.getElementById('search');
+        const filterSelect = document.getElementById('categoryFilter');
+
+        function filterProducts() {
+            const query = searchInput.value.toLowerCase();
+            const category = filterSelect.value;
+            const cards = document.querySelectorAll('.product-card');
+
+            cards.forEach(card => {
+                const name = card.dataset.name?.toLowerCase() || '';
+                const cat = card.dataset.category;
+                const match = name.includes(query) && (category === 'all' || category === cat);
+                card.style.display = match ? 'block' : 'none';
+            });
+        }
+
+        searchInput?.addEventListener('input', filterProducts);
+        filterSelect?.addEventListener('change', filterProducts);
+
+        // Login status check
+        function checkLoginStatus() {
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+            const userIcon = document.querySelector('.head-btn-end a[href="wait.html"]');
+            if (!userIcon) return;
+
+            userIcon.href = isLoggedIn === 'true' ? 'account.html' : 'sign-in.html';
+        }
+
+        document.addEventListener('DOMContentLoaded', checkLoginStatus);
+        window.addEventListener('storage', checkLoginStatus);
+
+        // Accordion
+        document.addEventListener("DOMContentLoaded", function () {
+            const accordions = document.querySelectorAll(".accordion");
+
+            accordions.forEach((accordion) => {
+                accordion.addEventListener("click", function () {
+                    this.classList.toggle("active");
+                    const panel = this.nextElementSibling;
+                    panel.style.display = panel.style.display === "block" ? "none" : "block";
+                });
+            });
+        });
+
+        // Header scroll effect
+        window.addEventListener('scroll', function () {
+            const header = document.querySelector('header');
+            if (window.scrollY > 20) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Dynamic Load for Poultry and Shellfish
+        let poultryIndex = 0;
+        let shellfishIndex = 0;
+        const productsPerLoad = 5;
+        let poultryNames = [];
+        let shellfishNames = [];
+
+        const poultryPrices = [155, 220, 150, 100, 200, 190, 230, 180, 175, 250];
+        const shellfishPrices = [400, 250, 120, 260, 350, 295, 310, 330, 305, 320];
+
+        fetch('products/products_poultry.txt')
+            .then(res => res.text())
+            .then(data => poultryNames = data.trim().split('\n'));
+
+        fetch('products/products_shellfish.txt')
+            .then(res => res.text())
+            .then(data => shellfishNames = data.trim().split('\n'));
+
+        function createCard(name, price, category) {
+            const card = document.createElement("div");
+            card.className = "product-card";
+            card.dataset.category = category;
+            card.dataset.name = name;
+
+            const imageName = name.split(' ')[0];
+            const imagePath = `img/thumbnail/${category.toUpperCase()}/${imageName}.png`;
+
+            card.innerHTML = `
+            <div class="product-image">
+              <img src="${imagePath}" alt="${name}" loading="lazy"
+                onerror="this.onerror=null; this.src='img/icons/noun-box-2845338-cropped.svg';" />
+            </div>
+            <div class="product-card-content">
+              <h3>${name}</h3>
+              <p>₱${price.toFixed(2)}</p>
+              <button><img src="img/icons/download.svg" alt="">ADD TO CART</button>
+            </div>
+        `;
+            return card;
+        }
+
+        // View More: Poultry
+        document.getElementById("viewMorePoultry")?.addEventListener("click", () => {
+            const container = document.querySelector(".product-container[data-category='poultry']");
+            for (let i = 0; i < productsPerLoad; i++) {
+                if (poultryIndex >= poultryNames.length) break;
+                const name = poultryNames[poultryIndex] || `Unnamed Poultry ${poultryIndex + 1}`;
+                const price = poultryPrices[poultryIndex] || 150;
+                const card = createCard(name, price, "poultry");
+                container.insertBefore(card, document.getElementById("viewMorePoultry"));
+                poultryIndex++;
+            }
+            if (poultryIndex >= poultryNames.length) {
+                document.getElementById("viewMorePoultry").style.display = "none";
+            }
+        });
+
+        // View More: Shellfish
+        document.getElementById("viewMoreShellfish")?.addEventListener("click", () => {
+            const container = document.querySelector(".product-container[data-category='shellfish']");
+            for (let i = 0; i < productsPerLoad; i++) {
+                if (shellfishIndex >= shellfishNames.length) break;
+                const name = shellfishNames[shellfishIndex] || `Unnamed Shellfish ${shellfishIndex + 1}`;
+                const price = shellfishPrices[shellfishIndex] || 199;
+                const card = createCard(name, price, "shellfish");
+                container.insertBefore(card, document.getElementById("viewMoreShellfish"));
+                shellfishIndex++;
+            }
+            if (shellfishIndex >= shellfishNames.length) {
+                document.getElementById("viewMoreShellfish").style.display = "none";
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+
+            if (!isLoggedIn) {
+                const buttons = document.querySelectorAll('.main-container button');
+
+                // Block Add to Cart buttons
+                buttons.forEach(button => {
+                    button.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        showToast1("⚠️ Please sign in first!");
+
+                        // 🔴 UI feedback: disable + show warning
+                        button.classList.add('cant-add');
+                        button.innerHTML = `Oops! Not now`;
+
+                        // Optional: Force restart animation if clicked multiple times
+                        button.style.animation = 'none';
+                        button.offsetHeight; // Trigger reflow
+                        button.style.animation = '';
+
+                        // Optional: revert back after 2 seconds
+                        setTimeout(() => {
+                            button.innerHTML = `<img src="img/icons/download.svg" alt="Add to Cart"> ADD TO CART`;
+                            button.classList.remove('cant-add');
+                        }, 2000);
+                    });
+                });
+            }
+        });
+
+
+        // Toast function
+        function showToast1(message) {
+            let toast = document.createElement('div');
+            toast.textContent = message;
+            toast.className = 'custom-toast';
+            document.body.appendChild(toast);
+
+            setTimeout(() => {
+                toast.classList.add('show');
+            }, 100); // Slight delay for transition
+
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => toast.remove(), 300);
+            }, 2500); // Duration before it fades out
+        }
+    </script>
+
+</body>
+
+</html>

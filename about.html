@@ -28,7 +28,25 @@
         font-size: clamp(1rem, 1.5vw, 1.5rem);
     }
 
-    .banner img {
+    h1 {
+        padding: 0;
+        margin: 0;
+    }
+
+    .banner {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        background-image: url('img/banner/UI-DESKTOP\ VIEW.jpg');
+        background-size: cover;
+        background-position: center;
+        font-size: clamp(1rem, 1.2vw, 2rem);
+        color: #daa520;
+        font-weight: bolder;
+        font-family: 'Times New Roman', Times, serif;
+        -webkit-text-stroke: 1px #6d4e00;
         width: 100%;
         height: 220px;
         object-fit: cover;
@@ -76,9 +94,6 @@
     }
 
     @media (max-width: 480px) {
-        .banner img {
-            height: 150px;
-        }
 
         .intro {
             font-size: 0.9rem;
@@ -140,14 +155,15 @@
                 <div class="head-btn-end">
                     <a href="login.html"><img src="images/USER-removebg-preview.png" alt="User" /></a>
                     <a href="cart.html"><img src="images/CART.png" alt="Cart" /></a>
-                    <a href="#"><img src="images/SEARCH.png" alt="Search" /></a>
+                    <a href="search-products.html"><img src="images/SEARCH.png" alt="Search" /></a>
                 </div>
             </div>
         </div>
     </header>
 
     <div class="banner">
-        <img src="img/banner/UI-DESKTOP VIEW.jpg" alt="">
+        <h1>Effortless Shopping</h1><br>
+        <h1>for a <span style="background-color: #f8de7e; padding: 10px; border-radius: 10px;">Healthier</span> You</h1>
     </div>
 
     <div class="main-container">
