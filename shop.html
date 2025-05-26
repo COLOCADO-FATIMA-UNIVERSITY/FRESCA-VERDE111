@@ -362,18 +362,17 @@
         <div class="main-container">
             <div class="store-flex">
                 <div class="store-item">
-                    <a href="dairy&eggs.html">
+                    <a href="unified.html?category=Dairy%20%26%20Eggs">
                         <div class="img-container">
                             <img src="img/thumbnail/HOME/Dairy and Eggs.png" alt="Dairy & Eggs"
                                 style="margin-top: 30px;">
                         </div>
                         <p>DAIRY & EGGS</p>
                     </a>
-
                 </div>
 
                 <div class="store-item">
-                    <a href="meat&seafoods.html">
+                    <a href="unified.html?category=Meat%20%26%20Seafoods">
                         <div class="img-container">
                             <img src="img/thumbnail/HOME/Meat and Seafood.png" alt="Meat & Seafood">
                         </div>
@@ -382,7 +381,7 @@
                 </div>
 
                 <div class="store-item">
-                    <a href="bakery.html">
+                    <a href="unified.html?category=Bakery%20Treats">
                         <div class="img-container">
                             <img src="img/thumbnail/HOME/Bakery Goods.png" alt="Bakery Treats">
                         </div>
@@ -391,7 +390,7 @@
                 </div>
 
                 <div class="store-item">
-                    <a href="snacks.html">
+                    <a href="unified.html?category=Snacks%20%26%20Sweets">
                         <div class="img-container">
                             <img src="img/thumbnail/HOME/Snack and Sweets.png" alt="Snacks & Sweets">
                         </div>
@@ -400,7 +399,7 @@
                 </div>
 
                 <div class="store-item">
-                    <a href="organic.html">
+                    <a href="unified.html?category=Organic">
                         <div class="img-container">
                             <img src="img/thumbnail/HOME/Organic Foods.png" alt="Organic Products">
                         </div>
@@ -409,6 +408,7 @@
                 </div>
             </div>
         </div>
+
 
         <div class="line fade-slide-up">
             <hr>
@@ -420,7 +420,9 @@
             <img src="img/thumbnail/HOME/Bakery Goods.png" alt="" width="150px">
             <div class="right">
                 <h1>Not Sure What to Pick? Discover Random Products!</h1>
-                <a href="search-products.html"><p><img src="img/icons/view-all-shop.svg" alt="" width="30px">View All</p></a>
+                <a href="search-products.html">
+                    <p><img src="img/icons/view-all-shop.svg" alt="" width="30px">View All</p>
+                </a>
             </div>
         </div>
     </div>
@@ -430,28 +432,28 @@
         <div class="footer-container">
             <div class="footer-column">
                 <h4>About Us</h4>
-                <p>About Fresca Verde</p>
-                <p>Sustainability & Organic – Commitment</p>
-                <p>Careers</p>
+                <p><a href="about.html">About Fresca Verde</a></p>
+                <p><a href="about.html#commitment">Sustainability & Organic – Commitment</a></p>
+                <p><a href="explore.html">Careers</a></p>
             </div>
             <div class="footer-column">
                 <h4>Quick Help</h4>
-                <p>FAQ</p>
-                <p>Terms & Conditions</p>
-                <p>Security & Privacy Policy</p>
-                <p>Shipping & Delivery</p>
+                <p><a href="info1.html#faqs">FAQ</a></p>
+                <p> <a href="info.html?section=agreement">Terms & Conditions</a></p>
+                <p><a href="info.html?section=privacy">Security & Privacy Policy</a></p>
+                <p><a href="info.html?section=shipping">Shipping & Delivery</a></p>
             </div>
             <div class="footer-column">
                 <h4>My Account</h4>
-                <p><a href="login.html">Log In</a></p>
-                <p><a href="signup.html">Sign Up</a></p>
-                <p>Apply Membership</p>
-                <p>Renew Membership</p>
+                <p><a href="sign-in.html">Log In</a></p>
+                <p><a href="sign-up.html">Sign Up</a></p>
+                <p><a href="membership-apply.html">Apply Membership</a></p>
+                <p><a href="membership-renew.html">Renew Membership</a></p>
             </div>
             <div class="footer-column">
                 <h4>Contact Us</h4>
-                <p>Email</p>
-                <p>Landline</p><br>
+                <p><a href="mailto:support@frescaverde.com">support@frescaverde.com</a></p>
+                <p><a href="tel:+6328123456">(02) 812-3456</a></p><br>
                 <p><em>Typically replies instantly</em></p>
             </div>
         </div>
@@ -545,7 +547,7 @@
             hamburger.classList.remove('open');
         });
 
-        function checkLoginStatus() { //hindi ata gumagana kase kapag pinipindot ko yung cart kahit d naka sign in pumupunta paidin s acart eh
+        function checkLoginStatus() {
             const isLoggedIn = localStorage.getItem('isLoggedIn');
             const userIcon = document.querySelector('.head-btn-end a[href="login.html"]');
             const cartIcon = document.querySelector('.head-btn-end a[href="cart.html"]');
@@ -554,8 +556,8 @@
                 userIcon.href = 'account.html';
                 cartIcon.href = 'cart.html';
             } else {
-                userIcon.href = 'sign-in.html';
-                cartIcon.href = 'need-sign-in.html';
+                userIcon.href = 'sign-in.html?auth=required';
+                cartIcon.href = 'sign-in.html?auth=required';
             }
         }
 

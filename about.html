@@ -208,6 +208,21 @@
                 </p>
             </div>
         </div>
+        <div class="upper" id="commitment">
+            <p>Sustainability & Organic – <span class="bold">Commitment</span></p>
+        </div>
+        <div class="intro">
+            <p>Welcome to Fresca Verde – where health, sustainability, and deliciousness meet. Our journey began with a
+                simple yet powerful idea: to make nourishing, organic food accessible to everyone. As a team of
+                passionate individuals who care deeply about the environment, health, and supporting local farmers,
+                we’ve made it our mission to provide the highest quality organic groceries, fresh produce, pantry
+                staples, and eco-friendly products to families everywhere. We understand that making healthier choices
+                can feel overwhelming at times. That’s why we’ve carefully curated a selection of products that are not
+                only good for you, but good for the planet. From farm-fresh fruits and vegetables, free-range meats, and
+                dairy products to organic snacks, gluten-free options, and natural cleaning supplies, [Fresca Verde] is
+                your one-stop destination for all things organic.
+            </p>
+        </div>
     </div>
 
     <!-- Desktop Footer -->
@@ -215,33 +230,33 @@
         <div class="footer-container">
             <div class="footer-column">
                 <h4>About Us</h4>
-                <p>About Fresca Verde</p>
-                <p>Sustainability & Organic – Commitment</p>
-                <p>Careers</p>
+                <p><a href="about.html">About Fresca Verde</a></p>
+                <p><a href="about.html#commitment">Sustainability & Organic – Commitment</a></p>
+                <p><a href="explore.html">Careers</a></p>
             </div>
             <div class="footer-column">
                 <h4>Quick Help</h4>
-                <p>FAQ</p>
-                <p>Terms & Conditions</p>
-                <p>Security & Privacy Policy</p>
-                <p>Shipping & Delivery</p>
+                <p><a href="info1.html#faqs">FAQ</a></p>
+                <p> <a href="info.html?section=agreement">Terms & Conditions</a></p>
+                <p><a href="info.html?section=privacy">Security & Privacy Policy</a></p>
+                <p><a href="info.html?section=shipping">Shipping & Delivery</a></p>
             </div>
             <div class="footer-column">
                 <h4>My Account</h4>
-                <p><a href="login.html">Log In</a></p>
-                <p><a href="signup.html">Sign Up</a></p>
-                <p>Apply Membership</p>
-                <p>Renew Membership</p>
+                <p><a href="sign-in.html">Log In</a></p>
+                <p><a href="sign-up.html">Sign Up</a></p>
+                <p><a href="membership-apply.html">Apply Membership</a></p>
+                <p><a href="membership-renew.html">Renew Membership</a></p>
             </div>
             <div class="footer-column">
                 <h4>Contact Us</h4>
-                <p>Email</p>
-                <p>Landline</p><br>
+                <p><a href="mailto:support@frescaverde.com">support@frescaverde.com</a></p>
+                <p><a href="tel:+6328123456">(02) 812-3456</a></p><br>
                 <p><em>Typically replies instantly</em></p>
             </div>
         </div>
         <div class="footer-bottom">
-            <p>All rights reserved – Fresca Verde</p>
+            <p>All rights reserved – Fresca Verde <span id="versionLabelD"></span></p>
             <img src="images/LOGO-removebg-preview.png" alt="Fresca Verde Logo" class="footer-logo">
         </div>
     </footer>
@@ -281,10 +296,10 @@
 
             <button class="accordion">My Account <span class="arrow">&#9662;</span></button>
             <div class="panel">
-                <a href="login.html">
+                <a href="sign-in.html">
                     <p>Log In</p>
                 </a>
-                <a href="signup.html">
+                <a href="sign-up.html">
                     <p>Sign Up</p>
                 </a>
                 <a href="">
@@ -314,6 +329,7 @@
         </div>
     </footer>
 
+
     <!-- JS -->
     <script>
         const hamburger = document.getElementById('hamburger');
@@ -330,7 +346,6 @@
             hamburger.classList.remove('open');
         });
 
-        // Check if the user is logged in
         function checkLoginStatus() {
             const isLoggedIn = localStorage.getItem('isLoggedIn');
             const userIcon = document.querySelector('.head-btn-end a[href="login.html"]');
@@ -340,8 +355,8 @@
                 userIcon.href = 'account.html';
                 cartIcon.href = 'cart.html';
             } else {
-                userIcon.href = 'sign-in.html';
-                cartIcon.href = 'need-sign-in.html';
+                userIcon.href = 'sign-in.html?auth=required';
+                cartIcon.href = 'sign-in.html?auth=required';
             }
         }
 

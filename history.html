@@ -237,6 +237,11 @@
     <!-- JS -->
     <script>
 
+        if (localStorage.getItem('isLoggedIn') !== 'true') {
+            window.location.href = 'sign-in.html?auth=required';
+        }
+
+
         document.addEventListener('DOMContentLoaded', checkLoginStatus);
         window.addEventListener('storage', checkLoginStatus);
 
@@ -306,7 +311,7 @@
                 loadOrderHistory();
             }
             else {
-                window.location.href = 'sign-in.html';
+                window.location.href = 'sign-in.html?auth=required';
             }
         });
 

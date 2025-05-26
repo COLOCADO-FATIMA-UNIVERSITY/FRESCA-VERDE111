@@ -307,7 +307,7 @@
     .product-card:hover {
         transform: translateY(-5px);
         border: #456655 1px solid;
-        box-shadow: 0 0 25px rgba(0, 0, 0, 0.496);
+        box-shadow: 0 0 25px rgba(0, 0, 0, 0.359);
     }
 
     .thumb {
@@ -1066,6 +1066,59 @@
         height: auto;
         transition: all 0.3s;
     }
+
+    .claim-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #456655;
+        color: white;
+        padding: 10px 18px;
+        border: none;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 14px;
+        cursor: pointer;
+        gap: 8px;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .claim-btn img {
+        height: 18px;
+    }
+
+    .claim-btn:hover {
+        background-color: #2f4f2f;
+    }
+
+    .claim-btn.claimed {
+        background-color: #cccccc;
+        color: #555;
+        cursor: default;
+        pointer-events: none;
+        font-weight: bold;
+        justify-content: center;
+        gap: 0;
+        box-shadow: none;
+        animation: fadeInClaimed 0.4s ease-in-out;
+    }
+
+    .claim-btn.claimed img {
+        display: none;
+    }
+
+    @keyframes fadeInClaimed {
+        from {
+            opacity: 0;
+            transform: scale(0.95);
+        }
+
+        to {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
 </style>
 
 <body>
@@ -1162,18 +1215,17 @@
         <div class="main-container">
             <div class="store-flex">
                 <div class="store-item">
-                    <a href="dairy&eggs.html">
+                    <a href="unified.html?category=Dairy%20%26%20Eggs">
                         <div class="img-container">
                             <img src="img/thumbnail/HOME/Dairy and Eggs.png" alt="Dairy & Eggs"
                                 style="margin-top: 30px;">
                         </div>
                         <p>DAIRY & EGGS</p>
                     </a>
-
                 </div>
 
                 <div class="store-item">
-                    <a href="meat&seafoods.html">
+                    <a href="unified.html?category=Meat%20%26%20Seafoods">
                         <div class="img-container">
                             <img src="img/thumbnail/HOME/Meat and Seafood.png" alt="Meat & Seafood">
                         </div>
@@ -1182,7 +1234,7 @@
                 </div>
 
                 <div class="store-item">
-                    <a href="bakery.html">
+                    <a href="unified.html?category=Bakery%20Treats">
                         <div class="img-container">
                             <img src="img/thumbnail/HOME/Bakery Goods.png" alt="Bakery Treats">
                         </div>
@@ -1191,7 +1243,7 @@
                 </div>
 
                 <div class="store-item">
-                    <a href="snacks.html">
+                    <a href="unified.html?category=Snacks%20%26%20Sweets">
                         <div class="img-container">
                             <img src="img/thumbnail/HOME/Snack and Sweets.png" alt="Snacks & Sweets">
                         </div>
@@ -1200,7 +1252,7 @@
                 </div>
 
                 <div class="store-item">
-                    <a href="organic.html">
+                    <a href="unified.html?category=Organic">
                         <div class="img-container">
                             <img src="img/thumbnail/HOME/Organic Foods.png" alt="Organic Products">
                         </div>
@@ -1339,8 +1391,8 @@
         <div class="toast-content">
             <h2 class="toast-title">Version <span id="versionLabel">NULL</span></h2>
             <p class="toast-description">
-                You're viewing the official release of the Fresca Verde website by GROUP 5. Last updated on
-                18-05-25<br><br>
+                You're viewing the official release of the <span class="bold">Fresca Verde</span> website by <span class="bold">GROUP 5.</span> Last updated on
+                <span class="bold">26-05-25</span><br><br>
                 Thank you for supporting sustainable living.
             </p>
             <button onclick="dismissVersionToast()" class="toast-btn">OK</button>
@@ -1361,33 +1413,33 @@
         <div class="footer-container">
             <div class="footer-column">
                 <h4>About Us</h4>
-                <p>About Fresca Verde</p>
-                <p>Sustainability & Organic – Commitment</p>
-                <p>Careers</p>
+                <p><a href="about.html">About Fresca Verde</a></p>
+                <p><a href="about.html#commitment">Sustainability & Organic – Commitment</a></p>
+                <p><a href="explore.html">Careers</a></p>
             </div>
             <div class="footer-column">
                 <h4>Quick Help</h4>
-                <p>FAQ</p>
-                <p>Terms & Conditions</p>
-                <p>Security & Privacy Policy</p>
-                <p>Shipping & Delivery</p>
+                <p><a href="info1.html#faqs">FAQ</a></p>
+                <p> <a href="info.html?section=agreement">Terms & Conditions</a></p>
+                <p><a href="info.html?section=privacy">Security & Privacy Policy</a></p>
+                <p><a href="info.html?section=shipping">Shipping & Delivery</a></p>
             </div>
             <div class="footer-column">
                 <h4>My Account</h4>
-                <p><a href="login.html">Log In</a></p>
-                <p><a href="signup.html">Sign Up</a></p>
-                <p>Apply Membership</p>
-                <p>Renew Membership</p>
+                <p><a href="sign-in.html">Log In</a></p>
+                <p><a href="sign-up.html">Sign Up</a></p>
+                <p><a href="membership-apply.html">Apply Membership</a></p>
+                <p><a href="membership-renew.html">Renew Membership</a></p>
             </div>
             <div class="footer-column">
                 <h4>Contact Us</h4>
-                <p>Email</p>
-                <p>Landline</p><br>
+                <p><a href="mailto:support@frescaverde.com">support@frescaverde.com</a></p>
+                <p><a href="tel:+6328123456">(02) 812-3456</a></p><br>
                 <p><em>Typically replies instantly</em></p>
             </div>
         </div>
         <div class="footer-bottom">
-            <p>All rights reserved – Fresca Verde</p>
+            <p>All rights reserved – Fresca Verde <span id="versionLabelD"></span></p>
             <img src="images/LOGO-removebg-preview.png" alt="Fresca Verde Logo" class="footer-logo">
         </div>
     </footer>
@@ -1427,10 +1479,10 @@
 
             <button class="accordion">My Account <span class="arrow">&#9662;</span></button>
             <div class="panel">
-                <a href="login.html">
+                <a href="sign-in.html">
                     <p>Log In</p>
                 </a>
-                <a href="signup.html">
+                <a href="sign-up.html">
                     <p>Sign Up</p>
                 </a>
                 <a href="">
@@ -1463,7 +1515,9 @@
     <!-- JS -->
     <script>
 
-        const CURRENT_VERSION = "1.0 OFFICIAL";
+        const CURRENT_VERSION = "1.1R OFFICIAL";
+
+        document.getElementById("versionLabelD").innerText = CURRENT_VERSION;
 
         function showVersionToast() {
             const stored = JSON.parse(localStorage.getItem('versionToastData'));
@@ -1498,6 +1552,34 @@
 
             // Show the toast if conditions are met
             showVersionToast();
+        });
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const buttons = document.querySelectorAll(".claim-btn");
+
+            // Load claimed states from localStorage
+            const claimedVouchers = JSON.parse(localStorage.getItem("claimedVouchers") || "[]");
+
+            buttons.forEach((button, index) => {
+                const voucherId = `voucher-${index}`; // Unique ID based on position
+
+                if (claimedVouchers.includes(voucherId)) {
+                    markAsClaimed(button);
+                }
+
+                button.addEventListener("click", () => {
+                    if (!claimedVouchers.includes(voucherId)) {
+                        claimedVouchers.push(voucherId);
+                        localStorage.setItem("claimedVouchers", JSON.stringify(claimedVouchers));
+                        markAsClaimed(button);
+                    }
+                });
+            });
+
+            function markAsClaimed(button) {
+                button.classList.add("claimed");
+                button.innerHTML = "CLAIMED";
+            }
         });
 
         document.addEventListener('DOMContentLoaded', showVersionToast);
@@ -1609,7 +1691,7 @@
                 overlay.classList.remove('show');
             };
         }
-        
+
         document.addEventListener('DOMContentLoaded', () => {
             const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
             const username = localStorage.getItem('username') || 'Guest';
@@ -1617,10 +1699,10 @@
             const stored = JSON.parse(localStorage.getItem('welcomeToastData')) || {};
             const now = new Date();
 
-            const oneWeek = 7 * 24 * 60 * 60 * 1000;
+            const oneDay = 24 * 60 * 60 * 1000;
             const shouldShow =
                 !stored.dismissedAt ||
-                (now - new Date(stored.dismissedAt)) > oneWeek ||
+                (now - new Date(stored.dismissedAt)) > oneDay ||
                 stored.version !== CURRENT_VERSION;
 
             if (!shouldShow) return;
@@ -1708,7 +1790,6 @@
         });
 
 
-        // Check if the user is logged in
         function checkLoginStatus() {
             const isLoggedIn = localStorage.getItem('isLoggedIn');
             const userIcon = document.querySelector('.head-btn-end a[href="login.html"]');
@@ -1718,8 +1799,8 @@
                 userIcon.href = 'account.html';
                 cartIcon.href = 'cart.html';
             } else {
-                userIcon.href = 'sign-in.html';
-                cartIcon.href = 'need-sign-in.html';
+                userIcon.href = 'sign-in.html?auth=required';
+                cartIcon.href = 'sign-in.html?auth=required';
             }
         }
 

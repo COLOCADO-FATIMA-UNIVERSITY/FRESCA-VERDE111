@@ -527,12 +527,10 @@
                 <span class="toggle-password" onclick="togglePassword()">
                     <i class="fas fa-eye" id="eye-icon"></i>
                 </span>
-                
+
                 <div style="text-align: right; margin-top: 5px;">
                     <a href="forgot-password.html" style="font-size: 0.9rem; color: #456655;">Forgot your password?</a>
                 </div>
-
-                <div id="toast" class="toast"></div>
                 <button type="submit">Sign In</button>
             </form>
 
@@ -548,6 +546,8 @@
             <p>Don't have an account? <a href="sign-up.html">Sign Up</a></p>
         </div>
     </div>
+
+    <div id="toast" class="toast"></div>
 
     <!-- Fake Loading Screen -->
     <div id="loading-screen" class="loading-screen">
@@ -574,6 +574,25 @@
     </div>
 
     <script>
+        // Toast logic
+        const toast = document.getElementById("toast");
+        function showToast(message, color = "#b94b4b") {
+            toast.textContent = message;
+            toast.style.backgroundColor = color;
+            toast.classList.add("show");
+
+            setTimeout(() => {
+                toast.classList.remove("show");
+            }, 3000);
+        }
+
+        // Show toast if redirected due to missing login
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get("auth") === "required") {
+            showToast("You must be signed in to access some features.", "#b94b4b");
+        }
+
+
         // Password toggle
         function togglePassword() {
             const passwordInput = document.getElementById("password");
@@ -590,17 +609,7 @@
             }
         }
 
-        // Toast logic
-        const toast = document.getElementById("toast");
-        function showToast(message, color = "#b94b4b") {
-            toast.textContent = message;
-            toast.style.backgroundColor = color;
-            toast.classList.add("show");
 
-            setTimeout(() => {
-                toast.classList.remove("show");
-            }, 3000);
-        }
 
         function validateEmail(email) {
             const re = /^[^\s@]+@[^\s@]+\.[a-z]{2,}$/;
@@ -652,7 +661,7 @@
             setTimeout(() => {
                 loadingScreen.classList.remove("show");
                 window.location.href = "index.html"; // Redirect to home page
-            }, 5000);
+            }, 3000);
         });
 
 
