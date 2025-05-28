@@ -65,7 +65,7 @@ function renderProducts(products) {
 // Product list
 const cheeseProducts = [
     { name: "Sharp - Cheddar Cheese 200g", category: "cheese", price: "₱350.00" },
-    { name: "Arla - Mozzarella Cheese 200g", category: "cheese", price: "₱320.00" },
+    { name: "Borden - Cheddar Cheese 200g", category: "cheese", price: "₱320.00" },
     { name: "Santini - Parmesan 222g", category: "cheese", price: "₱250.00" },
     { name: "Bulla - Cottage Cheese 250g", category: "cheese", price: "₱350.00" },
     { name: "Philadelphia - Cream Cheese", category: "cheese", price: "₱185.00" },
@@ -74,7 +74,6 @@ const cheeseProducts = [
     { name: "Gouda Cheese Block 200g", category: "cheese", price: "₱300.00" },
     { name: "Feta Cheese Original 150g", category: "cheese", price: "₱220.00" },
     { name: "Blue Cheese Original 100g", category: "cheese", price: "₱400.00" },
-    { name: "Ricotta Cheese 250g", category: "cheese", price: "₱250.00" },
 ];
 
 const milkProducts = [
@@ -84,67 +83,62 @@ const milkProducts = [
     { name: "Silk - Almond Milk Original 946ml", category: "milk", price: "₱180.00" },
     { name: "Arla - Lactose Free Milk 1L", category: "milk", price: "₱135.00" },
     { name: "Robina - Fresh Eggs Medium", category: "milk", price: "₱135.00" },
-    { name: "Nestle - Full Cream Milk 1L", category: "milk", price: "₱120.00" },
+    { name: "Unica - Full Cream Milk 1L", category: "milk", price: "₱120.00" },
     { name: "Alpro - Soya Milk 1L", category: "milk", price: "₱150.00" },
     { name: "Oatly - Oats Milk 1L", category: "milk", price: "₱200.00" },
-    { name: "Anchor - Cream Milk Powder", category: "milk", price: "₱350.00" },
-    { name: "Milo - Chocolate Malt Drink 1L", category: "milk", price: "₱140.00" },
+    { name: "Anchor - Cream Milk Powder", category: "milk", price: "₱350.00" }, ,
 ];
 
 const poultryProducts = [
+    { name: "Pork Liempo (500g)", category: "poultry", price: "₱250.00" },
+    { name: "HQ Beef Cubes (500g)", category: "poultry", price: "₱280.00" },
+    { name: "Horse Meat (1.5kg)", category: "poultry", price: "₱350.00" },
+    { name: "Cut Pork Kasim (500g)", category: "poultry", price: "₱220.00" },
+    { name: "Beef Tenderloin (500g)", category: "poultry", price: "₱240.00" },
     { name: "Bounty Fresh Chicken (1.2kg)", category: "poultry", price: "₱300.00" },
     { name: "Tyson Chicken Tenderloins (500g)", category: "poultry", price: "₱220.00" },
     { name: "San Mig - Chicken Longganisa (250g)", category: "poultry", price: "₱150.00" },
     { name: "Magnolia Vienna Sausage (200g)", category: "poultry", price: "₱100.00" },
     { name: "Farmwell Thigh Fillet (500g)", category: "poultry", price: "₱200.00" },
-    { name: "Purefoods Chicken Nuggets (500g)", category: "poultry", price: "₱250.00" },
-    { name: "Magnolia Chicken Jumbo Hotdog (400g)", category: "poultry", price: "₱180.00" },
-    { name: "Bounty Fresh Whole Chicken (1.5kg)", category: "poultry", price: "₱350.00" },
-    { name: "Purefoods Chicken Tocino (500g)", category: "poultry", price: "₱220.00" },
-    { name: "Magnolia Chicken Jumbo Cream Fillet (500g)", category: "poultry", price: "₱240.00" },
-    { name: "Farmwell Chicken Stress Free Wings (1kg)", category: "poultry", price: "₱300.00" },
 ];
 
 const shellfishProducts = [
     { name: "Dampa Fresh Crabs (per kg)", category: "shellfish", price: "₱400.00" },
-    { name: "John Dory Fillet (250g)", category: "shellfish", price: "₱250.00" },
-    { name: "Century Bangus Can (350g)", category: "shellfish", price: "₱120.00" },
-    { name: "Sea Queen Shrimp (300g)", category: "shellfish", price: "₱260.00" },
     { name: "Hito Catfish Slices (per kg)", category: "shellfish", price: "₱350.00" },
     { name: "Fresh Mussels (per kg)", category: "shellfish", price: "₱300.00" },
     { name: "Live Lobster (per kg)", category: "shellfish", price: "₱800.00" },
+    { name: "John Dory Fillet (250g)", category: "shellfish", price: "₱250.00" },
+    { name: "Century Bangus Can (350g)", category: "shellfish", price: "₱120.00" },
+    { name: "Sea Queen Shrimp (300g)", category: "shellfish", price: "₱260.00" },
     { name: "Prawns Shellfish (500g)", category: "shellfish", price: "₱500.00" },
     { name: "Fish Fillet Mix (500g)", category: "shellfish", price: "₱300.00" },
-    { name: "Canned Sardines (400g)", category: "shellfish", price: "₱80.00" },
-    { name: "Dried Instant Cook Fish (500g)", category: "shellfish", price: "₱150.00" },
+    { name: "GGN Sardines (400g)", category: "shellfish", price: "₱80.00" },
 ];
 
 const pastryProducts = [
-    { name: "Goldilocks Ensaymada Piece", category: "Pastries & Cakes", price: "₱35.00" },
+    { name: "Goldilocks Ensaymada 1s", category: "Pastries & Cakes", price: "₱35.00" },
     { name: "RedRibbon Ube Roll (8 pcs)", category: "Pastries & Cakes", price: "₱480.00" },
     { name: "French Baker Croissant", category: "Pastries & Cakes", price: "₱60.00" },
     { name: "Conti Mango Chiffon", category: "Pastries & Cakes", price: "₱150.00" },
     { name: "BreadTalk Almond Bun", category: "Pastries & Cakes", price: "₱50.00" },
-    { name: "Goldilocks Chocolate Cake", category: "Pastries & Cakes", price: "₱600.00" },
+    { name: "Goldilocks Ensaymada 2s", category: "Pastries & Cakes", price: "₱600.00" },
     { name: "RedRibbon Ube Roll (14 pcs)", category: "Pastries & Cakes", price: "₱600.00" },
-    { name: "French Baker Danish Pastry", category: "Pastries & Cakes", price: "₱70.00" },
+    { name: "Danish French Baker Pastry", category: "Pastries & Cakes", price: "₱70.00" },
     { name: "Conti's Chocolate Mousse", category: "Pastries & Cakes", price: "₱200.00" },
     { name: "BreadTalk Cheese Tart", category: "Pastries & Cakes", price: "₱80.00" },
-    { name: "Goldilocks Leche Flan", category: "Pastries & Cakes", price: "₱120.00" },
 ];
 
 const breadProducts = [
     { name: "Gardenia White Bread (680g)", category: "Bread Rolls & Buns", price: "₱75.00" },
     { name: "Pacific Hotdog Buns(6pcs)", category: "Bread Rolls & Buns", price: "₱80.00" },
     { name: "Baguio Raisin Bread (600g)", category: "Bread Rolls & Buns", price: "₱140.00" },
-    { name: "PanManila Pandesal (6pcs)", category: "Bread Rolls & Buns", price: "₱30.00" },
+    { name: "PanManila Pandesal (12pcs)", category: "Bread Rolls & Buns", price: "₱30.00" },
     { name: "Ministop Garlic Rolls (4pcs)", category: "Bread Rolls & Buns", price: "₱55.00" },
     { name: "Gardenia White Bread (880g)", category: "Bread Rolls & Buns", price: "₱85.00" },
-    { name: "Pacific Hotdog Buns (4pcs)", category: "Bread Rolls & Buns", price: "₱90.00" },
+    { name: "Pacific Hotdog Buns (12pcs)", category: "Bread Rolls & Buns", price: "₱90.00" },
     { name: "Baguio Cheese Bread (600g)", category: "Bread Rolls & Buns", price: "₱150.00" },
     { name: "PanManila Cheese Pandesal (6pcs)", category: "Bread Rolls & Buns", price: "₱40.00" },
-    { name: "Ministop Sweet Rolls (4pcs)", category: "Bread Rolls & Buns", price: "₱60.00" },
-    { name: "Gardenia Multigrain Bread (680g)", category: "Bread Rolls & Buns", price: "₱90.00" },
+    { name: "Ministop Sweet Rolls (8pcs)", category: "Bread Rolls & Buns", price: "₱60.00" },
 ];
 
 const chipsProducts = [
@@ -167,10 +161,10 @@ const delicacyProducts = [
     { name: "Bulaklak Chicharon Pack", category: "Local Delicacies", price: "₱75.00" },
     { name: "Goodah Vanilla Polvoron (6pcs)", category: "Local Delicacies", price: "₱120.00" },
     { name: "Lara Cebu Chorizo (per pack)", category: "Local Delicacies", price: "₱200.00" },
-    { name: "Chocnut (10 pcs)", category: "Local Delicacies", price: "₱50.00" },
+    { name: "Coconut Pudding 1s", category: "Local Delicacies", price: "₱50.00" },
     { name: "Puto Bumbong (6 pcs)", category: "Local Delicacies", price: "₱100.00" },
     { name: "Kakanin Assorted Pack", category: "Local Delicacies", price: "₱150.00" },
-    { name: "Biko (Rice Cake)", category: "Local Delicacies", price: "₱80.00" },
+    { name: "Biko (Rice Cake) 50s", category: "Local Delicacies", price: "₱80.00" },
     { name: "Suman (Sticky Rice)", category: "Local Delicacies", price: "₱70.00" },
     { name: "Turon (Banana Lumpia)", category: "Local Delicacies", price: "₱60.00" },
 ];
@@ -181,12 +175,11 @@ const organicFruits = [
     { name: "Benguet Organic Strawberries", category: "Organic Fruits & Veggies", price: "₱200.00" },
     { name: "Mindanao Organic Pineapple", category: "Organic Fruits & Veggies", price: "₱120.00" },
     { name: "Quezon Malunggay Leaves", category: "Organic Fruits & Veggies", price: "₱50.00" },
-    { name: "Organic Bananas (1kg)", category: "Organic Fruits & Veggies", price: "₱100.00" },
-    { name: "Organic Apples (1kg)", category: "Organic Fruits & Veggies", price: "₱180.00" },
-    { name: "Organic Tomatoes (500g)", category: "Organic Fruits & Veggies", price: "₱90.00" },
-    { name: "Organic Carrots (500g)", category: "Organic Fruits & Veggies", price: "₱70.00" },
-    { name: "Organic Cucumbers (500g)", category: "Organic Fruits & Veggies", price: "₱60.00" },
-    { name: "Organic Bell Peppers (500g)", category: "Organic Fruits & Veggies", price: "₱150.00" },
+    { name: "Bananas Organic (1kg)", category: "Organic Fruits & Veggies", price: "₱100.00" },
+    { name: "Apples Organic (1kg)", category: "Organic Fruits & Veggies", price: "₱180.00" },
+    { name: "Tomatoes Organic (500g)", category: "Organic Fruits & Veggies", price: "₱90.00" },
+    { name: "Carrots Organic (500g)", category: "Organic Fruits & Veggies", price: "₱70.00" },
+    { name: "Cucumbers Organic (500g)", category: "Organic Fruits & Veggies", price: "₱60.00" },
 ];
 
 const organicGrains = [
@@ -195,12 +188,11 @@ const organicGrains = [
     { name: "EarthOrigins Rolled Oats", category: "Organic Grains & Staples", price: "₱120.00" },
     { name: "Ayala Moringa Powder", category: "Organic Grains & Staples", price: "₱180.00" },
     { name: "LaMer Coconut Sugar", category: "Organic Grains & Staples", price: "₱110.00" },
-    { name: "Organic Brown Rice (1kg)", category: "Organic Grains & Staples", price: "₱80.00" },
-    { name: "Organic Millet (500g)", category: "Organic Grains & Staples", price: "₱150.00" },
-    { name: "Organic Barley (500g)", category: "Organic Grains & Staples", price: "₱200.00" },
-    { name: "Organic Chia Seeds (250g)", category: "Organic Grains & Staples", price: "₱300.00" },
-    { name: "Organic Flaxseeds (250g)", category: "Organic Grains & Staples", price: "₱250.00" },
-    { name: "Organic Spelt Flour (1kg)", category: "Organic Grains & Staples", price: "₱220.00" },
+    { name: "Brown Rice Organic (1kg)", category: "Organic Grains & Staples", price: "₱80.00" },
+    { name: "Millet Organic (500g)", category: "Organic Grains & Staples", price: "₱150.00" },
+    { name: "Barley Organic (500g)", category: "Organic Grains & Staples", price: "₱200.00" },
+    { name: "Chia Seeds Organic (250g)", category: "Organic Grains & Staples", price: "₱300.00" },
+    { name: "Flaxseeds Organic (250g)", category: "Organic Grains & Staples", price: "₱250.00" },
 ];
 
 
@@ -217,3 +209,17 @@ document.addEventListener("DOMContentLoaded", () => {
     assignImages(chipsProducts);
     assignImages(delicacyProducts);
 });
+
+
+window.ALL_PRODUCTS = [
+    ...cheeseProducts,
+    ...milkProducts,
+    ...poultryProducts,
+    ...shellfishProducts,
+    ...pastryProducts,
+    ...breadProducts,
+    ...organicGrains,
+    ...organicFruits,
+    ...chipsProducts,
+    ...delicacyProducts,
+];

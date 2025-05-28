@@ -1,13 +1,22 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
     const searchInput = document.getElementById("searchBox");
     const resultContainer = document.getElementById("results");
 
+    // ⛔ If database.js isn't loaded, this will crash.
+    const allProducts = window.ALL_PRODUCTS || [];
+
+    // ✅ Assign images
+    await assignImages(allProducts);
+
+    // ✅ Initial render
+    displayResults(allProducts);
+
+    // ✅ Live Search Filter
     searchInput.addEventListener("input", () => {
         const query = searchInput.value.toLowerCase().trim();
         const filtered = allProducts.filter(product =>
             product.name.toLowerCase().includes(query)
         );
-
         displayResults(filtered);
     });
 
@@ -26,65 +35,52 @@ document.addEventListener("DOMContentLoaded", () => {
                     margin: 20px auto;
                     width: 100%;
                     max-width: 300px;
-                ">
-                ⚠️No results found.
-                </p>
-            `;
-
+                ">⚠️ No results found.</p>`;
             return;
         }
 
         products.forEach(product => {
             const card = document.createElement("div");
             card.className = "product-card";
+            card.dataset.name = product.name;
+            card.dataset.category = product.category;
+
             card.innerHTML = `
-            <div class="product-image">
-                <img src="${product.image}" alt="${product.name}">
-            </div>
-            <div class="product-card-content">
-                <h3>${product.name}</h3>
-                <p>${product.price}</p>
-                <button><img src="img/icons/download.svg" alt="">ADD TO CART</button>
-            </div>
-        `;
+                <div class="product-image">
+                    <img src="${product.image}" alt="${product.name}">
+                </div>
+                <div class="product-card-content">
+                    <h3>${product.name}</h3>
+                    <p>${product.price}</p>
+                    <button><img src="img/icons/download.svg" alt="">ADD TO CART</button>
+                </div>
+            `;
 
-            const button = card.querySelector("button");
-
-            // ✅ ATTACH CLICK HANDLER DIRECTLY
-            button.addEventListener("click", (e) => {
-                e.preventDefault();
+            // Add to Cart
+            card.querySelector("button").addEventListener("click", () => {
                 const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
 
                 if (!isLoggedIn) {
-                    showToast1("⚠️ Please sign in first!");
-                    button.classList.add("cant-add");
-                    button.innerHTML = `Oops! Not now`;
-
-                    // Restart animation
-                    button.style.animation = 'none';
-                    button.offsetHeight;
-                    button.style.animation = '';
-
-                    setTimeout(() => {
-                        button.innerHTML = `<img src="img/icons/download.svg" alt="">ADD TO CART`;
-                        button.classList.remove("cant-add");
-                    }, 2000);
-
+                    showToast("⚠️ Please sign in first!");
                     return;
                 }
 
-                const name = product.name;
-                const image = product.image;
-                const price = parseFloat(product.price.replace("₱", "")) || 0;
-                const item = { name, image, price, quantity: 1 };
+                const item = {
+                    name: product.name,
+                    image: product.image,
+                    price: parseFloat(product.price.replace("₱", "")),
+                    quantity: 1
+                };
 
                 let cart = JSON.parse(localStorage.getItem("cart")) || [];
                 const existing = cart.find(p => p.name === item.name);
+
                 if (existing) {
                     existing.quantity += 1;
                 } else {
                     cart.push(item);
                 }
+
                 localStorage.setItem("cart", JSON.stringify(cart));
 
                 const toast = document.getElementById("toast");
@@ -97,17 +93,13 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-
-    function showToast1(message) {
-        let toast = document.createElement('div');
+    function showToast(message) {
+        const toast = document.createElement('div');
         toast.textContent = message;
         toast.className = 'custom-toast';
         document.body.appendChild(toast);
 
-        setTimeout(() => {
-            toast.classList.add('show');
-        }, 100);
-
+        setTimeout(() => toast.classList.add('show'), 100);
         setTimeout(() => {
             toast.classList.remove('show');
             setTimeout(() => toast.remove(), 300);

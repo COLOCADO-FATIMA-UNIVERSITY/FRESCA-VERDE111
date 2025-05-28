@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Arimo:wght@700&family=Open+Sans:wght@300&display=swap"
         rel="stylesheet" />
     <link rel="stylesheet" href="style/footer.css">
-    <script src="js/products.js" defer></script>
+    <script src="products/database.js" defer></script>
     <script src="js/search.js" defer></script>
     <title>Search - Fresca Verde</title>
     <link rel="icon" type="image/x-icon" href="/images/LOGO-removebg-preview.png">
@@ -731,6 +731,7 @@
         </div>
     </footer>
     <script>
+        // Sidebar hamburger toggle
         const hamburger = document.getElementById('hamburger');
         const sidebarMenu = document.getElementById('sidebar-menu');
         const closeBtn = document.querySelector('.sidebar-menu .close-btn');
@@ -745,207 +746,40 @@
             hamburger.classList.remove('open');
         });
 
-        const toast = document.getElementById('toast');
-
-        // ✅ Event Delegation for Add to Cart (including dynamically added cards)
-        document.addEventListener('click', function (event) {
-            const button = event.target.closest('.product-card button');
-
-            const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
-            if (!isLoggedIn) {
-                e.preventDefault();
-                showToast1("⚠️ Please sign in first!");
-                return; // 🛑 STOP here
-            }
-
-            if (button) {
-                const card = button.closest('.product-card');
-                const name = card.querySelector('h3').innerText;
-                const image = card.querySelector('img').getAttribute('src');
-                const priceText = card.querySelector('p').innerText.replace('₱', '');
-                const price = parseFloat(priceText);
-
-                const product = { name, image, price, quantity: 1 };
-                let cart = JSON.parse(localStorage.getItem('cart')) || [];
-
-                const existing = cart.find(item => item.name === product.name);
-                if (existing) {
-                    existing.quantity += 1;
-                } else {
-                    cart.push(product);
-                }
-
-                localStorage.setItem('cart', JSON.stringify(cart));
-
-                toast.innerText = `${product.name} added to cart!`;
-                toast.classList.add('show');
-                setTimeout(() => toast.classList.remove('show'), 5000);
-            }
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            header.classList.toggle('scrolled', window.scrollY > 20);
         });
 
-        // Live Search & Filter
-        const searchInput = document.getElementById('search');
-        const filterSelect = document.getElementById('categoryFilter');
-
-        function filterProducts() {
-            const query = searchInput.value.toLowerCase();
-            const category = filterSelect.value;
-            const cards = document.querySelectorAll('.product-card');
-
-            cards.forEach(card => {
-                const name = card.dataset.name?.toLowerCase() || '';
-                const cat = card.dataset.category;
-                const match = name.includes(query) && (category === 'all' || category === cat);
-                card.style.display = match ? 'block' : 'none';
+        // Accordion (mobile footer)
+        document.addEventListener("DOMContentLoaded", () => {
+            document.querySelectorAll(".accordion").forEach(accordion => {
+                accordion.addEventListener("click", () => {
+                    accordion.classList.toggle("active");
+                    const panel = accordion.nextElementSibling;
+                    panel.style.display = (panel.style.display === "block") ? "none" : "block";
+                });
             });
-        }
 
-        searchInput?.addEventListener('input', filterProducts);
-        filterSelect?.addEventListener('change', filterProducts);
+            // Header login check
+            checkLoginStatus();
+        });
 
+        // Check login status
         function checkLoginStatus() {
-            const isLoggedIn = localStorage.getItem('isLoggedIn');
+            const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
             const userIcon = document.querySelector('.head-btn-end a[href="login.html"]');
             const cartIcon = document.querySelector('.head-btn-end a[href="cart.html"]');
 
-            if (isLoggedIn === 'true') {
-                userIcon.href = 'account.html';
-                cartIcon.href = 'cart.html';
-            } else {
-                userIcon.href = 'sign-in.html?auth=required';
-                cartIcon.href = 'sign-in.html?auth=required';
+            if (userIcon && cartIcon) {
+                userIcon.href = isLoggedIn ? 'account.html' : 'sign-in.html?auth=required';
+                cartIcon.href = isLoggedIn ? 'cart.html' : 'sign-in.html?auth=required';
             }
         }
 
-        document.addEventListener('DOMContentLoaded', checkLoginStatus);
+        // Listen for login status changes
         window.addEventListener('storage', checkLoginStatus);
-
-        // Accordion
-        document.addEventListener("DOMContentLoaded", function () {
-            const accordions = document.querySelectorAll(".accordion");
-
-            accordions.forEach((accordion) => {
-                accordion.addEventListener("click", function () {
-                    this.classList.toggle("active");
-                    const panel = this.nextElementSibling;
-                    panel.style.display = panel.style.display === "block" ? "none" : "block";
-                });
-            });
-        });
-
-        // Header scroll effect
-        window.addEventListener('scroll', function () {
-            const header = document.querySelector('header');
-            if (window.scrollY > 20) {
-                header.classList.add('scrolled');
-            } else {
-                header.classList.remove('scrolled');
-            }
-        });
-
-        // Dynamic Load for Poultry and Shellfish
-        let poultryIndex = 0;
-        let shellfishIndex = 0;
-        const productsPerLoad = 5;
-        let poultryNames = [];
-        let shellfishNames = [];
-
-        const poultryPrices = [155, 220, 150, 100, 200, 190, 230, 180, 175, 250];
-        const shellfishPrices = [400, 250, 120, 260, 350, 295, 310, 330, 305, 320];
-
-        fetch('products/products_poultry.txt')
-            .then(res => res.text())
-            .then(data => poultryNames = data.trim().split('\n'));
-
-        fetch('products/products_shellfish.txt')
-            .then(res => res.text())
-            .then(data => shellfishNames = data.trim().split('\n'));
-
-        function createCard(name, price, category) {
-            const card = document.createElement("div");
-            card.className = "product-card";
-            card.dataset.category = category;
-            card.dataset.name = name;
-
-            const imageName = name.split(' ')[0];
-            const imagePath = `img/thumbnail/${category.toUpperCase()}/${imageName}.png`;
-
-            card.innerHTML = `
-            <div class="product-image">
-              <img src="${imagePath}" alt="${name}" loading="lazy"
-                onerror="this.onerror=null; this.src='img/icons/noun-box-2845338-cropped.svg';" />
-            </div>
-            <div class="product-card-content">
-              <h3>${name}</h3>
-              <p>₱${price.toFixed(2)}</p>
-              <button><img src="img/icons/download.svg" alt="">ADD TO CART</button>
-            </div>
-        `;
-            return card;
-        }
-
-        // View More: Poultry
-        document.getElementById("viewMorePoultry")?.addEventListener("click", () => {
-            const container = document.querySelector(".product-container[data-category='poultry']");
-            for (let i = 0; i < productsPerLoad; i++) {
-                if (poultryIndex >= poultryNames.length) break;
-                const name = poultryNames[poultryIndex] || `Unnamed Poultry ${poultryIndex + 1}`;
-                const price = poultryPrices[poultryIndex] || 150;
-                const card = createCard(name, price, "poultry");
-                container.insertBefore(card, document.getElementById("viewMorePoultry"));
-                poultryIndex++;
-            }
-            if (poultryIndex >= poultryNames.length) {
-                document.getElementById("viewMorePoultry").style.display = "none";
-            }
-        });
-
-        // View More: Shellfish
-        document.getElementById("viewMoreShellfish")?.addEventListener("click", () => {
-            const container = document.querySelector(".product-container[data-category='shellfish']");
-            for (let i = 0; i < productsPerLoad; i++) {
-                if (shellfishIndex >= shellfishNames.length) break;
-                const name = shellfishNames[shellfishIndex] || `Unnamed Shellfish ${shellfishIndex + 1}`;
-                const price = shellfishPrices[shellfishIndex] || 199;
-                const card = createCard(name, price, "shellfish");
-                container.insertBefore(card, document.getElementById("viewMoreShellfish"));
-                shellfishIndex++;
-            }
-            if (shellfishIndex >= shellfishNames.length) {
-                document.getElementById("viewMoreShellfish").style.display = "none";
-            }
-        });
-
-        document.addEventListener('DOMContentLoaded', () => {
-            const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
-
-            if (!isLoggedIn) {
-                const buttons = document.querySelectorAll('.main-container button');
-
-                // Block Add to Cart buttons
-                buttons.forEach(button => {
-                    button.addEventListener('click', (e) => {
-                        e.preventDefault();
-                        showToast1("⚠️ Please sign in first!");
-
-                        // 🔴 UI feedback: disable + show warning
-                        button.classList.add('cant-add');
-                        button.innerHTML = `Oops! Not now`;
-
-                        // Optional: Force restart animation if clicked multiple times
-                        button.style.animation = 'none';
-                        button.offsetHeight; // Trigger reflow
-                        button.style.animation = '';
-
-                        // Optional: revert back after 2 seconds
-                        setTimeout(() => {
-                            button.innerHTML = `<img src="img/icons/download.svg" alt="Add to Cart"> ADD TO CART`;
-                            button.classList.remove('cant-add');
-                        }, 2000);
-                    });
-                });
-            }
-        });
 
 
         // Toast function
