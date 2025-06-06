@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Arimo:wght@700&family=Open+Sans:wght@300&display=swap"
         rel="stylesheet" />
     <link rel="stylesheet" href="style/footer.css">
-    <script src="products/database.js" defer></script>
+    <script src="products/database-search.js" defer></script>
     <script src="js/search.js" defer></script>
     <title>Search - Fresca Verde</title>
     <link rel="icon" type="image/x-icon" href="/images/LOGO-removebg-preview.png">
@@ -730,76 +730,6 @@
             <img src="images/LOGO-removebg-preview.png" alt="logo">
         </div>
     </footer>
-    <script>
-        // Sidebar hamburger toggle
-        const hamburger = document.getElementById('hamburger');
-        const sidebarMenu = document.getElementById('sidebar-menu');
-        const closeBtn = document.querySelector('.sidebar-menu .close-btn');
-
-        hamburger.addEventListener('click', () => {
-            sidebarMenu.classList.toggle('show');
-            hamburger.classList.toggle('open');
-        });
-
-        closeBtn.addEventListener('click', () => {
-            sidebarMenu.classList.remove('show');
-            hamburger.classList.remove('open');
-        });
-
-        // Header scroll effect
-        window.addEventListener('scroll', () => {
-            const header = document.querySelector('header');
-            header.classList.toggle('scrolled', window.scrollY > 20);
-        });
-
-        // Accordion (mobile footer)
-        document.addEventListener("DOMContentLoaded", () => {
-            document.querySelectorAll(".accordion").forEach(accordion => {
-                accordion.addEventListener("click", () => {
-                    accordion.classList.toggle("active");
-                    const panel = accordion.nextElementSibling;
-                    panel.style.display = (panel.style.display === "block") ? "none" : "block";
-                });
-            });
-
-            // Header login check
-            checkLoginStatus();
-        });
-
-        // Check login status
-        function checkLoginStatus() {
-            const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
-            const userIcon = document.querySelector('.head-btn-end a[href="login.html"]');
-            const cartIcon = document.querySelector('.head-btn-end a[href="cart.html"]');
-
-            if (userIcon && cartIcon) {
-                userIcon.href = isLoggedIn ? 'account.html' : 'sign-in.html?auth=required';
-                cartIcon.href = isLoggedIn ? 'cart.html' : 'sign-in.html?auth=required';
-            }
-        }
-
-        // Listen for login status changes
-        window.addEventListener('storage', checkLoginStatus);
-
-
-        // Toast function
-        function showToast1(message) {
-            let toast = document.createElement('div');
-            toast.textContent = message;
-            toast.className = 'custom-toast';
-            document.body.appendChild(toast);
-
-            setTimeout(() => {
-                toast.classList.add('show');
-            }, 100); // Slight delay for transition
-
-            setTimeout(() => {
-                toast.classList.remove('show');
-                setTimeout(() => toast.remove(), 300);
-            }, 2500); // Duration before it fades out
-        }
-    </script>
-
 </body>
 
 </html>

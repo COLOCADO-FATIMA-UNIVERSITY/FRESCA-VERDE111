@@ -2,16 +2,15 @@ document.addEventListener("DOMContentLoaded", async () => {
     const searchInput = document.getElementById("searchBox");
     const resultContainer = document.getElementById("results");
 
-    // ⛔ If database.js isn't loaded, this will crash.
     const allProducts = window.ALL_PRODUCTS || [];
 
-    // ✅ Assign images
+    // Assign images only once
     await assignImages(allProducts);
 
-    // ✅ Initial render
+    // Initial full render
     displayResults(allProducts);
 
-    // ✅ Live Search Filter
+    // Filter on input
     searchInput.addEventListener("input", () => {
         const query = searchInput.value.toLowerCase().trim();
         const filtered = allProducts.filter(product =>
@@ -56,7 +55,6 @@ document.addEventListener("DOMContentLoaded", async () => {
                 </div>
             `;
 
-            // Add to Cart
             card.querySelector("button").addEventListener("click", () => {
                 const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
 
@@ -105,4 +103,4 @@ document.addEventListener("DOMContentLoaded", async () => {
             setTimeout(() => toast.remove(), 300);
         }, 2500);
     }
-});
+}); 
